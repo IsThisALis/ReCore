@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.gfs</groupId>
+  <artifactId>ReCore</artifactId>
+  <version>0.0.1-alpha</version>
+
+  <name>ReCore</name>
+  <url></url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    
+    <imgui.java.version>1.86.10</imgui.java.version>
+    <lwjgl.version>3.3.6</lwjgl.version>
+    <joml.version>1.10.8</joml.version>
+  </properties>
+
+  <profiles>
+        <profile>
+            <id>windows-profile</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <native.target>natives-windows</native.target>
+            </properties>                
+        </profile>
+        <profile>
+            <id>linux-profile</id>
+            <activation>
+                <os>
+                    <family>Linux</family>
+                </os>
+            </activation>
+            <properties>
+                <native.target>natives-linux</native.target>
+            </properties>                
+        </profile>
+        <profile>
+            <id>OSX-profile</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <native.target>natives-osx</native.target>
+            </properties>
+        </profile>
+    </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>21</source>
+          <target>21</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.5.0</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>org.gfs.recore.example.Main</mainClass>
+                    </transformer>
+                </transformers>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+    </plugins>
+  </build>
+
+<dependencies>
+  <!-- ===== LWJGL CORE MODULES ===== -->
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl</artifactId>
+    <version>${lwjgl.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-assimp</artifactId>
+    <version>${lwjgl.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-glfw</artifactId>
+    <version>${lwjgl.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-opengl</artifactId>
+    <version>${lwjgl.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-stb</artifactId>
+    <version>${lwjgl.version}</version>
+  </dependency>
+  
+  <!-- ===== NATIVE LIBRARIES ===== -->
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl</artifactId>
+    <version>${lwjgl.version}</version>
+    <classifier>${native.target}</classifier>
+    <scope>runtime</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-assimp</artifactId>
+    <version>${lwjgl.version}</version>
+    <classifier>${native.target}</classifier>
+    <scope>runtime</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-glfw</artifactId>
+    <version>${lwjgl.version}</version>
+    <classifier>${native.target}</classifier>
+    <scope>runtime</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-opengl</artifactId>
+    <version>${lwjgl.version}</version>
+    <classifier>${native.target}</classifier>
+    <scope>runtime</scope>
+  </dependency>
+  <dependency>
+    <groupId>org.lwjgl</groupId>
+    <artifactId>lwjgl-stb</artifactId>
+    <version>${lwjgl.version}</version>
+    <classifier>${native.target}</classifier>
+    <scope>runtime</scope>
+  </dependency>
+
+  <!-- JOML - Java OpenGL Math Library -->
+  <dependency>
+    <groupId>org.joml</groupId>
+    <artifactId>joml</artifactId>
+    <version>${joml.version}</version>
+  </dependency>
+
+  <!-- ImGui -->
+  <dependency>
+    <groupId>io.github.spair</groupId>
+    <artifactId>imgui-java-binding</artifactId>
+    <version>${imgui.java.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>io.github.spair</groupId>
+    <artifactId>imgui-java-lwjgl3</artifactId>
+    <version>${imgui.java.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>io.github.spair</groupId>
+    <artifactId>imgui-java-natives-linux</artifactId>
+    <version>${imgui.java.version}</version>
+    <scope>runtime</scope>
+  </dependency>
+ </dependencies>
+</project>
