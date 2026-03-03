@@ -1,6 +1,6 @@
 package org.gfs.recore.util;
 
-import org.gfs.recore.graphics.textures.Params;
+import org.gfs.recore.graphics.textures.*;
 //IO imports
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,13 +25,15 @@ public class IO {
     ByteBuffer imageBuffer;
     MemoryStack stack = MemoryStack.stackPush();
 
-  Params params = Params.getParams();
+
    /**
    * used to load files with text, do not use for loading images or something!
    * @param path path to your file
    * returns String 
    */ 
     public static String loadTextFile(String path) {
+
+    //
     InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
     try {
       if (stream == null) {
@@ -43,37 +45,51 @@ public class IO {
     }
   }
 
-  public void loadImage(String path) {
-    try {
-      InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
-      byte[] fileBytes = stream.readAllBytes();
 
+  /**
+   * Loads image as texture and sets parameters, loads content from resources folder
+   * @param path Path to your image file like assets/textures/image.png
+   * returns data directly to the texture parameters
+   */
+  public void loadTexture(String path, Texture texture) {
+      try {
+
+        //Reads image from file
+        InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
+        byte[] fileBytes = stream.readAllBytes();
+
+        //Puts image in ByteBuffer
         imageBuffer = stack.malloc(fileBytes.length);
         imageBuffer.put(fileBytes);
-        imageBuffer.flip();
-      } catch(IOException e) {
-        System.out.println("Encountered IO exception");
-      }
-      
-       IntBuffer w = stack.mallocInt(1);
-       IntBuffer h = stack.mallocInt(1);
-       IntBuffer comp = stack.mallocInt(1);
+        imageBuffer.position(0);
         
+        //Catches IOException like file not found
+      } catch(IOException e) {
+          System.out.println("Encountered IO exception");
+        }
+      
+        //Puts image data into IntBuffers
+        IntBuffer w = stack.mallocInt(1);
+        IntBuffer h = stack.mallocInt(1);
+        IntBuffer comp = stack.mallocInt(1);
+        
+        //Loads image using STB
         STBImage.stbi_set_flip_vertically_on_load(true);
         ByteBuffer image = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
 
-        
-
+        //Transfers texture parameters to int
         int height = h.get();
         int width = w.get();
 
+        //Throws exception if texture not loaded
         if (image == null) {
-          throw new RuntimeException("Ошибка загрузки текстуры: " + STBImage.nstbi_failure_reason());
+          throw new RuntimeException("Error while loading texture: "+STBImage.nstbi_failure_reason());
         }
 
-        params.setHeight(height);
-        params.setWidth(width);
-        params.setImage(image);
+        //Sets texture data
+        texture.getParams().setHeight(height);
+        texture.getParams().setWidth(width);
+        texture.getParams().setImage(image);
 
     }
 }
