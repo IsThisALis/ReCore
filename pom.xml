@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.gfs</groupId>
-  <artifactId>ReCore</artifactId>
-  <version>0.0.1-alpha</version>
+  <artifactId>recore</artifactId>
+  <version>0.0.2-alpha</version>
 
   <name>ReCore</name>
   <url></url>
@@ -20,35 +20,41 @@
     <joml.version>1.10.8</joml.version>
   </properties>
 
-<profiles>
-    <profile>
-        <id>windows</id>
-        <activation>
-            <os><family>windows</family></os>
-        </activation>
-        <properties>
-            <native.target>natives-windows</native.target>
-        </properties>
-    </profile>
-    <profile>
-        <id>linux</id>
-        <activation>
-            <os><family>unix</family><name>linux</name></os>
-        </activation>
-        <properties>
-            <native.target>natives-linux</native.target>
-        </properties>
-    </profile>
-    <profile>
-        <id>OSX</id>
-        <activation>
-            <os><family>unix</family><name>mac os x</name></os>
-        </activation>
-        <properties>
-            <native.target>natives-osx</native.target>
-        </properties>
-    </profile>
-  </profiles>
+    <profiles>
+        <profile>
+            <id>windows-profile</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <native.target>natives-windows</native.target>
+            </properties>                
+        </profile>
+        <profile>
+            <id>linux-profile</id>
+            <activation>
+                <os>
+                    <family>Linux</family>
+                </os>
+            </activation>
+            <properties>
+                <native.target>natives-linux</native.target>
+            </properties>                
+        </profile>
+        <profile>
+            <id>OSX-profile</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <native.target>natives-osx</native.target>
+            </properties>
+        </profile>
+      </profiles>
 
   <build>
     <plugins>
