@@ -20,41 +20,35 @@
     <joml.version>1.10.8</joml.version>
   </properties>
 
-  <profiles>
-        <profile>
-            <id>windows-profile</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-            <properties>
-                <native.target>natives-windows</native.target>
-            </properties>                
-        </profile>
-        <profile>
-            <id>linux-profile</id>
-            <activation>
-                <os>
-                    <family>Linux</family>
-                </os>
-            </activation>
-            <properties>
-                <native.target>natives-linux</native.target>
-            </properties>                
-        </profile>
-        <profile>
-            <id>OSX-profile</id>
-            <activation>
-                <os>
-                    <family>mac</family>
-                </os>
-            </activation>
-            <properties>
-                <native.target>natives-osx</native.target>
-            </properties>
-        </profile>
-    </profiles>
+<profiles>
+    <profile>
+        <id>windows</id>
+        <activation>
+            <os><family>windows</family></os>
+        </activation>
+        <properties>
+            <native.target>natives-windows</native.target>
+        </properties>
+    </profile>
+    <profile>
+        <id>linux</id>
+        <activation>
+            <os><family>unix</family><name>linux</name></os>
+        </activation>
+        <properties>
+            <native.target>natives-linux</native.target>
+        </properties>
+    </profile>
+    <profile>
+        <id>OSX</id>
+        <activation>
+            <os><family>unix</family><name>mac os x</name></os>
+        </activation>
+        <properties>
+            <native.target>natives-osx</native.target>
+        </properties>
+    </profile>
+  </profiles>
 
   <build>
     <plugins>
@@ -130,13 +124,6 @@
   </dependency>
   <dependency>
     <groupId>org.lwjgl</groupId>
-    <artifactId>lwjgl-assimp</artifactId>
-    <version>${lwjgl.version}</version>
-    <classifier>${native.target}</classifier>
-    <scope>runtime</scope>
-  </dependency>
-  <dependency>
-    <groupId>org.lwjgl</groupId>
     <artifactId>lwjgl-glfw</artifactId>
     <version>${lwjgl.version}</version>
     <classifier>${native.target}</classifier>
@@ -157,29 +144,11 @@
     <scope>runtime</scope>
   </dependency>
 
-  <!-- JOML - Java OpenGL Math Library -->
+  <!-- Java OpenGL Math Library -->
   <dependency>
     <groupId>org.joml</groupId>
     <artifactId>joml</artifactId>
     <version>${joml.version}</version>
-  </dependency>
-
-  <!-- ImGui -->
-  <dependency>
-    <groupId>io.github.spair</groupId>
-    <artifactId>imgui-java-binding</artifactId>
-    <version>${imgui.java.version}</version>
-  </dependency>
-  <dependency>
-    <groupId>io.github.spair</groupId>
-    <artifactId>imgui-java-lwjgl3</artifactId>
-    <version>${imgui.java.version}</version>
-  </dependency>
-  <dependency>
-    <groupId>io.github.spair</groupId>
-    <artifactId>imgui-java-natives-linux</artifactId>
-    <version>${imgui.java.version}</version>
-    <scope>runtime</scope>
   </dependency>
  </dependencies>
 </project>
