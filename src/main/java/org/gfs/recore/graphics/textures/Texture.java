@@ -8,14 +8,11 @@ import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
 public class Texture {
-
-  Params params = Params.getParams(); 
-
-  public Texture() {
-    params.setID(glGenTextures());
-  }
+  int texCoord;
+  public Params params = new Params();
 
   public void bind() {
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, params.getID());
   }
 
@@ -24,33 +21,39 @@ public class Texture {
   }
 
   public void uploadData() {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, params.getWidth(), params.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, params.getImage());
+     params.getImage().position(0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, params.getWidth(), params.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, params.getImage());
   }
 
-  public void createTexture(Texture texture, ShaderProgram shaderProgram) {
-    glActiveTexture(GL_TEXTURE0);
-    texture.bind();
+  public void createTexture(ShaderProgram shaderProgram) {
+    params.setID(glGenTextures());
 
-      glTexParameteri(params.getID(), GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-      glTexParameteri(params.getID(), GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-      glTexParameteri(params.getID(), GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-      glTexParameteri(params.getID(), GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    bind();
+
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
-    texture.uploadData();
-    glGenerateMipmap(params.getID());
+      glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    uploadData();
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     System.out.println("uniform name: "+params.getUniformName());
 
-    int texCoord = glGetUniformLocation(shaderProgram.getID(), params.getUniformName());
-    glUniform1i(texCoord, 0);
-
-    if(texCoord==-1) {
-      throw new RuntimeException("Unable to get uniform location");
-    }
+    texCoord = glGetUniformLocation(shaderProgram.getID(), params.getUniformName());
+    glUniform1i(texCoord, params.getUniformID());
     
     STBImage.stbi_image_free(params.getImage());
-
   }
 
+  public void update() {
+    glUniform1i(texCoord, params.getUniformID());
+  }
+
+  public Params getParams() {
+    return params;
+  }
 
 }

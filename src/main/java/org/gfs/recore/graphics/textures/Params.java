@@ -12,6 +12,7 @@ public class Params {
   private int id;
   private int width;
   private int height;
+  private int uniformId;
   
   private ByteBuffer image;
 
@@ -26,6 +27,10 @@ public class Params {
 
   public int getHeight() {
     return height;
+  }
+
+  public int getUniformID() {
+    return uniformId;
   }
     //ByteBuffer
   public ByteBuffer getImage() {
@@ -45,8 +50,9 @@ public class Params {
     return uniformName;
   }
 
-  public void setUniformName(String value) {
+  public void setUniform(String value, int uniformID) {
     uniformName = value;
+    uniformId = uniformID;
   }
 
   public void setImage(ByteBuffer value) {
@@ -64,9 +70,4 @@ public class Params {
   public void setID(int value) {
     id = value;
   }
-
-  public static Params getParams() {
-    return params;
-  }
-  
 }
