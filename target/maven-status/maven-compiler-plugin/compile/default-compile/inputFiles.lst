@@ -5,13 +5,9 @@
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/shaders/ShaderProgram.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/textures/Texture.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/window/WindowUtils.java
-/home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/example/shaders/Renderer.java
-/home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/render/Params.java
-/home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/example/shaders/ShaderManager.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/render/VertexBufferObject.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/util/IO.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/textures/Params.java
-/home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/example/Main.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/core/osProcessor.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/render/Mesh.java
 /home/IsThisALis/projects/reCore/src/main/java/org/gfs/recore/graphics/render/VertexArrayObject.java

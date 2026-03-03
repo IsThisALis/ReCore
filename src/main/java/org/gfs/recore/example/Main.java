@@ -1,21 +1,20 @@
 package org.gfs.recore.example;
 
-//Core imports
+import org.gfs.game.graphic.Render;
+import org.gfs.game.graphic.TextureManager;
+
 import org.gfs.recore.core.ApplicationLogic;
 
-//Graphic imports
-//Window
 import org.gfs.recore.graphics.window.Params;
 import org.gfs.recore.graphics.window.Window;
 
-import org.gfs.recore.example.shaders.Renderer;
-
 public class Main implements ApplicationLogic {
 
+  TextureManager textureManager = new TextureManager();
+  Render render = new Render();
   Window window = new Window();
-  Params params = Params.getParams();
 
-  Renderer renderer;
+  Params params = Params.getParams();
 
   private static Main main = new Main();
 
@@ -24,14 +23,9 @@ public class Main implements ApplicationLogic {
     params.setTitle("Elderness");
     params.setHeight(1200);
     params.setWidth(1920);
-
-		System.out.println("ReCore: Initializing");
-
-    window.init();
-
-    renderer = new Renderer();
-
-    renderer.init();
+    
+    window.init(); 
+    render.init();
 	}
 
 	@Override
@@ -41,11 +35,12 @@ public class Main implements ApplicationLogic {
 
 	@Override
 	public void loop() {
-    while(!window.isWindowShouldClose()) {
+        while (!window.isWindowShouldClose()) {
+          
 		        window.loop();
-            renderer.render();
-          }    
-    }
+            render.update();
+        }
+  }
 
 	@Override
 	public void input() {

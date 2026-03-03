@@ -38,19 +38,19 @@
   </build>
   <profiles>
     <profile>
-      <id>windows-profile</id>
+      <id>windows</id>
       <properties>
         <native.target>natives-windows</native.target>
       </properties>
     </profile>
     <profile>
-      <id>linux-profile</id>
+      <id>linux</id>
       <properties>
         <native.target>natives-linux</native.target>
       </properties>
     </profile>
     <profile>
-      <id>OSX-profile</id>
+      <id>OSX</id>
       <properties>
         <native.target>natives-osx</native.target>
       </properties>
