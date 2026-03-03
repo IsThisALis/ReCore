@@ -4,6 +4,8 @@ import org.gfs.recore.core.Renderable;
 
 import org.gfs.recore.graphics.shaders.ShaderProgram;
 
+import org.gfs.recore.graphics.textures.Texture;
+
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
@@ -22,28 +24,33 @@ public class Mesh implements Renderable {
     }
 
   @Override 
-    public void init(float[] vertices, int[] indices) {
+    public void init(float[] vertices, int[] indices, boolean useTexture) {
 
       VAO.bind();
 
       VBO.bind();
+      VBO.uploadData(vertices);
+        
+      
+      if(useTexture) {
+        glDisableVertexAttribArray(1);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 5 * Float.BYTES, 0L);
+        glEnableVertexAttribArray(0);
 
+        glVertexAttribPointer(2, 2, GL_FLOAT, false, 5 * Float.BYTES, 3 * Float.BYTES);
+        glEnableVertexAttribArray(2); } 
+      else {
               // Position attribute (xyz - 3 floats)
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * Float.BYTES, 0L);
         glEnableVertexAttribArray(0);
 
               // Color attribute (rgb - 3 floats)
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * Float.BYTES, 3 * Float.BYTES);
-        glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(1); }
 
-              // Texture coordinate attribute (uv - 2 floats)
-        glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * Float.BYTES, 6 * Float.BYTES);
-        glEnableVertexAttribArray(2);
 
       EBO.bind();
       EBO.uploadData(indices);
-   
-      VBO.uploadData(vertices);
 
       VAO.unbind();
 
@@ -70,7 +77,9 @@ public class Mesh implements Renderable {
     }
 
   @Override
-    public void draw(ShaderProgram shaderProgram) {
+    public void draw(ShaderProgram shaderProgram, Texture texture) {
+
+      texture.bind();
       VAO.bind();
       shaderProgram.use();
 
