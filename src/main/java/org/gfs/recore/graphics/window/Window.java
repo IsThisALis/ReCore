@@ -16,7 +16,7 @@ import static org.lwjgl.opengl.GL15.*;
 public class Window implements ComponentLogic {
   
   //Gets parameters instance
-  Params params = Params.getParams();
+  Params params;
 
 	@Override
      /**
@@ -30,6 +30,8 @@ public class Window implements ComponentLogic {
      *
      */
     public void init() {
+
+      params = Params.getParams();
       
     //GLFW hint to use X11  
       if(osProcessor.isLinux()) {

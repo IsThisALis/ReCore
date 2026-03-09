@@ -20,9 +20,10 @@ public class Params {
 	private int width;
 	private int frameRateLimit;
 
-  private long window;
+  private long windowL;
 
   private static Params params = new Params();
+  private static Window window = new Window();
 
 
       //Instance
@@ -32,15 +33,19 @@ public class Params {
         return params;
     }
 
+    public static Window getWindowInst() {
+      return window;
+    }
+
       //Long 
       //window
 
     public long getWindow() {
-        return window;
+        return windowL;
     }
 
     public void setWindow(long value) {
-        window = value;
+        windowL = value;
     }
     
       //int 
