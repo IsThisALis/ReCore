@@ -35,7 +35,6 @@
         </profile>
         <profile>
             <id>OSX</id>
-            </activation>
             <properties>
                 <native.target>natives-osx</native.target>
             </properties>
