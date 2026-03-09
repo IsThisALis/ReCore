@@ -85,8 +85,9 @@ A: Yes! This is a pet project, contributions are welcome.
 **Q: Is there a roadmap?**  
 A: No fixed roadmap. Development depends on tasks and contributors.
 
-**Q: How to correctly open issue?**
+**Q: How to correctly open issue?**    
 A: Because this is only alpha there is no template for issues, just provide enough (or not, just be ready to answer questions) info.
+
 ---
 
 ## Contributing
