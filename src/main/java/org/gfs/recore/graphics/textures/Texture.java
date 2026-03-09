@@ -12,7 +12,7 @@ public class Texture {
   public Params params = new Params();
 
   public void bind() {
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0+params.getUniformID());
     glBindTexture(GL_TEXTURE_2D, params.getID());
   }
 
