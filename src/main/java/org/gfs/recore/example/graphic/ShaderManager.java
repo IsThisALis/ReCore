@@ -31,7 +31,7 @@ public class ShaderManager {
     ft1.createShader("fragment", IO.loadTextFile("samples/shaders/ft1.frag"));
     //f1.createShader("fragment", IO.loadTextFile("samples/shaders/f1.frag"));
     program1.attachShader(ft1);
-    program2.attachShader(f1);
+    program2.attachShader(ft1);
 
     program1.putShader("ft1", ft1);
     program2.putShader("ft1", ft1);

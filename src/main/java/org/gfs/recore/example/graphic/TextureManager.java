@@ -1,4 +1,4 @@
-package org.gfs.recore.example.graphics;
+package org.gfs.recore.example.graphic;
 
 import org.gfs.recore.graphics.shaders.ShaderProgram;
 
@@ -10,8 +10,8 @@ public class TextureManager {
 
   private IO io = new IO();
 
-  Texture texture;
-  Texture texture1;
+  public Texture texture;
+  public Texture texture1;
 
   public void init(ShaderProgram program, ShaderProgram program1) {
     texture = new Texture();

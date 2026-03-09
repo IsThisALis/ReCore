@@ -1,13 +1,11 @@
-package org.gfs.recore.example.graphics;
+package org.gfs.recore.example.graphic;
 
 import org.gfs.recore.core.ComponentLogic;
 
-import org.gfs.recore.graphics.window.Window;
+import org.gfs.recore.graphics.window.*;
 import org.gfs.recore.graphics.render.*;
 
 public class Render implements ComponentLogic {
-
-  Window window = new Window();
 
   VertexBufferObject vbo;
   VertexArrayObject vao;
@@ -20,7 +18,9 @@ public class Render implements ComponentLogic {
 
 
   public ShaderManager shaderManager = new ShaderManager();
-  
+ 
+  Params params = Params.getParams();
+  Window window = params.getWindowInst();
   Mesh mesh;
   Mesh mesh1;
 
@@ -66,10 +66,10 @@ public class Render implements ComponentLogic {
     public void update() {
       window.cleanWindow();
       
-      shaderManager.textureManager.texture.params.setUniform("ourTexture", 0);
+      //shaderManager.textureManager.texture.params.setUniform("ourTexture", 0);
       mesh.draw(shaderManager.program1, shaderManager.textureManager.texture1);
 
-      shaderManager.textureManager.texture1.params.setUniform("ourTexture", 0);
+      //shaderManager.textureManager.texture1.params.setUniform("ourTexture", 1);
       mesh1.draw(shaderManager.program2, shaderManager.textureManager.texture);
 
     }

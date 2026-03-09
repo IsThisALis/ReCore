@@ -1,7 +1,7 @@
 package org.gfs.recore.example;
 
-import org.gfs.game.graphic.Render;
-import org.gfs.game.graphic.TextureManager;
+import org.gfs.recore.example.graphic.Render;
+import org.gfs.recore.example.graphic.TextureManager;
 
 import org.gfs.recore.core.ApplicationLogic;
 
@@ -12,15 +12,15 @@ public class Main implements ApplicationLogic {
 
   TextureManager textureManager = new TextureManager();
   Render render = new Render();
-  Window window = new Window();
 
   Params params = Params.getParams();
+  Window window = Params.getWindowInst();
 
   private static Main main = new Main();
 
 	@Override
 	public void init() {
-    params.setTitle("Elderness");
+    params.setTitle("ReCore");
     params.setHeight(1200);
     params.setWidth(1920);
     
