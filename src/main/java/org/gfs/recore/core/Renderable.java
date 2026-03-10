@@ -7,9 +7,9 @@ public interface Renderable {
 
   void draw(ShaderProgram shaderProgram, Texture texture);
   
-  void init(float[] vertices, int[] indices, boolean useTexture);
+  void init(float[] vertices, int[] indices, int indicesNum, boolean useTexture);
 
-  void update(float[] vertices, int[] indices);
+  void update(float[] vertices, int[] indices, int indicesNum);
 
   void cleanup();
 
