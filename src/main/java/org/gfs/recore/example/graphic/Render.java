@@ -19,8 +19,8 @@ public class Render implements ComponentLogic {
 
   public ShaderManager shaderManager = new ShaderManager();
  
-  Params params = Params.getParams();
-  Window window = params.getWindowInst();
+  //Params params = Params.getParams();
+  Window window = Params.getWindowInst();
   Mesh mesh;
   Mesh mesh1;
 
@@ -57,8 +57,8 @@ public class Render implements ComponentLogic {
 
       mesh = new Mesh(vao, vbo, ebo);
       mesh1 = new Mesh(vao1, vbo1, ebo1);
-      mesh.init(verticesTopLeft, indices, true);
-      mesh1.init(verticesBottomRight, indices, true);
+      mesh.init(verticesTopLeft, indices, 6, true);
+      mesh1.init(verticesBottomRight, indices, 6, true);
       shaderManager.init();
 
     }
