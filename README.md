@@ -74,7 +74,7 @@ A: Use built-in methods as a foundation, extend with your own logic.
 A: You manage dependencies. Author is not liable for conflicts, but still can help you.
 
 **Q: Does it work on Windows?**  
-A: Listed in requirements, but currently hardcoded for X11. Track fixes in [Issues](https://github.com/IsThisALis/ReCore/issues/1).
+A: Listed in requirements, but currently may be unstable. Track fixes in [Issues](https://github.com/IsThisALis/ReCore/issues/1).
 
 **Q: Where do I report bugs?**  
 A: Create a ticket in [Issues](https://github.com/IsThisALis/ReCore/issues).
