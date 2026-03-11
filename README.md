@@ -51,7 +51,7 @@ git clone https://github.com/IsThisALis/ReCore.git
 cd ReCore
 
 ### Build
-mvn package
+mvn package -P(windows/linux/OSX)
 
 ### Install to local Maven repository
 mvn clean install
