@@ -1,12 +1,16 @@
 package org.gfs.recore.example.graphic;
 
+    // ReCore imports
+    // Core
 import org.gfs.recore.core.ComponentLogic;
 
+    // Graphics
 import org.gfs.recore.graphics.window.*;
 import org.gfs.recore.graphics.render.*;
 
 public class Render implements ComponentLogic {
 
+    // Instances
   VertexBufferObject vbo;
   VertexArrayObject vao;
   ElementBufferObject ebo;
@@ -15,15 +19,13 @@ public class Render implements ComponentLogic {
   VertexArrayObject vao1;
   ElementBufferObject ebo1;
 
-
-
   public ShaderManager shaderManager = new ShaderManager();
  
-  //Params params = Params.getParams();
   Window window = Params.getWindowInst();
   Mesh mesh;
   Mesh mesh1;
 
+    // Objects data
                 float[] verticesTopLeft = {
     // x     y    z     u     v
     -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
@@ -47,6 +49,7 @@ public class Render implements ComponentLogic {
 
   @Override
     public void init() {
+          // Initializing instances
       vbo = new VertexBufferObject();
       vao = new VertexArrayObject();
       ebo = new ElementBufferObject();
@@ -57,11 +60,15 @@ public class Render implements ComponentLogic {
 
       mesh = new Mesh(vao, vbo, ebo);
       mesh1 = new Mesh(vao1, vbo1, ebo1);
+          // Initializing objects
       mesh.init(verticesTopLeft, indices, 6, true);
       mesh1.init(verticesBottomRight, indices, 6, true);
+          // IInitializing shaders
       shaderManager.init();
 
     }
+
+    // Render cycle
   @Override
     public void update() {
       window.cleanWindow();
@@ -75,6 +82,6 @@ public class Render implements ComponentLogic {
     }
   @Override
     public void cleanup() {
-      
+      // TODO: Cleanup
     }
 }
