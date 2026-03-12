@@ -46,6 +46,7 @@ A lightweight Java game engine built on LWJGL 3
 
 ### Clone repository
 git clone https://github.com/IsThisALis/ReCore.git
+
 cd ReCore
 
 ### Build
