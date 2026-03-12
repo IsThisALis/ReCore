@@ -1,6 +1,6 @@
 # ReCore
 
-A lightweight Java game engine built on LWJGL 3, designed for learning and experimentation.
+A lightweight Java game engine built on LWJGL 3
 
 ![Version](https://img.shields.io/badge/version-0.0.2--alpha-blue)
 ![Java](https://img.shields.io/badge/java-21-orange)
