@@ -80,13 +80,16 @@ public class ShaderProgram {
     }
       /**
        * Puts shader in storage
+       * @param key keyword to store shader under
+       * @param shader shader to store
        */
     public void putShader(String key, Shader shader) {
       shaderCache.put(key, shader);
     }
 
     /**
-     * Returns
+     * Returns shader from storage 
+     * @param key keyword to shader
      */
     public Shader getShader(String key) {
       return shaderCache.get(key);
