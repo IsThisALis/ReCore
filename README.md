@@ -10,7 +10,7 @@ A lightweight Java game engine built on LWJGL 3
 
 ## Warning
 
-> **Platform:** Windows support is not guaranteed in alpha (see [Issues](https://github.com/IsThisALis/ReCore/issues)).
+> **Platform:** Windows support is not guaranteed in alpha (see [Issues](https://github.com/IsThisALis/ReCore/issues/1)).
 
 ---
 
@@ -69,10 +69,10 @@ See `org.gfs.recore.example` package for usage.
 **Q: How do I use the engine?**  
 A: Use built-in methods as a foundation, extend with your own logic.
 
-**Q: Who is responsible for third-party modifications?**
+**Q: Can i get help with modifications (forked and modificated versions)?**
 A: Author is not liable for conflicts but still can help you.
 
-**Q: Where do I report bugs?**  
+**Q: Where do I report bugs or get help?**  
 A: Create a ticket in [Issues](https://github.com/IsThisALis/ReCore/issues).
 
 **Q: Can I contribute?**  
@@ -83,6 +83,9 @@ A: No fixed roadmap. Development depends on tasks and contributors.
 
 **Q: How to correctly open issue?**    
 A: Because this is only alpha there is no template for issues, just provide enough (or not, just be ready to answer questions) info.
+
+**Q: I saw "custom" in method comment, what it means?**
+A: This method is used to create custom logic, will be moved to fork.
 
 ---
 
