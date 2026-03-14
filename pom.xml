@@ -134,12 +134,5 @@
     <classifier>${native.target}</classifier>
     <scope>runtime</scope>
   </dependency>
-
-  <!-- Java OpenGL Math Library -->
-  <dependency>
-    <groupId>org.joml</groupId>
-    <artifactId>joml</artifactId>
-    <version>${joml.version}</version>
-  </dependency>
  </dependencies>
 </project>
