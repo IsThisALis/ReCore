@@ -69,7 +69,7 @@ See `org.gfs.recore.example` package for usage.
 **Q: How do I use the engine?**  
 A: Use built-in methods as a foundation, extend with your own logic.
 
-**Q: Can i get help with modifications (forked and modificated versions)?**
+**Q: Can i get help with modifications (forked and modificated versions)?**    
 A: Author is not liable for conflicts but still can help you.
 
 **Q: Where do I report bugs or get help?**  
@@ -81,10 +81,10 @@ A: Yes! This is a pet project, contributions are welcome.
 **Q: Is there a roadmap?**  
 A: No fixed roadmap. Development depends on tasks and contributors.
 
-**Q: How to correctly open issue?**    
+**Q: How to correctly open issue?**  
 A: Because this is only alpha there is no template for issues, just provide enough (or not, just be ready to answer questions) info.
 
-**Q: I saw "custom" in method comment, what it means?**
+**Q: I saw "custom" in method comment, what it means?**    
 A: This method is used to create custom logic, will be moved to fork.
 
 ---
