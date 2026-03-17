@@ -36,9 +36,9 @@ public class ShaderProgram {
     public void link() {
         glLinkProgram(id);
         if(!checkStatus()) {
-        System.out.println("Not linked shader program");
+        System.out.println("ReCore: Not linked shader program");
         }
-        System.out.println("Linked shader program");
+        System.out.println("ReCore: Linked shader program");
         
     }
     /**

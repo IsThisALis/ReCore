@@ -7,7 +7,7 @@ import org.gfs.recore.core.Renderable;
 import org.gfs.recore.graphics.shaders.ShaderProgram;
 import org.gfs.recore.graphics.textures.Texture;
 
-    // OpenGL imports
+// OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
@@ -126,8 +126,6 @@ public class Mesh implements Renderable {
           // Uses ShaderProgram with attached shaders
       shaderProgram.use();
           // Draws object from triangles and indicesNumber (pointer)
-      glDrawElements(GL_TRIANGLES, indicesNumber, GL_UNSIGNED_INT, 0L);
-
-      
+      glDrawElements(GL_TRIANGLES, indicesNumber, GL_UNSIGNED_INT, 0L); 
     }
 }

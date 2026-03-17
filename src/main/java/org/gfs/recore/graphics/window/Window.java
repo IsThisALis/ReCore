@@ -57,7 +57,7 @@ public class Window implements ComponentLogic {
       //Making OpenGL context current   
         glfwMakeContextCurrent(params.getWindow());
         GL.createCapabilities();
-        glEnable(GL_DEPTH_TEST);
+        glDisable(GL_DEPTH_TEST);
         glfwSwapInterval(1);
 
         glfwShowWindow(params.getWindow());
@@ -108,6 +108,15 @@ public class Window implements ComponentLogic {
 
     
     public void cleanWindow() {
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glClear(GL_COLOR_BUFFER_BIT);
     }
+
+    public void blend(boolean onOff) {
+      if(onOff) {
+          glEnable(GL_BLEND);
+          glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      } else {
+          glDisable(GL_BLEND);
+        }
+  }
 }
