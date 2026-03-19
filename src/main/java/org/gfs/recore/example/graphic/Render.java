@@ -7,6 +7,7 @@ import org.gfs.recore.core.ComponentLogic;
     // Graphics
 import org.gfs.recore.graphics.window.*;
 import org.gfs.recore.graphics.render.*;
+import org.gfs.recore.graphics.render.scene.Scene;
 
 public class Render implements ComponentLogic {
 
@@ -20,6 +21,7 @@ public class Render implements ComponentLogic {
   ElementBufferObject ebo1;
 
   public ShaderManager shaderManager = new ShaderManager();
+  private Scene scene = new Scene();
  
   Window window = Params.getWindowInst();
   Mesh mesh;
@@ -51,6 +53,10 @@ public class Render implements ComponentLogic {
 
   @Override
     public void init() {
+
+          // Initializing shaders
+      shaderManager.init();
+
           // Initializing instances
       vbo = new VertexBufferObject();
       vao = new VertexArrayObject();
@@ -60,10 +66,10 @@ public class Render implements ComponentLogic {
       vao1 = new VertexArrayObject();
       ebo1 = new ElementBufferObject();
 
-      mesh = new Mesh(vao, vbo, ebo);
-      mesh1 = new Mesh(vao, vbo, ebo);
-      mesh2 = new Mesh(vao, vbo, ebo);
-      mesh3 = new Mesh(vao1, vbo1, ebo1);
+      mesh = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture1, shaderManager.program1);
+      mesh1 = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture2, shaderManager.program2);
+      mesh2 = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture3, shaderManager.program3);
+      mesh3 = new Mesh(vao1, vbo1, ebo1, shaderManager.textureManager.texture, shaderManager.program);
 
           // Initializing objects
       mesh.init(verticesTopLeft, indices, 6, true);
@@ -71,9 +77,11 @@ public class Render implements ComponentLogic {
       mesh2.init(verticesTopLeft, indices, 6, true);
       mesh3.init(verticesBottomRight, indices, 6, true);
 
-          // Initializing shaders
-      shaderManager.init();
+      scene.setObjCount(10);
+      scene.create();
 
+      scene.addObj(0, mesh1);
+      scene.addObj(1, mesh2);
     }
 
     // Render cycle
@@ -81,14 +89,13 @@ public class Render implements ComponentLogic {
     public void update() {
       window.cleanWindow();
 
-      mesh.draw(shaderManager.program1, shaderManager.textureManager.texture1);
+      mesh.draw();
 
       window.blend(true); 
-      mesh1.draw(shaderManager.program2, shaderManager.textureManager.texture2);
-      mesh2.draw(shaderManager.program3, shaderManager.textureManager.texture3);
+      scene.draw();
       
       window.blend(false);
-      mesh3.draw(shaderManager.program, shaderManager.textureManager.texture);
+      mesh3.draw();
 
     }
   @Override
