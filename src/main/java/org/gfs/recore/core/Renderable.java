@@ -5,7 +5,7 @@ import org.gfs.recore.graphics.textures.Texture;
 
 public interface Renderable {
 
-  void draw(ShaderProgram shaderProgram, Texture texture);
+  void draw();
   
   void init(float[] vertices, int[] indices, int indicesNum, boolean useTexture);
 

@@ -17,6 +17,10 @@ public class Mesh implements Renderable {
   VertexBufferObject VBO;
   VertexArrayObject VAO;
   ElementBufferObject EBO;
+
+  Texture texture;
+
+  ShaderProgram shaderProgram;
   
       //Initializes number of ints in int[] indices
   int indicesNumber;
@@ -27,6 +31,16 @@ public class Mesh implements Renderable {
       VAO = vao;
       EBO = ebo;
     }
+
+   public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, Texture textureUnit, ShaderProgram shaderProgramUnit) {
+          // Initializes buffers
+      VBO = vbo;
+      VAO = vao;
+      EBO = ebo;
+          // Initializes texture and ShaderProgram
+      texture = textureUnit;
+      shaderProgram = shaderProgramUnit;
+    } 
 
     /**
      * Creates new renderable object 
@@ -116,7 +130,7 @@ public class Mesh implements Renderable {
      * @param texture Texture for object, can be used on multiple objects
      */
   @Override
-    public void draw(ShaderProgram shaderProgram, Texture texture) {
+    public void draw() {
           // Binds texture to render
       if(texture !=null) {
          texture.bind();
