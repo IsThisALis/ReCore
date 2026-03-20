@@ -21,13 +21,13 @@ public class Render implements ComponentLogic {
   ElementBufferObject ebo1;
 
   public ShaderManager shaderManager = new ShaderManager();
-  private Scene scene = new Scene();
+  public Scene scene = new Scene();
  
   Window window = Params.getWindowInst();
   Mesh mesh;
   Mesh mesh1;
   Mesh mesh2;
-  Mesh mesh3;
+  public Mesh mesh3;
 
     // Objects data
                 float[] verticesTopLeft = {
@@ -101,5 +101,9 @@ public class Render implements ComponentLogic {
   @Override
     public void cleanup() {
       // TODO: Cleanup
+    }
+
+    public void updateData(float[] vertices, int[] indices, Mesh meshCurr) {
+      meshCurr.update(vertices, indices, 6);
     }
 }

@@ -8,6 +8,9 @@ import org.gfs.recore.example.graphic.TextureManager;
     // Core
 import org.gfs.recore.core.ApplicationLogic;
 
+    // Util
+import org.gfs.recore.util.KeyboardInput;
+
     // Window
 import org.gfs.recore.graphics.window.Params;
 import org.gfs.recore.graphics.window.Window;
@@ -20,6 +23,26 @@ public class Main implements ApplicationLogic {
   Params params = Params.getParams();
   Window window = Params.getWindowInst();
 
+  KeyboardInput KeyboardInput = new KeyboardInput();
+
+      // Initializing data 
+    float x = 0.5f;
+    float y = -x;
+        float[] verticesBottomRight = {
+    // x     y     z    u     v
+    x, y, 0.0f, 0.0f, 1.0f,
+    x+0.5f, y, 0.0f, 1.0f, 1.0f,
+    x+0.5f, y-0.5f, 0.0f, 1.0f, 0.0f,
+    x, y-0.5f, 0.0f, 0.0f, 0.0f
+        };
+
+        int[] indices = {
+            0, 1, 2,
+            2, 3, 0
+        };
+
+        float speed;
+
   private static Main main = new Main();
 
 	@Override
@@ -31,6 +54,7 @@ public class Main implements ApplicationLogic {
        // Initializing components
     window.init(); 
     render.init();
+    KeyboardInput.keyMapCreate();
 	}
 
 	@Override
@@ -44,20 +68,43 @@ public class Main implements ApplicationLogic {
         while (!window.isWindowShouldClose()) {
         // Window and rendering loops
 		    window.loop();
-            render.update();
+        main.input();
+        main.update();
+        render.update();
         }
   }
 
 	@Override
 	public void input() {
-		// TODO: handle input
-		System.out.println("ReCore: Registering user input");
+
+    if(KeyboardInput.keyCallback(KeyboardInput.getKey("A"))) {
+      x-=0.01f;
+    }
+
+    if(KeyboardInput.keyCallback(KeyboardInput.getKey("D"))) {
+      x+=0.01f;
+    }
+
+    if(KeyboardInput.keyCallback(KeyboardInput.getKey("W"))) {
+      y+=0.01f;
+    }
+
+    if(KeyboardInput.keyCallback(KeyboardInput.getKey("S"))) {
+      y-=0.01f;
+    }
+    
+    verticesBottomRight = new float[] {
+    // x     y     z    u     v
+    x, y, 0.0f, 0.0f, 1.0f,
+    x+0.5f, y, 0.0f, 1.0f, 1.0f,
+    x+0.5f, y-0.5f, 0.0f, 1.0f, 0.0f,
+    x, y-0.5f, 0.0f, 0.0f, 0.0f
+    };
 	}
 
 	@Override
 	public void update() {
-		// TODO: update logic
-		System.out.println("ReCore: Updating some data");
+    render.updateData(verticesBottomRight, indices, render.mesh3);
 	}
 
 
@@ -66,7 +113,7 @@ public class Main implements ApplicationLogic {
 	public static void main(String[] args) {
 		// Initialization and game loop
 	    main.init();
-        main.loop();
+      main.loop();
 	}
 
 }
