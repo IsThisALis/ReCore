@@ -1,6 +1,6 @@
 package org.gfs.recore.core;
 
-public class osProcessor {
+public class OsProcessor {
 
   private static final String os = System.getProperty("os.name").toLowerCase();
 
