@@ -56,7 +56,7 @@ mvn package -P(windows/linux/OSX)
 mvn install
 
 ### Run example
-java -jar target/recore-0.0.2-alpha.jar
+java -jar target/recore-0.0.3-alpha.jar
 
 ## Examples
 
