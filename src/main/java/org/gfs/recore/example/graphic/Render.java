@@ -66,9 +66,9 @@ public class Render implements ComponentLogic {
       vao1 = new VertexArrayObject();
       ebo1 = new ElementBufferObject();
 
-      mesh = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture1, shaderManager.program1);
-      mesh1 = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture2, shaderManager.program2);
-      mesh2 = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture3, shaderManager.program3);
+      mesh = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture1, shaderManager.program);
+      mesh1 = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture2, shaderManager.program);
+      mesh2 = new Mesh(vao, vbo, ebo, shaderManager.textureManager.texture3, shaderManager.program);
       mesh3 = new Mesh(vao1, vbo1, ebo1, shaderManager.textureManager.texture, shaderManager.program);
 
           // Initializing objects
@@ -77,7 +77,7 @@ public class Render implements ComponentLogic {
       mesh2.init(verticesTopLeft, indices, 6, true);
       mesh3.init(verticesBottomRight, indices, 6, true);
 
-      scene.setObjCount(10);
+      scene.setObjCount(2);
       scene.create();
 
       scene.addObj(0, mesh1);
