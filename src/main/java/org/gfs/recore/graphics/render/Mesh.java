@@ -11,6 +11,9 @@ import org.gfs.recore.graphics.textures.Texture;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
+import org.joml.Vector3f;
+import org.joml.Matrix4f;
+
 public class Mesh implements Renderable {
 
       // Declares buffers for data
@@ -25,6 +28,12 @@ public class Mesh implements Renderable {
       //Initializes number of ints in int[] indices
   int indicesNumber;
 
+  int location;
+
+  Vector3f position = new Vector3f(0, 0, 0);
+  Vector3f rotation = new Vector3f(0, 0, 0);
+  Vector3f scale    = new Vector3f(1, 1, 1);
+
     public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo) {
           // Initializes buffers
       VBO = vbo;
@@ -32,7 +41,7 @@ public class Mesh implements Renderable {
       EBO = ebo;
     }
 
-   public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, Texture textureUnit, ShaderProgram shaderProgramUnit) {
+    public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, Texture textureUnit, ShaderProgram shaderProgramUnit) {
           // Initializes buffers
       VBO = vbo;
       VAO = vao;
@@ -88,6 +97,8 @@ public class Mesh implements Renderable {
           // Unbinds VAO (no use now)
       VAO.unbind();
 
+      shaderProgram.use();
+      location = glGetUniformLocation(shaderProgram.getID(), "uModelMatrix");
       System.out.println("ReCore: New mesh initialized");
     }
 
@@ -126,8 +137,7 @@ public class Mesh implements Renderable {
 
     /**
      * Draws object with ShaderProgram and its texture (if used, if not)
-     * @param shaderProgram ShaderProgram with linked shaders
-     * @param texture Texture for object, can be used on multiple objects
+     * 
      */
   @Override
     public void draw() {
@@ -137,9 +147,25 @@ public class Mesh implements Renderable {
       }
           // Binds VAO
       VAO.bind();
-          // Uses ShaderProgram with attached shaders
-      shaderProgram.use();
+
+      float[] data = new float[16];
+      buildModelMatrix().get(data);
+      glUniformMatrix4fv(location, false, data);
           // Draws object from triangles and indicesNumber (pointer)
       glDrawElements(GL_TRIANGLES, indicesNumber, GL_UNSIGNED_INT, 0L); 
     }
+
+  public Matrix4f buildModelMatrix() {
+    return new Matrix4f().translate(position).rotateZ(rotation.z).scale(scale);
+  }
+
+  public void setPosition(float x, float y) {
+      position.x = x;
+      position.y = y;
+      position.z = 0.0f;
+  }
+
+  public void logLocation() {
+    System.out.println(location);
+  }
 }
