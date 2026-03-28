@@ -2,7 +2,7 @@ package org.gfs.recore.graphics.window;
 
 //Project imports
 import org.gfs.recore.core.ComponentLogic;
-import org.gfs.recore.core.osProcessor;
+import org.gfs.recore.util.OS;
 //GLFW imports
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -34,7 +34,7 @@ public class Window implements ComponentLogic {
       params = Params.getParams();
       
     //GLFW hint to use X11  
-      if(osProcessor.isLinux()) {
+      if(OS.isLinux()) {
         glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
       }
 
