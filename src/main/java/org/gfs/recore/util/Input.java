@@ -4,12 +4,15 @@ import java.util.HashMap;
 
 import org.gfs.recore.graphics.window.*;
 
+import org.lwjgl.glfw.GLFWScrollCallbackI;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class KeyboardInput {
 
   HashMap<String, Integer> keyMap = new HashMap<>();
   Params params = Params.getParams();
+
+  int scrollActionX, scrollActionY;
 
     public void keyMapCreate() {
         
@@ -147,9 +150,47 @@ public class KeyboardInput {
         return keyMap.size();
     }
     
-     public boolean keyCallback(int key) {
+     public boolean keyPressed(int key) {
        if(glfwGetKey(params.getWindow(), key) == GLFW_PRESS) { return true; } 
        else { return false; }
     }
 
+    public void scrollCallback() {
+      GLFWScrollCallbackI scrollCall = (window, xOffset, yOffset) -> {
+
+        if(xOffset > 0) {
+          scrollActionX = 1;
+        }
+
+        if(xOffset < 0) {
+          scrollActionX = -1;
+        }
+
+        if(yOffset > 0) {
+          scrollActionY = 1;
+        }
+
+        if(yOffset < 0) {
+          scrollActionY = -1;
+        }
+          };
+
+        glfwSetScrollCallback(params.getWindow(), scrollCall);
+    }
+
+    public void resetScrollActionX() {
+      scrollActionX = 0;
+    }
+
+    public void resetScrollActionY() {
+      scrollActionY = 0;
+    }
+
+    public int getScrollActionX() {
+      return scrollActionX;    
+    }
+
+    public int getScrollActionY() {
+      return scrollActionY;
+    }
 }
