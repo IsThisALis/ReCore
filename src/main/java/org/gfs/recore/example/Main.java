@@ -23,25 +23,7 @@ public class Main implements ApplicationLogic {
   Params params = Params.getParams();
   Window window = Params.getWindowInst();
 
-  KeyboardInput KeyboardInput = new KeyboardInput();
-
-      // Initializing data 
-    float x = 0.5f;
-    float y = -x;
-        float[] verticesBottomRight = {
-    // x     y     z    u     v
-    x, y, 0.0f, 0.0f, 1.0f,
-    x+0.5f, y, 0.0f, 1.0f, 1.0f,
-    x+0.5f, y-0.5f, 0.0f, 1.0f, 0.0f,
-    x, y-0.5f, 0.0f, 0.0f, 0.0f
-        };
-
-        int[] indices = {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        float speed;
+  InputManager inputManager = new InputManager();
 
   private static Main main = new Main();
 
@@ -54,7 +36,7 @@ public class Main implements ApplicationLogic {
        // Initializing components
     window.init(); 
     render.init();
-    KeyboardInput.keyMapCreate();
+    inputManager.init();
 	}
 
 	@Override
@@ -66,7 +48,11 @@ public class Main implements ApplicationLogic {
 	@Override
 	public void loop() {
         while (!window.isWindowShouldClose()) {
-        // Window and rendering loops
+
+            // Time util work
+        inputManager.time.tick();
+
+            // Window and rendering loops
 		    window.loop();
         main.input();
         main.update();
@@ -76,35 +62,12 @@ public class Main implements ApplicationLogic {
 
 	@Override
 	public void input() {
-
-    if(KeyboardInput.keyCallback(KeyboardInput.getKey("A"))) {
-      x-=0.01f;
-    }
-
-    if(KeyboardInput.keyCallback(KeyboardInput.getKey("D"))) {
-      x+=0.01f;
-    }
-
-    if(KeyboardInput.keyCallback(KeyboardInput.getKey("W"))) {
-      y+=0.01f;
-    }
-
-    if(KeyboardInput.keyCallback(KeyboardInput.getKey("S"))) {
-      y-=0.01f;
-    }
-    
-    verticesBottomRight = new float[] {
-    // x     y     z    u     v
-    x, y, 0.0f, 0.0f, 1.0f,
-    x+0.5f, y, 0.0f, 1.0f, 1.0f,
-    x+0.5f, y-0.5f, 0.0f, 1.0f, 0.0f,
-    x, y-0.5f, 0.0f, 0.0f, 0.0f
-    };
+    inputManager.input();
 	}
 
 	@Override
 	public void update() {
-    render.updateData(verticesBottomRight, indices, render.mesh3);
+
 	}
 
 

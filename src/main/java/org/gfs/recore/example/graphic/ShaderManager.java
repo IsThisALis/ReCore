@@ -6,8 +6,8 @@ import org.gfs.recore.util.*;
 
 public class ShaderManager {
 
-  Shader vt1 = new Shader();
-  Shader ft1 = new Shader();
+  Shader vct1 = new Shader();
+  Shader fct1 = new Shader();
 
   public ShaderProgram program;
 
@@ -17,16 +17,16 @@ public class ShaderManager {
     
     program = new ShaderProgram();
 
-    vt1.createShader("vertex", IO.loadTextFile("samples/shaders/vt1.vert"));
+    vct1.createShader("vertex", IO.loadTextFile("samples/shaders/vct1.vert"));
     
-    program.attachShader(vt1);
-    program.putShader("vt1", vt1);
+    program.attachShader(vct1);
+    program.putShader("vct1", vct1);
 
-    ft1.createShader("fragment", IO.loadTextFile("samples/shaders/ft1.frag"));
+    fct1.createShader("fragment", IO.loadTextFile("samples/shaders/fct1.frag"));
     
-    program.attachShader(ft1);
+    program.attachShader(fct1);
 
-    program.putShader("ft1", ft1);
+    program.putShader("fct1", fct1);
 
     program.link();
     

@@ -10,16 +10,19 @@ public class TextureManager {
 
   private IO io = new IO();
 
-  public Texture texture;
-  public Texture texture1;
-  public Texture texture2;
-  public Texture texture3;
+   Texture texture;
+   Texture texture1;
+   Texture texture2;
+   Texture texture3;
+   Texture texture4;
+  
 
   public void init(ShaderProgram program) {
     texture = new Texture();
     texture1 = new Texture();
     texture2 = new Texture();
-    texture3 = new Texture();  
+    texture3 = new Texture();
+    texture4 = new Texture();
 
     program.use();
     texture.bind();
@@ -47,5 +50,11 @@ public class TextureManager {
         // Creating texture
     io.loadTexture("samples/textures/disassembler.png", texture3);
     texture3.createTexture(program);
+
+    texture4.bind();
+    texture4.getParams().setUniform("ourTexture", 0);
+
+    io.loadTexture("samples/textures/grass_floor.png", texture4);
+    texture4.createTexture(program);
   }
 }
