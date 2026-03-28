@@ -5,7 +5,7 @@ package org.gfs.recore.util;
 
 public class Time {
 
-  Long lastTime;
+  Long lastTime = 0L;
   float delta;
   
   public void tick() {
