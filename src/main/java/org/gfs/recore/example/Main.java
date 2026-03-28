@@ -8,9 +8,6 @@ import org.gfs.recore.example.graphic.TextureManager;
     // Core
 import org.gfs.recore.core.ApplicationLogic;
 
-    // Util
-import org.gfs.recore.util.KeyboardInput;
-
     // Window
 import org.gfs.recore.graphics.window.Params;
 import org.gfs.recore.graphics.window.Window;

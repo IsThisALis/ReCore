@@ -4,14 +4,14 @@ import org.gfs.recore.example.graphic.Render;
 
 import org.gfs.recore.graphics.camera.Camera;
 
-import org.gfs.recore.util.KeyboardInput;
+import org.gfs.recore.util.Input;
 import org.gfs.recore.util.Time;
 
 public class InputManager {
 
   Camera camera;
 
-  KeyboardInput keyboardInput = new KeyboardInput();
+  Input keyboardInput = new Input();
 
   public Time time = new Time();
 

@@ -7,7 +7,7 @@ import org.gfs.recore.graphics.window.*;
 import org.lwjgl.glfw.GLFWScrollCallbackI;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class KeyboardInput {
+public class Input {
 
   HashMap<String, Integer> keyMap = new HashMap<>();
   Params params = Params.getParams();
