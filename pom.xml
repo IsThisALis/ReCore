@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.gfs</groupId>
   <artifactId>recore</artifactId>
-  <version>0.0.3-alpha</version>
+  <version>0.0.4-alpha</version>
 
   <name>ReCore</name>
-  <url></url>
+  <url>t.me/GlowingFoxStudios</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
