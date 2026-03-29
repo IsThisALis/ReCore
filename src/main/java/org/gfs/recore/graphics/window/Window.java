@@ -55,6 +55,9 @@ public class Window implements ComponentLogic {
         
       //Creating window
         params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
+      if(params.getWindow() == 0L) {
+        params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
+      }
 
       //Making OpenGL context current   
         glfwMakeContextCurrent(params.getWindow());
