@@ -2,7 +2,7 @@
 
 A lightweight Java game engine built on LWJGL 3
 
-![Version](https://img.shields.io/badge/version-0.0.3--alpha-blue)
+![Version](https://img.shields.io/badge/version-0.0.4--alpha-blue)
 ![Java](https://img.shields.io/badge/java-21-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -10,14 +10,15 @@ A lightweight Java game engine built on LWJGL 3
 
 ## Warning
 
-> **Platform:** Windows support is not guaranteed in alpha (see [Issues](https://github.com/IsThisALis/ReCore/issues/1)).
+> **Platform:** Windows, Mac is not supported in alpha (see [Issues](https://github.com/IsThisALis/ReCore/issues/1)).
 
 ---
 
 ## Features
 
-- **Component logic** — `init()`, `update()`, `cleanup()` via `ComponentLogic`
-- **Lightweight** — Minimal dependencies
+- **Component logic** -- `init()`, `update()`, `cleanup()` via `ComponentLogic`
+- **Lightweight** -- Minimal dependencies
+- **Simple API** -- simple methods with no need to learn OpenGL
 
 ---
 
@@ -27,8 +28,8 @@ A lightweight Java game engine built on LWJGL 3
 | :--- | :--- |
 | **JDK** | 21 |
 | **Build tool** | Maven 3.6+ |
-| **GPU** | OpenGL 3.2+ compatible |
-| **OS** | Linux, Windows |
+| **GPU** | OpenGL 3.3+ compatible |
+| **OS** | Linux |
 
 ---
 
@@ -39,7 +40,7 @@ A lightweight Java game engine built on LWJGL 3
 <dependency>
     <groupId>org.gfs.recore</groupId>
     <artifactId>recore</artifactId>
-    <version>0.0.2-alpha</version>
+    <version>0.0.4-alpha</version>
 </dependency>
 ```
 ## Buid & Run
@@ -50,13 +51,13 @@ git clone https://github.com/IsThisALis/ReCore.git
 cd ReCore
 
 ### Build
-mvn package -P(windows/linux/OSX)
+mvn package -Plinux
 
 ### Install to local Maven repository
 mvn install
 
 ### Run example
-java -jar target/recore-0.0.3-alpha.jar
+java -jar target/recore-0.0.4-alpha.jar
 
 ## Examples
 
@@ -85,7 +86,7 @@ A: No fixed roadmap. Development depends on tasks and contributors.
 A: Because this is only alpha there is no template for issues, just provide enough (or not, just be ready to answer questions) info.
 
 **Q: I saw "custom" in method comment, what it means?**    
-A: This method is used to create custom logic, will be moved to fork.
+A: This method is used to create custom logic, will be moved to fork for advanced users.
 
 ---
 
