@@ -1,15 +1,16 @@
 package org.gfs.recore.graphics.window;
 
-//Project imports
+  // ReCore imports
 import org.gfs.recore.core.ComponentLogic;
 import org.gfs.recore.util.OS;
-//GLFW imports
+
+  // GLFW imports
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFW;
 import static org.lwjgl.glfw.GLFW.*; 
 
-//OpenGL imports
+  // OpenGL imports
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL15.*;
 
@@ -33,9 +34,15 @@ public class Window implements ComponentLogic {
 
       params = Params.getParams();
       
-    //GLFW hint to use X11  
+    //GLFW hint to use X11 on linux
       if(OS.isLinux()) {
         glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
+      }
+
+    // MacOS hints
+      if(OS.isMac()) {
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE); 
       }
 
       //Initializing GLFW
@@ -43,26 +50,27 @@ public class Window implements ComponentLogic {
         throw new IllegalStateException("GLFW is not initialized");
       }
 
-      //Setting up GLFW
+      // Setting up GLFW
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_DEPTH_BITS, 24);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE); 
+
+        glDisable(GL_DEPTH_TEST);
+
         
-      //Creating window
+      // Creating window
         params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
       if(params.getWindow() == 0L) {
         params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
       }
 
-      //Making OpenGL context current   
+      // Making OpenGL context current   
         glfwMakeContextCurrent(params.getWindow());
         GL.createCapabilities();
-        glDisable(GL_DEPTH_TEST);
+
         glfwSwapInterval(1);
 
         glfwShowWindow(params.getWindow());
@@ -70,7 +78,7 @@ public class Window implements ComponentLogic {
 
 
   @Override
-  //Cleans glfw and window through getter
+  // Cleans glfw and window through getter
     public void cleanup() {
       Callbacks.glfwFreeCallbacks(params.getWindow());
 
@@ -95,10 +103,14 @@ public class Window implements ComponentLogic {
     */ 
     public void update() {
       glfwSwapBuffers(params.getWindow());
-    //glViewport(0, 0, params.getWidth(), params.getHeight());
-      
     }
 
+    // Resizes window using width and height in parameters
+    public void resize() {
+      glViewport(0, 0, params.getWidth(), params.getHeight());
+    }
+
+    // Window cycle
     public void loop() {
             update();
             glfwPollEvents();
