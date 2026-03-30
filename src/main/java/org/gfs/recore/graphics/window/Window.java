@@ -58,8 +58,6 @@ public class Window implements ComponentLogic {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-        glDisable(GL_DEPTH_TEST);
-
         
       // Creating window
         params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
@@ -72,6 +70,7 @@ public class Window implements ComponentLogic {
         GL.createCapabilities();
 
         glfwSwapInterval(1);
+        glDisable(GL_DEPTH_TEST);
 
         glfwShowWindow(params.getWindow());
     }
