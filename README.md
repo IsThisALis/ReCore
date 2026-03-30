@@ -10,7 +10,7 @@ A lightweight Java game engine built on LWJGL 3
 
 ## Warning
 
-> **Platform:** Windows, Mac is not supported in alpha (see [Issues](https://github.com/IsThisALis/ReCore/issues/1)).
+> **Platform:** Windows, Mac is not supported in alpha (see [Issues](https://github.com/IsThisALis/ReCore/issues)).
 
 ---
 
