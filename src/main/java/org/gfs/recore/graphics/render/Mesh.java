@@ -165,6 +165,16 @@ public class Mesh implements Renderable {
       position.z = 0.0f;
   }
 
+  public void setScale(float x, float y, float z) {
+    scale.x = x;
+    scale.y = y;
+    scale.z = z;
+  }
+
+  public void setRotation(float value) {
+    rotation.z = value;
+  }
+
   public void logLocation() {
     System.out.println(location);
   }
