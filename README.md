@@ -61,7 +61,7 @@ java -jar target/recore-0.0.4-alpha.jar
 
 ## Examples
 
-See `org.gfs.recore.example` package for usage.
+See `recore.example` package for usage.
 
 ---
 
