@@ -26,7 +26,7 @@ public class Banana {
   };
 
   public void create() {
-    mesh = Resources.getScene().getObj(3);
+    mesh = Resources.getScene().getObj(0);
     mesh.init(vertices, indices, 6, true);
     mesh.setScale(0.65f, 0.65f, 0.65f);
     mesh.setPosition(4.5f, -3.75f);

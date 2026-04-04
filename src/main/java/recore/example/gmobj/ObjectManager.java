@@ -9,7 +9,7 @@ public class ObjectManager {
 
   Floor floor = new Floor();
   Banana banana = new Banana();
-  Disassembler disassembler = new Disassembler();
+  GrassBlock grassBlock = new GrassBlock();
   Player player = new Player();
 
   Window window = Params.getWindowInst();
@@ -18,7 +18,7 @@ public class ObjectManager {
   public void init() {
     floor.create();
     banana.create();
-    disassembler.create();
+    grassBlock.create();
     player.init();
 
     program = Resources.getShaderProgramMap().getObj(0);
@@ -30,7 +30,7 @@ public class ObjectManager {
  
     floor.draw();
     banana.draw();
-    disassembler.draw();
+    grassBlock.draw();
     player.draw();
   }
 }

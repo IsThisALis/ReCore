@@ -18,10 +18,8 @@ public class TextureManager {
     textureMap.create();
 
     textureMap.addObj(0, textureFactory.newTexture("samples/textures/banana.png", program));
-    textureMap.addObj(1, textureFactory.newTexture("samples/textures/disassembler-bottom.png", program));
-    textureMap.addObj(2, textureFactory.newTexture("samples/textures/disassembler-spinner.png", program));
-    textureMap.addObj(3, textureFactory.newTexture("samples/textures/disassembler.png", program));
-    textureMap.addObj(4, textureFactory.newTexture("samples/textures/grass_floor.png", program));
-    textureMap.addObj(5, textureFactory.newTexture("samples/textures/player.png", program));
+    textureMap.addObj(1, textureFactory.newTexture("samples/textures/grass_block.png", program));
+    textureMap.addObj(2, textureFactory.newTexture("samples/textures/grass_floor.png", program));
+    textureMap.addObj(3, textureFactory.newTexture("samples/textures/player.png", program));
     }
 }
