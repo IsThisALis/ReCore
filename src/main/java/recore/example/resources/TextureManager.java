@@ -14,6 +14,7 @@ public class TextureManager {
    Texture texture2;
    Texture texture3;
    Texture texture4;
+   Texture texture5;
   
    IO io = new IO();
    TextureMap textureMap = Resources.getTextureMap();
@@ -31,6 +32,7 @@ public class TextureManager {
     texture2 = new Texture();
     texture3 = new Texture();
     texture4 = new Texture();
+    texture5 = new Texture();
 
     program.use();
     texture.bind();
@@ -73,6 +75,13 @@ public class TextureManager {
 
     io.loadTexture("samples/textures/grass_floor.png", texture4);
     texture4.createTexture(program);
+
+    texture5.bind();
+    texture5.getParams().setUniform("ourTexture", 0);
+    textureMap.addObj(5, texture5);
+
+    io.loadTexture("samples/textures/player.png", texture5);
+    texture5.createTexture(program);
 
     }
 }
