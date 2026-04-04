@@ -27,10 +27,10 @@ public class ObjectManager {
   public void draw() {
     window.cleanWindow();
     program.use();
-
-    player.draw();
+ 
     floor.draw();
     banana.draw();
     disassembler.draw();
+    player.draw();
   }
 }
