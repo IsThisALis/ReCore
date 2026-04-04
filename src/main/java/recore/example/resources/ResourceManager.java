@@ -25,6 +25,7 @@ public class ResourceManager {
   Mesh mesh2;
   Mesh mesh3;
   Mesh mesh4;
+  Mesh mesh5;
 
   ShaderProgramMap shaderProgramMap = Resources.getShaderProgramMap();
   TextureMap textureMap = Resources.getTextureMap();
@@ -49,14 +50,16 @@ public class ResourceManager {
    mesh2 = new Mesh(vao, vbo, ebo, textureMap.getObj(3), shaderProgramMap.getObj(0));
    mesh3 = new Mesh(vao1, vbo1, ebo1, textureMap.getObj(0), shaderProgramMap.getObj(0));
    mesh4 = new Mesh(vao2, vbo2, ebo2, textureMap.getObj(4), shaderProgramMap.getObj(0));
+   mesh5 = new Mesh(vao1, vbo1, ebo1, textureMap.getObj(5), shaderProgramMap.getObj(0));
 
-   scene.setObjCount(4);
+   scene.setObjCount(5);
    scene.create();
    scene.addObj(0, mesh);
    scene.addObj(1, mesh1);
    scene.addObj(2, mesh2);
    scene.addObj(3, mesh3);
    scene.addObj(4, mesh4);
+   scene.addObj(5, mesh5);
 
  } 
 }
