@@ -14,8 +14,7 @@ public class Camera {
   Vector3f position;
   Vector2f screenSize;
 
-  float screenWidth;
-  float screenHeight;
+  float screenWidth, screenHeight;
   float zoom = 1.0f;
   float zoomEditValue = 0.0f;
 
@@ -47,28 +46,27 @@ public class Camera {
 
   }
 
+  public Vector3f getPosition() {
+    return position;
+  }
+
   public Matrix4f getViewMatrix() {
     return new Matrix4f().translate(-position.x, -position.y, -position.z);
   }
 
   public Matrix4f getProjectionMatrix() {
-
-    /*float left = position.x - (screenWidth / 2) / zoom;
-    float right = position.x + (screenWidth / 2) / zoom;
-    float bottom = position.y - (screenHeight / 2) / zoom;
-    float top = position.y + (screenHeight / 2) / zoom;*/
-
-    //return new Matrix4f().ortho2D(left, right, bottom, top);
-    return new Matrix4f().setOrtho2D(-10 * zoom, 10 * zoom, -10 * zoom, 10 * zoom);
-  }
+    float w = screenWidth / 2f / zoom;
+    float h = screenHeight / 2f / zoom;
+    return new Matrix4f().ortho2D(-w, w, -h, h);
+}
 
   public Matrix4f getVPMatrix() {
     return getProjectionMatrix().mul(getViewMatrix());
   }
 
   public void update() {
+    attachedProgram.use();
     Matrix4f vp = getVPMatrix();
-
     float data[] = new float[16];
     vp.get(data);
     glUniformMatrix4fv(location, false, data);
@@ -76,12 +74,12 @@ public class Camera {
 
   public void addZoom(float value) {
     zoomEditValue = value;
-    zoom = zoom + zoomEditValue;
+    zoom *= zoomEditValue;
   }
 
   public void subZoom(float value) {
     zoomEditValue = -value;
-    zoom = zoom + zoomEditValue;
+    zoom /= zoomEditValue;
   }
 
   public float getZoom() {
