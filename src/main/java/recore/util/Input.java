@@ -155,6 +155,16 @@ public class Input {
        else { return false; }
     }
 
+    public boolean keyReleased(int key) {
+       if(glfwGetKey(params.getWindow(), key) == GLFW_RELEASE) { return true; } 
+       else { return false; }
+    }
+
+    public boolean keyRepeated(int key) {
+       if(glfwGetKey(params.getWindow(), key) == GLFW_REPEAT) { return true; } 
+       else { return false; }
+    }
+
     public void scrollCallback() {
       GLFWScrollCallbackI scrollCall = (window, xOffset, yOffset) -> {
 
