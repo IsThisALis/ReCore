@@ -159,10 +159,18 @@ public class Mesh implements Renderable {
     return new Matrix4f().translate(position).rotateZ(rotation.z).scale(scale);
   }
 
+  public Vector3f getPosition() {
+    return position;
+  }
+
+  public void move(float x, float y, float speed, float deltaTime) {
+      position.x += x*speed*deltaTime;
+      position.y += y*speed*deltaTime; 
+  }
+
   public void setPosition(float x, float y) {
-      position.x = x;
-      position.y = y;
-      position.z = 0.0f;
+    position.x = x;
+    position.y = y;
   }
 
   public void setScale(float x, float y, float z) {
