@@ -15,7 +15,8 @@ public class Player {
   Time time = new Time();
   Input input = new Input();
 
-  float speed = 1.5f;
+  float speed = 2.5f;
+  boolean jumping;
 
     float[] vertices = {
     // x     y     z    u     v
@@ -34,9 +35,10 @@ public class Player {
     input.keyMapCreate();
     input.scrollCallback();
 
-    mesh = Resources.getScene().getObj(5);
+    mesh = Resources.getScene().getObj(3);
     mesh.init(vertices, indices, 6, true);
     mesh.setPosition(0.0f, 0.0f);
+    mesh.setScale(0.75f, 0.75f, 0.75f);
 
     camera = new Camera(0.0f, 0.0f, 0.0f, Resources.getShaderProgramMap().getObj(0));
     camera.addZoom(3.0f);
@@ -70,6 +72,22 @@ public class Player {
       x=0.25f;
     }
 
+    if(input.keyPressed(input.getKey("E"))) {
+      mesh.setScale(1.25f, 1.25f, 1.25f);
+    }
+
+    /*if(input.keyReleased(input.getKey("E"))) {
+      mesh.setScale(0.75f, 0.75f, 0.75f);
+    }*/
+
+    if(input.keyPressed(input.getKey("C"))) {
+      mesh.setScale(0.25f, 0.25f, 0.25f);
+    } 
+
+    if(input.keyReleased(input.getKey("C")) && input.keyReleased(input.getKey("E"))) {
+      mesh.setScale(0.75f, 0.75f, 0.75f);
+    }
+
     if(input.getScrollActionY() == 1) {
       camera.addZoom(1.1f);
     }
@@ -86,5 +104,4 @@ public class Player {
 
     input.resetScrollActionY();
   }
-  
 }
