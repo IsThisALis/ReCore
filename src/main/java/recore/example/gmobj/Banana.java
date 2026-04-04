@@ -1,7 +1,9 @@
 package recore.example.gmobj;
 
 import recore.example.resources.Resources;
+
 import recore.graphics.render.Mesh;
+
 import recore.graphics.window.Params;
 import recore.graphics.window.Window;
 
@@ -26,7 +28,7 @@ public class Banana {
   public void create() {
     mesh = Resources.getScene().getObj(3);
     mesh.init(vertices, indices, 6, true);
-    mesh.setPosition(4.5f, -3.75f);;
+    mesh.setPosition(4.5f, -3.75f);
   }
 
   public void draw() {
