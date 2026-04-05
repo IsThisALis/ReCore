@@ -46,6 +46,11 @@ public class Camera {
 
   }
 
+  public void setPosition(float x, float y) {
+    position.y = y;
+    position.x = x;
+  }
+
   public Vector3f getPosition() {
     return position;
   }
