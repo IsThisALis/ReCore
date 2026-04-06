@@ -16,8 +16,12 @@ public class Player {
   Input input = new Input();
 
   float speed = 5f;
-  boolean jumping;
   float velocity = 5f;
+
+  boolean jumping;
+  boolean healable;
+  
+  int hp = 100;
 
     float[] vertices = {
     // x     y     z    u   v
@@ -48,7 +52,7 @@ public class Player {
   public void draw() {
     time.tick();
     input();
-
+    interact();
     camera.update();
     mesh.draw(); 
   }
@@ -101,7 +105,15 @@ public class Player {
       if(camera.getZoom() >= 1.1f) {
         camera.subZoom(-1.1f);
       }
-    }
+    } 
+
+    camera.move(x, 0f, speed, time.getDelta()); 
+    mesh.setPosition(camera.getPosition().x, camera.getPosition().y);
+
+    input.resetScrollActionY();
+  }
+
+  public void interact() {
 
     if(jumping==true) {  
 
@@ -116,9 +128,12 @@ public class Player {
       camera.setPosition(camera.getPosition().x, newY);
     }
 
-    camera.move(x, 0f, speed, time.getDelta()); 
-    mesh.setPosition(camera.getPosition().x, camera.getPosition().y);
+    if(hp<100) {
+      healable = true;
+    }
 
-    input.resetScrollActionY();
+    if(hp==100) {
+      healable = false;
+    }
   }
 }

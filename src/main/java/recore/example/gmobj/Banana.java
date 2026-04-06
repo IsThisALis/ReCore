@@ -37,4 +37,8 @@ public class Banana {
     mesh.draw();
     window.blend(false);
   }
+
+  public void setPosition(float x, float y) {
+    mesh.setPosition(x, y);
+  }
 }
