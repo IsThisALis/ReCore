@@ -67,13 +67,17 @@ public class Player {
     if(input.keyPressed(input.getKey("E"))) {
       mesh.setScale(1.25f, 1.25f, 1.25f);
       speed = 2.5f;
-      //velocity = 2.5f;
+      if(!jumping) {
+        velocity = 2.5f;
+      }
     }
 
     if(input.keyPressed(input.getKey("C"))) {
       mesh.setScale(0.25f, 0.25f, 0.25f);
       speed = 7.25f;
-      //velocity = 7.5f;
+      if(!jumping) {
+        velocity = 7.5f;
+      }
     } 
 
     if(input.keyReleased(input.getKey("C")) && input.keyReleased(input.getKey("E"))) {
