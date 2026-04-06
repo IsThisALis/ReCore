@@ -34,11 +34,13 @@ public class Mesh implements Renderable {
   Vector3f rotation = new Vector3f(0, 0, 0);
   Vector3f scale    = new Vector3f(1, 1, 1);
 
-    public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo) {
+    public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, ShaderProgram shaderProgramUnit) {
           // Initializes buffers
       VBO = vbo;
       VAO = vao;
       EBO = ebo;
+
+      shaderProgram = shaderProgramUnit;
     }
 
     public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, Texture textureUnit, ShaderProgram shaderProgramUnit) {
