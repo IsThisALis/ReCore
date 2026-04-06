@@ -10,9 +10,10 @@ public class Resources {
   private static ShaderManager shaderManager = new ShaderManager();
   private static TextureMap textureMap = new TextureMap();
   private static TextureFactory textureFactory = new TextureFactory();
+  private static MeshFactory meshFactory = new MeshFactory();
   private static TextureManager textureManager = new TextureManager();
   private static Scene scene = new Scene();
-  private static ResourceManager resourceManager = new ResourceManager();
+  private static ResourceManager resourceManager = new ResourceManager(); 
 
   public static ShaderManager getShaderManager() {
     return shaderManager;
@@ -40,5 +41,9 @@ public class Resources {
 
   public static TextureFactory getTextureFactory() {
     return textureFactory;
+  }
+
+  public static MeshFactory getMeshFactory() {
+    return meshFactory;
   }
 }
