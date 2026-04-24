@@ -2,6 +2,7 @@ package recore.graphics.window;
 
   // ReCore imports
 import recore.core.ComponentLogic;
+import recore.util.IO;
 import recore.util.OS;
 
   // GLFW imports
@@ -120,6 +121,11 @@ public class Window implements ComponentLogic {
         return false;
       }
       return true;
+    }
+
+    public void setIcon(String path) {
+      IO io = new IO();
+      glfwSetWindowIcon(params.getWindow(), io.loadIcon(path));
     }
 
     

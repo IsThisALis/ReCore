@@ -1,27 +1,24 @@
 package recore.util;
 
 import recore.graphics.textures.*;
-//IO imports
+
+// Java imports
+// IO imports
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-//NIO imports
+// NIO imports
 import java.nio.charset.StandardCharsets;
-/*import java.nio.file.Files;
-import java.nio.file.Paths;
 
-//Util imports
-import java.util.Stack;
-import java.util.stream.Stream;
-*/
-
-//LWJGL imports
+// LWJGL imports
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.stb.STBImage;
-//import org.lwjgl.stb.STBImage.*;
+import org.lwjgl.glfw.GLFWImage;
+import static org.lwjgl.system.MemoryUtil.*;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class IO {
     ByteBuffer imageBuffer;
@@ -96,6 +93,44 @@ public class IO {
         texture.getParams().setHeight(height);
         texture.getParams().setWidth(width);
         texture.getParams().setImage(image);
-
     }
+  
+  public GLFWImage.Buffer loadIcon(String path) {
+    ByteBuffer imageBuffer = null;
+      try {
+
+        //Reads image from file
+        InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
+        if(stream == null) {
+          throw new IOException("IO Error! Check file path please: "+path);
+        }
+        byte[] fileBytes = stream.readAllBytes();
+
+        //Puts image in ByteBuffer
+        imageBuffer = BufferUtils.createByteBuffer(fileBytes.length);
+        imageBuffer.put(fileBytes);
+        imageBuffer.position(0);
+        
+        //Catches IOException like file not found
+      } catch(IOException e) {
+          System.out.println("Encountered IO exception: "+e);
+        }
+      
+        //Puts image data into IntBuffers
+        IntBuffer w = stack.mallocInt(1);
+        IntBuffer h = stack.mallocInt(1);
+        IntBuffer comp = stack.mallocInt(1);
+
+    ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
+    if (pixels == null) {
+        throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
+    }
+        try(GLFWImage.Buffer icons = GLFWImage.malloc(1)) { 
+          GLFWImage icon = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
+          icons.put(0, icon);
+          icon.free();
+          return icons;
+        }        
+    }
+
 }

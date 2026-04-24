@@ -4,6 +4,7 @@ import recore.example.resources.Resources;
 
 import recore.graphics.camera.Camera;
 import recore.graphics.render.Mesh;
+
 import recore.util.Input;
 import recore.util.Time;
 
@@ -12,6 +13,7 @@ public class Player {
   Camera camera;
   Mesh mesh;
 
+  Projectile projectile = new Projectile();
   Time time = new Time();
   Input input = new Input();
 
@@ -45,6 +47,8 @@ public class Player {
     mesh.setPosition(0.0f, 0.0f);
     mesh.setScale(0.75f, 0.75f, 0.75f);
 
+    projectile.init();
+
     camera = new Camera(0.0f, 0.0f, 0.0f, Resources.getShaderProgramMap().getObj(0));
     camera.addZoom(3.0f);
   }
@@ -54,7 +58,8 @@ public class Player {
     input();
     interact();
     camera.update();
-    mesh.draw(); 
+    mesh.draw();
+    projectile.draw();
   }
 
   public void input() {
@@ -66,6 +71,11 @@ public class Player {
 
     if(input.keyPressed(input.getKey("D"))) {
       x=0.25f;
+    }
+
+    if(input.keyPressed(input.getKey("L"))) {
+     projectile.setPosition(mesh.getPosition().x, mesh.getPosition().y);
+     projectile.run(true);
     }
 
     if(input.keyPressed(input.getKey("E"))) {
@@ -84,17 +94,8 @@ public class Player {
       }
     } 
 
-    if(input.keyReleased(input.getKey("C")) && input.keyReleased(input.getKey("E"))) {
-      mesh.setScale(0.75f, 0.75f, 0.75f);
-      speed = 5f;
-    }
-
     if(input.keyPressed(input.getKey("SPACE"))) {
       jumping = true;
-    }
-
-    if(input.keyReleased(input.getKey("SPACE")) && jumping == false) {
-      velocity = 5f;
     }
 
     if(input.getScrollActionY() == 1) {
@@ -105,7 +106,16 @@ public class Player {
       if(camera.getZoom() >= 1.1f) {
         camera.subZoom(-1.1f);
       }
-    } 
+    }
+
+    if(input.keyReleased(input.getKey("SPACE")) && jumping == false) {
+      velocity = 5f;
+    }
+
+    if(input.keyReleased(input.getKey("C")) && input.keyReleased(input.getKey("E"))) {
+      mesh.setScale(0.75f, 0.75f, 0.75f);
+      speed = 5f;
+    }
 
     camera.move(x, 0f, speed, time.getDelta()); 
     mesh.setPosition(camera.getPosition().x, camera.getPosition().y);

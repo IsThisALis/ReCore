@@ -1,12 +1,14 @@
 package recore.example;
 
     // Game components imports
+    // Resources
 import recore.example.resources.TextureManager;
 import recore.example.resources.Resources;
 import recore.example.resources.ShaderManager;
-import recore.example.gmobj.ObjectManager;
 import recore.example.resources.ResourceManager;
-// ReCore imports
+    // Game objects
+import recore.example.gmobj.ObjectManager;
+    // ReCore imports
     // Core
 import recore.core.ApplicationLogic;
 
@@ -33,6 +35,7 @@ public class Main implements ApplicationLogic {
     params.setWidth(1920);
        // Initializing components
     window.init();
+    window.setIcon("samples/textures/icon_smol.png");
     shaderManager.init();
     textureManager.init();
     resourceManager.init();

@@ -17,12 +17,13 @@ public class ResourceManager {
 
  public void init() {
 
-   scene.setObjCount(3);
+   scene.setObjCount(4);
    scene.create();
 
    scene.addObj(0, meshFactory.newMesh(shaderProgramMap.getObj(0), textureMap.getObj(0)));
    scene.addObj(1, meshFactory.newMesh(shaderProgramMap.getObj(0), textureMap.getObj(1)));
    scene.addObj(2, meshFactory.newMesh(shaderProgramMap.getObj(0), textureMap.getObj(2)));
    scene.addObj(3, meshFactory.newMesh(shaderProgramMap.getObj(0), textureMap.getObj(3)));
+   scene.addObj(4, meshFactory.newMesh(shaderProgramMap.getObj(0), textureMap.getObj(3)));
  } 
 }

@@ -20,6 +20,6 @@ public class TextureManager {
     textureMap.addObj(0, textureFactory.newTexture("samples/textures/banana.png", program));
     textureMap.addObj(1, textureFactory.newTexture("samples/textures/grass_block.png", program));
     textureMap.addObj(2, textureFactory.newTexture("samples/textures/grass_floor.png", program));
-    textureMap.addObj(3, textureFactory.newTexture("samples/textures/player.png", program));
+    textureMap.addObj(3, textureFactory.newTexture("samples/textures/player_red.png", program));
     }
 }

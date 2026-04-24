@@ -22,13 +22,15 @@ public class Mesh implements Renderable {
   ElementBufferObject EBO;
 
   Texture texture;
-
   ShaderProgram shaderProgram;
   
-      //Initializes number of ints in int[] indices
+      // Indices
   int indicesNumber;
+  int[] indices;
 
   int location;
+
+  float[] vertices;
 
   Vector3f position = new Vector3f(0, 0, 0);
   Vector3f rotation = new Vector3f(0, 0, 0);
@@ -57,13 +59,15 @@ public class Mesh implements Renderable {
      * Creates new renderable object 
      * @param vertices coordinates and color/UV of object
      * @param indices indices of object
-     * @param indicesNum used to correctly draw objects with custom indices
+     * @param indicesNumber used to set indices
      * @param useTexture use texture or not, if true requires to load texture and use UV in vertices instead of rgb
      */
   @Override 
-    public void init(float[] vertices, int[] indices, int indicesNum, boolean useTexture) {
+    public void init(float[] vertices, int[] indices, int indicesNumber, boolean useTexture) {
           // Initializes number of indices
-      indicesNumber = indicesNum;
+      this.indicesNumber = indicesNumber;
+      this.indices = indices;
+      this.vertices = vertices;
 
           // Binds VAO to set data parameters
       VAO.bind();
@@ -111,7 +115,10 @@ public class Mesh implements Renderable {
      *
      */
   @Override
-    public void update(float[] vertices, int[] indices, int indicesNum) {
+    public void update(float[] vertices, int[] indices, int indicesNumber) {
+      this.vertices = vertices;
+      this.indices = indices;
+      this.indicesNumber = indicesNumber;
 
           // Binds VBO to update data
       VBO.bind();
@@ -163,6 +170,10 @@ public class Mesh implements Renderable {
 
   public Vector3f getPosition() {
     return position;
+  }
+
+  public float[] getVertices() {
+    return vertices;
   }
 
   public void move(float x, float y, float speed, float deltaTime) {
