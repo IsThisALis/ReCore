@@ -1,6 +1,6 @@
-package recore.example.gmobj;
+package rexample.gmobj;
 
-import recore.example.resources.Resources;
+import rexample.resources.Resources;
 
 import recore.graphics.camera.Camera;
 import recore.graphics.render.Mesh;

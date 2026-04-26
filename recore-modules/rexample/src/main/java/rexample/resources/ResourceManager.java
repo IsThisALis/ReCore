@@ -1,14 +1,10 @@
-package recore.example.resources;
-
-import recore.graphics.render.*;
+package rexample.resources;
 
 import recore.graphics.textures.TextureMap;
 import recore.graphics.shaders.ShaderProgramMap;
 import recore.graphics.render.scene.Scene;
 
 public class ResourceManager {
-
-  Mesh mesh, mesh1, mesh2, mesh3;
 
   ShaderProgramMap shaderProgramMap = Resources.getShaderProgramMap();
   TextureMap textureMap = Resources.getTextureMap();

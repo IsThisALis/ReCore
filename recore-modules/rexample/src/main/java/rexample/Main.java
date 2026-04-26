@@ -1,13 +1,13 @@
-package recore.example;
+package rexample;
 
     // Game components imports
     // Resources
-import recore.example.resources.TextureManager;
-import recore.example.resources.Resources;
-import recore.example.resources.ShaderManager;
-import recore.example.resources.ResourceManager;
+import rexample.resources.TextureManager;
+import rexample.resources.Resources;
+import rexample.resources.ShaderManager;
+import rexample.resources.ResourceManager;
     // Game objects
-import recore.example.gmobj.ObjectManager;
+import rexample.gmobj.ObjectManager;
     // ReCore imports
     // Core
 import recore.core.ApplicationLogic;

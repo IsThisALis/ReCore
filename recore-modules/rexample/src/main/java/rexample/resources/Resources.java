@@ -1,4 +1,4 @@
-package recore.example.resources;
+package rexample.resources;
 
 import recore.graphics.textures.TextureMap;
 import recore.graphics.shaders.ShaderProgramMap;

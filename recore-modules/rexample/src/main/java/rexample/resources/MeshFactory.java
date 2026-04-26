@@ -1,4 +1,4 @@
-package recore.example.resources;
+package rexample.resources;
 
 import recore.graphics.render.*;
 import recore.graphics.shaders.ShaderProgram;

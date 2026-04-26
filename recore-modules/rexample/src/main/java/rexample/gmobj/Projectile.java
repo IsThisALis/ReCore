@@ -1,8 +1,8 @@
-package recore.example.gmobj;
+package rexample.gmobj;
 
 import recore.graphics.render.Mesh;
 import recore.util.Time;
-import recore.example.resources.Resources;
+import rexample.resources.Resources;
 
 public class Projectile {
 
