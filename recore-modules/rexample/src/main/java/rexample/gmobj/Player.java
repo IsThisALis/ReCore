@@ -1,6 +1,7 @@
 package rexample.gmobj;
 
 import rexample.resources.Resources;
+import rexample.interaction.Collizion;
 
 import recore.graphics.camera.Camera;
 import recore.graphics.render.Mesh;
@@ -23,7 +24,7 @@ public class Player {
   boolean jumping;
   boolean healable;
   
-  int hp = 100;
+  int hp = 50;
 
     float[] vertices = {
     // x     y     z    u   v
@@ -144,6 +145,10 @@ public class Player {
 
     if(hp==100) {
       healable = false;
+    }
+
+    if(healable && Collizion.getPlayerState()) {
+        hp = 100;
     }
   }
 }
