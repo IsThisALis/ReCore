@@ -12,6 +12,10 @@ public class VectorUtil {
    * @param source Source vector
    */
   public void copy(Vector2f target, Vector2f source) {
+    if(target == null) {
+      target = new Vector2f();
+    }
+
     target.x = source.x;
     target.y = source.y;
   }
