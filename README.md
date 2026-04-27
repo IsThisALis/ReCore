@@ -43,25 +43,10 @@ A lightweight Java game engine built on LWJGL 3
     <version>0.0.4-alpha</version>
 </dependency>
 ```
-## Buid & Run
-
-### Clone repository
-git clone https://github.com/IsThisALis/ReCore.git
-
-cd ReCore
-
-### Build
-mvn package -Plinux
-
-### Install to local Maven repository
-mvn install
-
-### Run example
-java -jar target/recore-0.0.4-alpha.jar
 
 ## Examples
 
-See `recore.example` package for usage.
+See `rexample` module for usage.
 
 ---
 
