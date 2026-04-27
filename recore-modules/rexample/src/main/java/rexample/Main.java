@@ -8,6 +8,8 @@ import rexample.resources.ShaderManager;
 import rexample.resources.ResourceManager;
     // Game objects
 import rexample.gmobj.ObjectManager;
+    // Interaction
+import rexample.interaction.Collizion;
     // ReCore imports
     // Core
 import recore.core.ApplicationLogic;
@@ -24,6 +26,7 @@ public class Main implements ApplicationLogic {
   TextureManager textureManager = Resources.getTextureManager();
   ResourceManager resourceManager = Resources.getResourceManager();
   ObjectManager objectManager = new ObjectManager();
+  Collizion collizion = new Collizion();
 
   private static Main main = new Main();
 
@@ -40,6 +43,7 @@ public class Main implements ApplicationLogic {
     textureManager.init();
     resourceManager.init();
     objectManager.init();
+    collizion.init();
 	}
 
 	@Override
@@ -53,6 +57,7 @@ public class Main implements ApplicationLogic {
         while (!window.isWindowShouldClose()) {
             // Window and rendering loops
 		    window.loop();
+        collizion.update();
         objectManager.draw();
         }
   }
