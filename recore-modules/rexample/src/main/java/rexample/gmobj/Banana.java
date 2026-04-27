@@ -1,5 +1,6 @@
 package rexample.gmobj;
 
+import rexample.interaction.Collizion;
 import rexample.resources.Resources;
 
 import recore.graphics.render.Mesh;
@@ -7,10 +8,15 @@ import recore.graphics.render.Mesh;
 import recore.graphics.window.Params;
 import recore.graphics.window.Window;
 
+import rephysics.collision.AABB;
+
 public class Banana {
 
   Mesh mesh;
   Window window = Params.getWindowInst();
+  AABB aabb = new AABB();
+
+  boolean cooldown = false;
 
   float[] vertices = {
     // x     y     z    u     v
@@ -33,9 +39,18 @@ public class Banana {
   }
 
   public void draw() {
-    window.blend(true);
-    mesh.draw();
-    window.blend(false);
+    interact();
+    if(!cooldown) {
+      window.blend(true);
+      mesh.draw();
+      window.blend(false);
+    }
+  }
+
+  public void interact() {
+    if(Collizion.getPlayerState()) {
+      cooldown = true;
+    }
   }
 
   public void setPosition(float x, float y) {
