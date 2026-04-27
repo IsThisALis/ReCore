@@ -30,6 +30,9 @@ public class AABB {
      * @param max Higher bound of AABB vertex.
      */
     public AABB(Vector2f min, Vector2f max) {
+        this.min = new Vector2f();
+        this.max = new Vector2f();
+
         vecutil.copy(this.min, min);
         vecutil.copy(this.max, max);
     }
@@ -54,6 +57,27 @@ public class AABB {
         Vector2f v1 = aabb.max;
         max.x = v1.x;
         max.y = v1.y;
+    }
+
+    /**
+     * Setter for min variable for lower bound vertex 
+     *
+     * @param x X value 
+     * @param y Y value 
+     */
+    public void setMin(float x, float y) {
+      min.x = x;
+      min.y = y;
+    }
+    /**
+     * Setter for max variable for upper bound vertex 
+     *
+     * @param x X value 
+     * @param y Y value 
+     */
+    public void setMax(float x, float y) {
+      max.x = x;
+      max.y = y;
     }
 
     /**
