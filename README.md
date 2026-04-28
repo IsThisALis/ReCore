@@ -33,17 +33,6 @@ A lightweight Java game engine built on LWJGL 3
 
 ---
 
-## Installation
-
-### Maven
-```xml
-<dependency>
-    <groupId>org.gfs.recore</groupId>
-    <artifactId>recore</artifactId>
-    <version>0.0.4-alpha</version>
-</dependency>
-```
-
 ## Examples
 
 See `rexample` module for usage.

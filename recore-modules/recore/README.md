@@ -28,6 +28,14 @@ mvn install -P(linux/windows/OSX)
 ```xml
 <dependency>
     <groupId>org.gfs</groupId>
+=======
+## Installation
+
+### Maven
+```xml
+<dependency>
+    <groupId>org.gfs.recore</groupId>
+>>>>>>> 15dd15026b752ef996a9fc83087a7f851ea40da1
     <artifactId>recore</artifactId>
     <version>0.0.4-alpha</version>
 </dependency>
