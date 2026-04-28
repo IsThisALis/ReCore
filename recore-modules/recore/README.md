@@ -1,5 +1,7 @@
 # ReCore (main module)
 
+Includes functionality to make game without learning OpenGL
+
 ## Buid & Run
 
 ### Clone repository 
@@ -19,4 +21,14 @@ mvn package -Plinux
 
 ```
 mvn install -P(linux/windows/OSX)
+```
+
+### Install as dependency
+
+```xml
+<dependency>
+    <groupId>org.gfs</groupId>
+    <artifactId>recore</artifactId>
+    <version>0.0.4-alpha</version>
+</dependency>
 ```
