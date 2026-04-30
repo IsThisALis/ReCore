@@ -60,7 +60,7 @@ A: No fixed roadmap. Development depends on tasks and contributors.
 A: Because this is only alpha there is no template for issues, just provide enough (or not, just be ready to answer questions) info.
 
 **Q: I saw "custom" in method comment, what it means?**    
-A: This method is used to create custom logic, will be moved to fork for advanced users.
+A: This method is used to create custom logic, will be moved to module for advanced users.
 
 ---
 
