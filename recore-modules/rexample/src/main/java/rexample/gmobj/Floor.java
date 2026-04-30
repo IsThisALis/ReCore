@@ -21,7 +21,7 @@ public class Floor {
 
   public void create() {
     mesh = Resources.getScene().getObj(2);
-    mesh.init(vertices, indices, 6, true);
+    mesh.init(vertices, indices, true);
   }
 
   public void draw() {

@@ -29,7 +29,7 @@ public class Projectile {
 
   public void init() {
     mesh = Resources.getScene().getObj(4);
-    mesh.init(vertices, indices, 6, true);
+    mesh.init(vertices, indices, true);
   }
 
   public void draw() {

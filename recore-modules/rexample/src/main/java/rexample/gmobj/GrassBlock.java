@@ -24,7 +24,7 @@ public class GrassBlock {
 
   public void create() {
     body = Resources.getScene().getObj(1);
-    body.init(vertices, indices, 6, true);
+    body.init(vertices, indices, true);
   }
 
   public void draw() {
