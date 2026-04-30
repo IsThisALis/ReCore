@@ -1,16 +1,17 @@
 package recore.graphics.render;
 
-    // Core & Util imports
+    // Core imports
 import recore.core.Renderable;
 
     // Graphic imports
 import recore.graphics.shaders.ShaderProgram;
 import recore.graphics.textures.Texture;
 
-// OpenGL imports
+    // OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
+    // JOML imports
 import org.joml.Vector3f;
 import org.joml.Matrix4f;
 
@@ -21,51 +22,70 @@ public class Mesh implements Renderable {
   VertexArrayObject VAO;
   ElementBufferObject EBO;
 
+      // Instances for objects used in rendering
   Texture texture;
   ShaderProgram shaderProgram;
   
-      // Indices
+      // Int values
   int indicesNumber;
-  int[] indices;
-
   int location;
 
+      // Array values
+  int[] indices;
   float[] vertices;
 
+      // Vector3f values
   Vector3f position = new Vector3f(0, 0, 0);
   Vector3f rotation = new Vector3f(0, 0, 0);
   Vector3f scale    = new Vector3f(1, 1, 1);
 
+      /**
+       * Basic constructor for creating mesh
+       * Renders with colors 
+       * @param vao VertexArrayObject to attach 
+       * @param vbo VertexBufferObject to attach 
+       * @param ebo ElementBufferObject to attach 
+       * @param shaderProgramUnit ShaderProgram to attach 
+       */
     public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, ShaderProgram shaderProgramUnit) {
-          // Initializes buffers
+          // Attaches buffers
       VBO = vbo;
       VAO = vao;
       EBO = ebo;
-
+          // Attaches ShaderProgram
       shaderProgram = shaderProgramUnit;
+      System.out.println("ReCore: New mesh initialized");
     }
-
+      /**
+       * Advanced constructor for creating mesh
+       * Renders with texture
+       * @param vao VertexArrayObject to attach 
+       * @param vbo VertexBufferObject to attach 
+       * @param ebo ElementBufferObject to attach 
+       * @param textureUnit Texture to attach 
+       * @param shaderProgramUnit ShaderProgram to attach 
+       */
     public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, Texture textureUnit, ShaderProgram shaderProgramUnit) {
-          // Initializes buffers
+          // Attaches buffers
       VBO = vbo;
       VAO = vao;
       EBO = ebo;
-          // Initializes texture and ShaderProgram
+          // Attaches texture and ShaderProgram
       texture = textureUnit;
       shaderProgram = shaderProgramUnit;
+      System.out.println("ReCore: New mesh initialized");
     } 
 
     /**
-     * Creates new renderable object 
+     * Imitializes mesh
      * @param vertices coordinates and color/UV of object
      * @param indices indices of object
-     * @param indicesNumber used to set indices
      * @param useTexture use texture or not, if true requires to load texture and use UV in vertices instead of rgb
      */
   @Override 
-    public void init(float[] vertices, int[] indices, int indicesNumber, boolean useTexture) {
+    public void init(float[] vertices, int[] indices, boolean useTexture) {
           // Initializes number of indices
-      this.indicesNumber = indicesNumber;
+      this.indicesNumber = indices.length;
       this.indices = indices;
       this.vertices = vertices;
 
@@ -102,10 +122,9 @@ public class Mesh implements Renderable {
       EBO.uploadData(indices);
           // Unbinds VAO (no use now)
       VAO.unbind();
-
+          // Need to use ShaderProgram when getting uniform location
       shaderProgram.use();
-      location = glGetUniformLocation(shaderProgram.getID(), "uModelMatrix");
-      System.out.println("ReCore: New mesh initialized");
+      location = glGetUniformLocation(shaderProgram.getID(), "uModelMatrix"); 
     }
 
     /**
@@ -115,10 +134,10 @@ public class Mesh implements Renderable {
      *
      */
   @Override
-    public void update(float[] vertices, int[] indices, int indicesNumber) {
+    public void update(float[] vertices, int[] indices) {
       this.vertices = vertices;
       this.indices = indices;
-      this.indicesNumber = indicesNumber;
+      this.indicesNumber = indices.length;
 
           // Binds VBO to update data
       VBO.bind();
@@ -145,20 +164,21 @@ public class Mesh implements Renderable {
     }
 
     /**
-     * Draws object with ShaderProgram and its texture (if used, if not)
-     * 
+     * Draws object with ShaderProgram and its texture if used
      */
   @Override
     public void draw() {
-          // Binds texture to render
+          // Binds texture to render if used
       if(texture !=null) {
          texture.bind();
       }
           // Binds VAO
       VAO.bind();
 
+          // Building model matrix for camera
       float[] data = new float[16];
       buildModelMatrix().get(data);
+          // Move model matrix to uniform
       glUniformMatrix4fv(location, false, data);
           // Draws object from triangles and indicesNumber (pointer)
       glDrawElements(GL_TRIANGLES, indicesNumber, GL_UNSIGNED_INT, 0L); 
@@ -168,35 +188,82 @@ public class Mesh implements Renderable {
     return new Matrix4f().translate(position).rotateZ(rotation.z).scale(scale);
   }
 
-  public Vector3f getPosition() {
-    return position;
-  }
-
-  public float[] getVertices() {
-    return vertices;
-  }
-
-  public void move(float x, float y, float speed, float deltaTime) {
+      /**
+       * Moves mesh to position 
+       *
+       * @param x New x position
+       * @param y New y position
+       * @param speed Speed to move object with 
+       * @param deltaTime Time between past and now frames 
+       */
+    public void move(float x, float y, float speed, float deltaTime) {
       position.x += x*speed*deltaTime;
       position.y += y*speed*deltaTime; 
   }
 
+  /**
+   * Getter for mesh position
+   * 
+   * @return Mesh position
+   */
+  public Vector3f getPosition() {
+    return position;
+  }
+
+  /**
+   * Getter for mesh scale 
+   * 
+   * @return Mesh scale
+   */
+  public Vector3f getScale() {
+    return scale;
+  }
+
+  /**
+   * Getter for vertices
+   *
+   * @return Mesh vertices
+   */
+  public float[] getVertices() {
+    return vertices;
+  }
+
+  /**
+   * Getter for mesh indices 
+   *
+   * @return Mesh indices 
+   */
+  public int[] getIndices() {
+    return indices;
+  }
+
+    /**
+     * Setter for object position in world
+     * 
+     * @param x X coordinate in world
+     * @param y Y coordinate in world
+     */
   public void setPosition(float x, float y) {
     position.x = x;
     position.y = y;
   }
 
-  public void setScale(float x, float y, float z) {
+    /**
+     * Setter for object scale 
+     * @param x Scale value in x dimension
+     * @param y Scale value in y dimension 
+     */
+  public void setScale(float x, float y) {
     scale.x = x;
     scale.y = y;
-    scale.z = z;
   }
 
+    /**
+     * Setter for object rotation
+     *
+     * @param value Rotation value
+     */
   public void setRotation(float value) {
     rotation.z = value;
-  }
-
-  public void logLocation() {
-    System.out.println(location);
   }
 }
