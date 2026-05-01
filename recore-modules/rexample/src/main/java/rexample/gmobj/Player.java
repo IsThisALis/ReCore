@@ -23,8 +23,6 @@ public class Player {
 
   boolean jumping;
   boolean healable;
-  boolean small = false;
-  boolean big = false;
   
   int hp = 50;
 
@@ -82,18 +80,19 @@ public class Player {
     }
 
     if(input.keyPressed(input.getKey("E"))) {
-      if(big) {
-        big = false;
+      mesh.setScale(1.25f, 1.25f);
+      speed = 2.5f;
+      if(!jumping) {
+        velocity = 2.5f;
       }
-      if(!big && !small) {
-        big = true;
-      } 
     }
 
-    if(input.keyPressed(input.getKey("C"))) { 
-      if (!small && !big) {
-        small = true;
-      } else { small = false; }
+    if(input.keyPressed(input.getKey("C"))) {
+      mesh.setScale(0.25f, 0.25f);
+      speed = 7.25f;
+      if(!jumping) {
+        velocity = 7.5f;
+      }
     } 
 
     if(input.keyPressed(input.getKey("SPACE"))) {
@@ -114,7 +113,8 @@ public class Player {
       velocity = 5f;
     }
 
-    if(!big && !small) {
+
+    if(input.keyReleased(input.getKey("C")) && input.keyReleased(input.getKey("E"))) {
       mesh.setScale(0.75f, 0.75f);
       speed = 5f;
     }
@@ -150,22 +150,6 @@ public class Player {
 
     if(healable && Collizion.getPlayerState()) {
         hp = 100;
-    }
-
-    if(big) {
-      mesh.setScale(1.25f, 1.25f);
-      speed = 2.5f;
-      if(!jumping) {
-        velocity = 2.5f;
-      }
-    }
-
-    if(small) {
-      mesh.setScale(0.25f, 0.25f);
-      speed = 7.25f;
-      if(!jumping) {
-        velocity = 7.5f;
-      }
     }
   }
 }
