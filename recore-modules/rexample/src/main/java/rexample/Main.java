@@ -38,7 +38,7 @@ public class Main implements ApplicationLogic {
     params.setWidth(1920);
        // Initializing components
     window.init();
-    window.setIcon("samples/textures/icon_smol.png");
+    window.setIcon("samples/textures/icon.png");
     shaderManager.init();
     textureManager.init();
     resourceManager.init();
