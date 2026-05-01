@@ -95,7 +95,7 @@ public class IO {
         texture.getParams().setImage(image);
     }
   
-  public GLFWImage.Buffer loadIcon(String path) {
+  public void loadIcon(long window, String path) {
     ByteBuffer imageBuffer = null;
       try {
 
@@ -125,12 +125,12 @@ public class IO {
     if (pixels == null) {
         throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
     }
-        try(GLFWImage.Buffer icons = GLFWImage.malloc(1)) { 
+          GLFWImage.Buffer icons = GLFWImage.malloc(1);
           GLFWImage icon = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
-          icons.put(0, icon);
+          icons.put(0, icon); 
+          glfwSetWindowIcon(window, icons);
           icon.free();
-          return icons;
-        }        
+          STBImage.stbi_image_free(pixels);
     }
 
 }
