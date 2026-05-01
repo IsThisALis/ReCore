@@ -126,7 +126,7 @@ public class Window implements ComponentLogic {
     public void setIcon(String path) {
       IO io = new IO();
       try {
-        glfwSetWindowIcon(params.getWindow(), io.loadIcon(path));
+        io.loadIcon(params.getWindow(), path);
       } catch(Exception e) {
         System.out.println("ReCore: FAIL - setIcon: "+e);
       }
