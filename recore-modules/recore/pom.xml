@@ -55,7 +55,6 @@
   </build>
 
 <dependencies>
-  <!-- ===== LWJGL CORE MODULES ===== -->
   <dependency>
     <groupId>org.lwjgl</groupId>
     <artifactId>lwjgl</artifactId>
@@ -82,7 +81,6 @@
     <version>${lwjgl.version}</version>
   </dependency>
   
-  <!-- ===== NATIVE LIBRARIES ===== -->
   <dependency>
     <groupId>org.lwjgl</groupId>
     <artifactId>lwjgl</artifactId>
