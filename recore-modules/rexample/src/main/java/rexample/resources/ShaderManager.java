@@ -2,7 +2,7 @@ package rexample.resources;
 
 import recore.graphics.shaders.*;
 
-import recore.util.*;
+import recore.util.IO;
 
 public class ShaderManager {
 
@@ -18,12 +18,14 @@ public class ShaderManager {
     
     program = new ShaderProgram();
 
-    vct1.createShader("vertex", IO.loadTextFile("samples/shaders/vct1.vert"));
+    vct1.getShaderType("vertex");
+    vct1.createShader(IO.loadTextFile("samples/shaders/vct1.vert"));
     
     program.attachShader(vct1);
     program.putShader("vct1", vct1);
 
-    fct1.createShader("fragment", IO.loadTextFile("samples/shaders/fct1.frag"));
+    fct1.getShaderType("fragment");
+    fct1.createShader(IO.loadTextFile("samples/shaders/fct1.frag"));
     
     program.attachShader(fct1);
     program.putShader("fct1", fct1);
