@@ -1,7 +1,10 @@
 package recore.graphics.window;
 
   // ReCore imports
+  // Core 
 import recore.core.ComponentLogic;
+
+  // Util
 import recore.util.IO;
 import recore.util.OS;
 
@@ -17,25 +20,23 @@ import static org.lwjgl.opengl.GL15.*;
 
 public class Window implements ComponentLogic {
   
-  //Gets parameters instance
+  // Gets parameters instance
   Params params;
 
-	@Override
      /**
-     * 
-     * Initializing GLFW, OpenGL, window
+     * Initializing GLFW, OpenGL, window 
+     * All parameters is setting from init method in main class through setters
+     * Also sets window and operates with it through getter
      * @param width Width of creating window
      * @param height Height of creating window
      * @param title Title of creating window 
-     * All parameters is setting from init method in main class through setters
-     * Also sets window and operates with it through getter
-     *
      */
+  @Override
     public void init() {
-
+    // Getting parameters instance
       params = Params.getParams();
       
-    //GLFW hint to use X11 on linux
+    // GLFW hint to use X11 on linux
       if(OS.isLinux()) {
         glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
       }
@@ -46,16 +47,16 @@ public class Window implements ComponentLogic {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE); 
       }
 
-      //Initializing GLFW
+      // Initializing GLFW
       if(!glfwInit()) {
-        throw new IllegalStateException("GLFW is not initialized");
+        throw new IllegalStateException("ReCore: GLFW is not initialized!");
       }
 
       // Setting up GLFW
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_DEPTH_BITS, 24);
+        //glfwWindowHint(GLFW_DEPTH_BITS, 24);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
@@ -63,6 +64,7 @@ public class Window implements ComponentLogic {
       // Creating window
         params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
       if(params.getWindow() == 0L) {
+        System.out.println("ReCore: Error in window creating process!");
         params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
       }
 
@@ -71,51 +73,58 @@ public class Window implements ComponentLogic {
         GL.createCapabilities();
 
         glfwSwapInterval(1);
+      // Disabling depth 
         glDisable(GL_DEPTH_TEST);
 
+      // Makes window visible
         glfwShowWindow(params.getWindow());
     }
 
 
+      /**
+       * Cleans data, use after window closing
+       */
   @Override
-  // Cleans glfw and window through getter
     public void cleanup() {
       Callbacks.glfwFreeCallbacks(params.getWindow());
 
-      //Deleting window and GLFW
+      // Deleting window and GLFW
       glfwDestroyWindow(params.getWindow());
       glfwTerminate();
         
-        //set GLFWErrorCallback null and checks
+        // Set GLFWErrorCallback null and checks
         GLFWErrorCallback callback = glfwSetErrorCallback(null);
         if (callback != null) {
             callback.free();
         }
-
     }
 
-  @Override 
-    /**
-    * 
-    * Updates window data, call it from your update method
-    * Operates with window through getter
-    *
-    */ 
+
+      /**
+       * 
+       * Updates window data, call it from your update method
+       * Operates with window through getter
+       */ 
+  @Override
     public void update() {
       glfwSwapBuffers(params.getWindow());
+      glfwPollEvents();
     }
 
-    // Resizes window using width and height in parameters
+
+      /**
+       * Applies new window size
+       * Use once to avoid bugs with window resizing
+       */
     public void resize() {
       glViewport(0, 0, params.getWidth(), params.getHeight());
     }
 
-    // Window cycle
-    public void loop() {
-            update();
-            glfwPollEvents();
-          }
 
+      /**
+       * Getter for window state 
+       * @return Should window close or not
+       */
     public boolean isWindowShouldClose() {
       if(!glfwWindowShouldClose(params.getWindow())) {
         return false;
@@ -123,6 +132,11 @@ public class Window implements ComponentLogic {
       return true;
     }
 
+
+      /**
+       * Loads and sets icon
+       * @param path Path to imaage file
+       */
     public void setIcon(String path) {
       IO io = new IO();
       try {
@@ -133,16 +147,26 @@ public class Window implements ComponentLogic {
     }
 
     
+      /**
+       * Clears window, used in render cycle
+       */
     public void cleanWindow() {
       glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    public void blend(boolean onOff) {
-      if(onOff) {
+
+      /**
+       * Operates with blending state, useful when need to render objects with empty pixels in texture
+       * @param on Blend state 
+       */
+    public void blend(boolean on) {
+      if(on) {
           glEnable(GL_BLEND);
           glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      } else {
+      }
+
+      if(!on){
           glDisable(GL_BLEND);
-        }
+      }
   }
 }
