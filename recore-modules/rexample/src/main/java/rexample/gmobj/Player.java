@@ -50,7 +50,7 @@ public class Player {
 
     projectile.init();
 
-    camera = new Camera(0.0f, 0.0f, 0.0f, Resources.getShaderProgramMap().getObj(0));
+    camera = new Camera(0.0f, 0.0f, Resources.getShaderProgramMap().getObj(0));
     camera.addZoom(3.0f);
   }
 
