@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.gfs</groupId>
   <artifactId>rephysics</artifactId>
-  <version>0.0.4-alpha</version>
+  <version>0.0.5-alpha</version>
 
   <name>RePhysics</name>
   <url>t.me/GlowingFoxStudios</url>
@@ -34,7 +34,7 @@
   <dependency>
     <groupId>org.gfs</groupId>
     <artifactId>recore</artifactId>
-    <version>0.0.4-alpha</version>
+    <version>${project.version}</version>
   </dependency>
 </dependencies>
 </project>

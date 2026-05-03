@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.gfs</groupId>
   <artifactId>rexample</artifactId>
-  <version>0.0.4-alpha</version>
+  <version>0.0.5-alpha</version>
 
   <name>RExample</name>
   <url>t.me/GlowingFoxStudios</url>
@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
-    <recore.version>0.0.4-alpha</recore.version>
+    <recore.version>0.0.5-alpha</recore.version>
   </properties>
 
   <build>
