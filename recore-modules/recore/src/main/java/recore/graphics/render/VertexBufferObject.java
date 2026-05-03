@@ -1,6 +1,6 @@
 package recore.graphics.render;
 
-// OpenGL imports
+  // OpenGL imports
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
@@ -34,6 +34,7 @@ public class VertexBufferObject {
     
     /**
      * Uploads object data to buffer
+     * @param vertices Mesh data to upload 
      */
     public void uploadData(float[] vertices) {
         glBufferData(GL_ARRAY_BUFFER, vertices, GL_DYNAMIC_DRAW);
@@ -48,6 +49,7 @@ public class VertexBufferObject {
     
     /**
      * Returns buffer identifier
+     * @return Buffer id 
      */
     public int getID() {
         return id;

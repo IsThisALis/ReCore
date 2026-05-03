@@ -30,6 +30,7 @@ public class ElementBufferObject {
     
     /**
      * Uploads object data to buffer
+     * @param indices Indices to load in buffer 
      */
     public void uploadData(int[] indices) {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_DYNAMIC_DRAW);
@@ -44,6 +45,7 @@ public class ElementBufferObject {
     
     /**
      * Returns buffer identifier
+     * @return Buffer id 
      */
     public int getID() {
         return id;

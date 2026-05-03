@@ -37,6 +37,7 @@ public class VertexArrayObject {
     
     /**
      * Returns buffer identifier
+     * @return Buffer id  
      */
      public int getID() {
         return id;
