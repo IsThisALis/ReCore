@@ -15,21 +15,25 @@ public class ShaderProgram {
       // Stores shaders
     private final ConcurrentHashMap<String, Shader> shaderCache = new ConcurrentHashMap<>();
     
+
     /**
      * Creates new ShaderProgram
      */
     public ShaderProgram() {
         id = glCreateProgram();
     }
+
     
     /**
      * Attaches shader to the program and context (attachedShader)
      * @param shader Shader to be attached
      */
     public void attachShader(Shader shader) {
-        glAttachShader(id, shader.getID());
-        attachedShader = shader; 
+        glAttachShader(id, shader.getId());
+        attachedShader = shader;
     }
+    
+
     /**
      * Links ShaderProgram and checks link status
      */
@@ -37,39 +41,51 @@ public class ShaderProgram {
         glLinkProgram(id);
         if(checkStatus()) {
         System.out.println("ReCore: Linked shader program");
-        } else {
-        System.out.println("ReCore: Linked shader program");
+        } 
+        if(!checkStatus()) {
+        System.out.println("ReCore: Not linked shader program");
         }
     }
+
+
     /**
      * Uses ShaderProgram 
      */
     public void use() {
         glUseProgram(id);
     }
+
     
+      /**
+       * Deletes ShaderProgram 
+       */
     public void deleteShaderProgram() {
         glDeleteProgram(id);
     }
 
+
         /**
-         * Deletes attachedShader
+         * Deletes attached shader
          */
     public void deleteShader() {
         if (attachedShader != null) {
-            glDeleteShader(attachedShader.getID());
+            glDeleteShader(attachedShader.getId());
         }
     }
     
+
     /**
-     * Returns program identifier
+     * Getter for program identifier
+     * @return ShaderProgram identifier
      */
     public int getID() {
             return id;
     }
+
     
     /**
      * Checks program link status
+     * @return Link status 
      */
     public boolean checkStatus() {
         int status = glGetProgrami(id, GL_LINK_STATUS);
@@ -78,6 +94,8 @@ public class ShaderProgram {
         }
         return true;
     }
+
+
       /**
        * Puts shader in storage
        * @param key keyword to store shader under
@@ -87,9 +105,11 @@ public class ShaderProgram {
       shaderCache.put(key, shader);
     }
 
+
     /**
      * Returns shader from storage 
-     * @param key keyword to shader
+     * @param key keyword to get shader
+     * @return Shader
      */
     public Shader getShader(String key) {
       return shaderCache.get(key);
