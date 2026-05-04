@@ -20,13 +20,13 @@ import recore.graphics.window.Window;
 
 public class Main implements ApplicationLogic {
 	    // Getting instances 
-  Params params = Params.getParams();
-  Window window = Params.getWindowInst();
-  ShaderManager shaderManager = Resources.getShaderManager();
-  TextureManager textureManager = Resources.getTextureManager();
-  ResourceManager resourceManager = Resources.getResourceManager();
-  ObjectManager objectManager = new ObjectManager();
-  Collizion collizion = new Collizion();
+  private Params params = Params.getParams();
+  private static Window window = Params.getWindowInst();
+  private ShaderManager shaderManager = Resources.getShaderManager();
+  private TextureManager textureManager = Resources.getTextureManager();
+  private ResourceManager resourceManager = Resources.getResourceManager();
+  private ObjectManager objectManager = new ObjectManager();
+  private Collizion collizion = new Collizion();
 
   private static Main main = new Main();
 
@@ -54,13 +54,11 @@ public class Main implements ApplicationLogic {
 
 	@Override
 	public void loop() {
-        while (!window.isWindowShouldClose()) {
-            // Window and rendering loops
-		    window.loop();
-        collizion.update();
-        objectManager.draw();
+          // Window and rendering loops
+		window.update();
+    collizion.update();
+    objectManager.draw();
         }
-  }
 
 	@Override
 	public void update() {
@@ -73,7 +71,9 @@ public class Main implements ApplicationLogic {
 	public static void main(String[] args) {
 		// Initialization and game loop
 	    main.init();
-      main.loop();
+      while(!window.isWindowShouldClose()) {
+        main.loop();
+      }
 	}
 
 }
