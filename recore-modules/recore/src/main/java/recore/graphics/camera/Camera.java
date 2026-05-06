@@ -43,7 +43,7 @@ public class Camera {
     screenWidth = (float) Params.getParams().getWidth();
     screenHeight = (float) Params.getParams().getHeight();
     attachedProgram = program;
-    location = glGetUniformLocation(attachedProgram.getID(), "uVPMatrix");
+    location = glGetUniformLocation(attachedProgram.getId(), "uVPMatrix");
   }
   
 
