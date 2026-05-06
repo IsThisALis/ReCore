@@ -27,18 +27,16 @@ public class Shader {
        */
     public void compile(int id) {
         glCompileShader(id);
-        if(!checkStatus()) {
-          throw new RuntimeException("ReCore: Unable to compile shader with id: "+id);
-        }
-        System.out.println("ReCore: Compiled shader! ID: "+id);
+        checkStatus(id);
     }
 
     
       /**
        * Checks shader compile status 
+       * @param id Shader to check 
        * @return Shader compile state 
        */
-    public boolean checkStatus() {
+    public boolean checkStatus(int id) {
     int status = glGetShaderi(id, GL_COMPILE_STATUS);
     if (status != GL_TRUE && id == 0) {
         return false;
@@ -48,9 +46,9 @@ public class Shader {
 
 
       /**
-       * Transforms string to OpenGL shader type 
+       * Transforms string to int shader type 
        * @param type Text shader type (vertex/fragment)
-       * @return OpenGL shader type (Int)
+       * @return OpenGL shader type 
        */
     public int getShaderType(String type) {
       shaderType = type;
@@ -68,16 +66,17 @@ public class Shader {
 
 
       /**
-       * Deletes this shader 
+       * Deletes shader 
+       * @param id shader to be deleted 
        */
-    public void deleteShader() {
-        glDeleteShader(id);
+    public void deleteShader(int id) {
+        glDeleteShader(this.id);
     }
 
 
       /**
        * Getter for shader identifier 
-       * @return Shader id
+       * @return Shader identifier 
        */
     public int getId() {
         return id;
@@ -86,6 +85,7 @@ public class Shader {
 
       /**
       * Creates shader from source and type 
+      * @param type shader type - vertex or fragment
       * @param source code of your shader
       */
     public void createShader(String source) {
@@ -98,7 +98,7 @@ public class Shader {
         glShaderSource(id, source);
         glCompileShader(id);
             // Check to be sure shader compiled
-        if(!checkStatus()) {
+        if(!checkStatus(id)) {
           throw new RuntimeException("ReCore: Unable to compile shader. Type: "+shaderType+" Check your shader code! Source: "+source);
         }
     }
