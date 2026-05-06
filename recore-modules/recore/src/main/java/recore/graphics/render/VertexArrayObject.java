@@ -1,12 +1,13 @@
 package recore.graphics.render;
 
-// OpenGL imports
+  // OpenGL imports
 import static org.lwjgl.opengl.GL30.*;
 
 public class VertexArrayObject {
         // Buffer identifier
     private final int id;
     
+
     /**
      * Generates new buffer
      */
@@ -14,6 +15,7 @@ public class VertexArrayObject {
         id = glGenVertexArrays();
     }
     
+
     /**
      * Binds buffer
      */
@@ -21,6 +23,7 @@ public class VertexArrayObject {
         glBindVertexArray(id);
     }
     
+
     /**
      * Unbinds buffer
      */
@@ -28,6 +31,7 @@ public class VertexArrayObject {
         glBindVertexArray(0);
     }
     
+
     /**
      * Deletes buffer
      */
@@ -35,11 +39,12 @@ public class VertexArrayObject {
         glDeleteVertexArrays(id);
     }
     
+
     /**
      * Returns buffer identifier
      * @return Buffer id  
      */
-     public int getID() {
+     public int getId() {
         return id;
     }   
 }

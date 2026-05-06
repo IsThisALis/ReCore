@@ -1,22 +1,20 @@
 package recore.graphics.render;
 
   // OpenGL imports
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL15.glDeleteBuffers;
-import static org.lwjgl.opengl.GL15.glGenBuffers;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL15.*;
 
 public class VertexBufferObject {
         // Buffer identifier
     private final int id;
     
+
     /**
      * Generates new buffer
      */
     public VertexBufferObject() {
         id = glGenBuffers();
     }
+
     
     /**
      * Binds buffer
@@ -25,12 +23,14 @@ public class VertexBufferObject {
         glBindBuffer(GL_ARRAY_BUFFER, id);
     }
 
+
     /**
      * Unbinds buffer
      */
     public void unbind() {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+
     
     /**
      * Uploads object data to buffer
@@ -40,6 +40,7 @@ public class VertexBufferObject {
         glBufferData(GL_ARRAY_BUFFER, vertices, GL_DYNAMIC_DRAW);
     }
     
+
     /**
      * Deletes buffer
      */
@@ -47,11 +48,12 @@ public class VertexBufferObject {
         glDeleteBuffers(id);
     }
     
+
     /**
      * Returns buffer identifier
      * @return Buffer id 
      */
-    public int getID() {
+    public int getId() {
         return id;
     }
 }

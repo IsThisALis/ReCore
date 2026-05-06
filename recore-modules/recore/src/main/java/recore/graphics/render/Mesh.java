@@ -18,26 +18,26 @@ import org.joml.Matrix4f;
 public class Mesh implements Renderable {
 
       // Declares buffers for data
-  VertexBufferObject VBO;
-  VertexArrayObject VAO;
-  ElementBufferObject EBO;
+  private VertexBufferObject VBO;
+  private VertexArrayObject VAO;
+  private ElementBufferObject EBO;
 
       // Instances for objects used in rendering
-  Texture texture;
-  ShaderProgram shaderProgram;
+  private Texture texture;
+  private ShaderProgram shaderProgram;
   
       // Int values
-  int indicesNumber;
-  int location;
+  private int indicesNumber;
+  private int location;
 
       // Array values
-  int[] indices;
-  float[] vertices;
+  private int[] indices;
+  private float[] vertices;
 
       // Vector3f values
-  Vector3f position = new Vector3f(0, 0, 0);
-  Vector3f rotation = new Vector3f(0, 0, 0);
-  Vector3f scale    = new Vector3f(1, 1, 1);
+  private Vector3f position = new Vector3f(0, 0, 0);
+  private Vector3f rotation = new Vector3f(0, 0, 0);
+  private Vector3f scale    = new Vector3f(1, 1, 1);
 
       /**
        * Basic constructor for creating mesh
@@ -124,7 +124,7 @@ public class Mesh implements Renderable {
       VAO.unbind();
           // Need to use ShaderProgram when getting uniform location
       shaderProgram.use();
-      location = glGetUniformLocation(shaderProgram.getID(), "uModelMatrix"); 
+      location = glGetUniformLocation(shaderProgram.getId(), "uModelMatrix"); 
     }
 
     /**
@@ -157,10 +157,19 @@ public class Mesh implements Renderable {
      */
   @Override
     public void cleanup() {
-          // Deletes VBO and its data
+      position = null;
+      rotation = null;
+      scale = null;
+
+          // Delete buffers 
       VBO.delete();
-          // Deletes EBO and its data
       EBO.delete();
+      VAO.delete();
+
+        // Delete links to objects 
+      VBO = null;
+      EBO = null;
+      VAO = null;
     }
 
     /**
@@ -201,6 +210,9 @@ public class Mesh implements Renderable {
       position.y += y*speed*deltaTime; 
   }
 
+
+  //   <---   SETTERS --->
+
   /**
    * Getter for mesh position
    * 
@@ -209,6 +221,7 @@ public class Mesh implements Renderable {
   public Vector3f getPosition() {
     return position;
   }
+
 
   /**
    * Getter for mesh scale 
@@ -219,6 +232,7 @@ public class Mesh implements Renderable {
     return scale;
   }
 
+
   /**
    * Getter for vertices
    *
@@ -228,6 +242,7 @@ public class Mesh implements Renderable {
     return vertices;
   }
 
+
   /**
    * Getter for mesh indices 
    *
@@ -236,6 +251,10 @@ public class Mesh implements Renderable {
   public int[] getIndices() {
     return indices;
   }
+
+
+  //   <---  GETTERS   --->
+
 
     /**
      * Setter for object position in world

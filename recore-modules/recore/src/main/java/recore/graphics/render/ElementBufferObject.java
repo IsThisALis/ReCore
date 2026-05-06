@@ -1,12 +1,13 @@
 package recore.graphics.render;
 
-// OpenGL imports
+  // OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 
 public class ElementBufferObject {
       // Buffer identifier
     private final int id;
     
+
     /**
      * Generates new buffer
      */
@@ -14,12 +15,14 @@ public class ElementBufferObject {
         id = glGenBuffers();
     }
     
+
     /**
      * Binds buffer
      */
     public void bind() {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
     }
+
 
     /**
      * Unbinds buffer
@@ -28,6 +31,7 @@ public class ElementBufferObject {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     
+
     /**
      * Uploads object data to buffer
      * @param indices Indices to load in buffer 
@@ -36,18 +40,20 @@ public class ElementBufferObject {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_DYNAMIC_DRAW);
     }
 
+
     /**
      * Deletes buffer
      */
     public void delete() {
       glDeleteBuffers(id);
     }
-    
+   
+
     /**
      * Returns buffer identifier
      * @return Buffer id 
      */
-    public int getID() {
+    public int getId() {
         return id;
     }
 }
