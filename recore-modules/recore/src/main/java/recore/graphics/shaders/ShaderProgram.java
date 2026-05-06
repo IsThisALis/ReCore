@@ -8,16 +8,16 @@ import static org.lwjgl.opengl.GL20.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ShaderProgram {
-      // Program identifier
+      // Program identifier given by OpenGL
     private int id;
       // Stores shader we are working with
     private Shader attachedShader;
-      // Stores shaders
+      // Stores shaders, allows to switch shaders
     private final ConcurrentHashMap<String, Shader> shaderCache = new ConcurrentHashMap<>();
     
 
     /**
-     * Creates new ShaderProgram
+     * Creates new OpenGL shader program
      */
     public ShaderProgram() {
         id = glCreateProgram();
@@ -40,16 +40,16 @@ public class ShaderProgram {
     public void link() {
         glLinkProgram(id);
         if(checkStatus()) {
-        System.out.println("ReCore: Linked shader program");
+          System.out.println("ReCore: Linked shader program");
         } 
         if(!checkStatus()) {
-        System.out.println("ReCore: Not linked shader program");
+          System.out.println("ReCore: Not linked shader program");
         }
     }
 
 
     /**
-     * Uses ShaderProgram 
+     * Call OpenGL to use shader program 
      */
     public void use() {
         glUseProgram(id);
@@ -57,7 +57,7 @@ public class ShaderProgram {
 
     
       /**
-       * Deletes ShaderProgram 
+       * Deletes shader program 
        */
     public void deleteShaderProgram() {
         glDeleteProgram(id);
@@ -76,10 +76,10 @@ public class ShaderProgram {
 
     /**
      * Getter for program identifier
-     * @return ShaderProgram identifier
+     * @return Shader program id
      */
-    public int getID() {
-            return id;
+    public int getId() {
+        return id;
     }
 
     

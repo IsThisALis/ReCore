@@ -1,30 +1,40 @@
 package recore.graphics.shaders;
 
-import java.util.ArrayList;
+  // Java imports
+import java.util.HashMap;
 
 public class ShaderProgramMap {
 
-  private ArrayList<ShaderProgram> shaderPrograms;
-  private int objCount;
+    // ArrayList with ShaderPrograms
+  private HashMap<String, ShaderProgram> shaderPrograms;
 
-    public void setObjCount(int value) {
-        objCount = value;
-    }
-    public void create() {
-        shaderPrograms = new ArrayList<ShaderProgram>(objCount);
-    }
 
-    public void addObj(int index, ShaderProgram object) {
-        shaderPrograms.add(index, object);
-    }
-
-    public void rmObj(int index) {
-        shaderPrograms.remove(index);
-    }
-
-    public ShaderProgram getObj(int index) {
-        return shaderPrograms.get(index);
+      /**
+       * Adds object to HashMap
+       * @param key Store object with acces from this key 
+       */
+    public void addObj(String key, ShaderProgram object) {
+        shaderPrograms.put(key, object);
     }
 
 
-}
+      /**
+       * Removes object from ShaderProgramMap
+       * @param key Remove texture by key
+       */
+    public void rmObj(String key) {
+        shaderPrograms.remove(key);
+    }
+
+
+      /**
+       * Getter for ShaderProgramMap objects 
+       * @param key Get object by key
+       * @return ShaderProgram from ShaderProgramMap
+       */
+    public ShaderProgram getObj(String key) {
+        return shaderPrograms.get(key);
+    }
+
+
+  }
