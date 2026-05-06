@@ -1,29 +1,39 @@
 package recore.graphics.textures;
 
-import java.util.ArrayList;
+  // Java imports
+import java.util.HashMap;
 
 public class TextureMap {
 
-  private ArrayList<Texture> textures;
-  private int objCount;
+    // Store with Texture objects
+  private HashMap<String, Texture> textures = new HashMap<>();;
 
-    public void setObjCount(int value) {
-        objCount = value;
-    }
-    public void create() {
-        textures = new ArrayList<Texture>(objCount);
-    }
 
-    public void addObj(int index, Texture object) {
-        textures.add(index, object);
+      /**
+       * Adds object to HashMap
+       * @param key Store object with acces from this key 
+       */
+    public void addObj(String key, Texture object) {
+        textures.put(key, object);
     }
 
-    public void rmObj(int index) {
-        textures.remove(index);
+
+      /**
+       * Removes object from TextureMap
+       * @param key Remove texture by key
+       */
+    public void rmObj(String key) {
+        textures.remove(key);
     }
 
-    public Texture getObj(int index) {
-        return textures.get(index);
+
+      /**
+       * Getter for TextureMap objects 
+       * @param key Get object by key
+       * @return Texture from TextureMap
+       */
+    public Texture getObj(String key) {
+        return textures.get(key);
     }
 
 

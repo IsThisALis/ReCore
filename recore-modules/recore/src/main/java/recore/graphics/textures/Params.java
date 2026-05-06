@@ -19,11 +19,11 @@ public class Params {
 
     // Int
     // id
-  public int getID() {
+  public int getId() {
     return id;
   }
 
-  public void setID(int value) {
+  public void setId(int value) {
     id = value;
   }
 
@@ -46,7 +46,7 @@ public class Params {
   }
 
     // uniformId
-  public int getUniformID() {
+  public int getUniformId() {
     return uniformId;
   }
     // ByteBuffer
@@ -72,8 +72,8 @@ public class Params {
     return uniformName;
   }
     //  Uniform
-  public void setUniform(String value, int uniformID) {
-    uniformName = value;
-    uniformId = uniformID;
+  public void setUniform(String uniformName, int uniformId) {
+    this.uniformName = uniformName;
+    this.uniformId = uniformId;
   }
 }
