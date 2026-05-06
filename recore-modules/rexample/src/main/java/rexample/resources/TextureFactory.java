@@ -13,7 +13,7 @@ public class TextureFactory {
     program.use();
     Texture texture = new Texture();
 
-    texture.params.setUniform("ourTexture", 0);
+    texture.getParams().setUniform("ourTexture", 0);
     texture.bind();
 
     io.loadTexture(path, texture);
