@@ -146,6 +146,14 @@ public class Window implements ComponentLogic {
       }
     }
 
+
+      /**
+       * Sends signal to close window 
+       */
+    public void close() {
+      glfwSetWindowShouldClose(params.getWindow(), true);
+    }
+
     
       /**
        * Clears window, used in render cycle
