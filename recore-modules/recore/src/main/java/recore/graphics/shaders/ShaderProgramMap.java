@@ -5,9 +5,12 @@ import java.util.HashMap;
 
 public class ShaderProgramMap {
 
-    // ArrayList with ShaderPrograms
+    // HashMap with ShaderPrograms
   private HashMap<String, ShaderProgram> shaderPrograms;
 
+  public ShaderProgramMap() {
+      shaderPrograms = new HashMap<>();
+  }
 
       /**
        * Adds object to HashMap

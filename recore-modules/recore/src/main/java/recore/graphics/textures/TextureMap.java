@@ -5,8 +5,12 @@ import java.util.HashMap;
 
 public class TextureMap {
 
-    // Store with Texture objects
-  private HashMap<String, Texture> textures = new HashMap<>();;
+    // HashMap with Texture objects
+  private HashMap<String, Texture> textures;
+
+    public TextureMap() {
+      textures = new HashMap<>();;
+    }
 
 
       /**
