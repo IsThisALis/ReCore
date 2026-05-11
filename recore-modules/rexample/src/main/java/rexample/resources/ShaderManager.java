@@ -31,8 +31,6 @@ public class ShaderManager {
     program.putShader("fct1", fct1);
     program.link();
     
-    shaderProgramMap.setObjCount(0);
-    shaderProgramMap.create();
-    shaderProgramMap.addObj(0, program);
+    shaderProgramMap.addObj("ct1", program);
   }
 }

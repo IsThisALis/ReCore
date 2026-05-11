@@ -12,14 +12,11 @@ public class TextureManager {
 
   public void init() {
 
-    program = Resources.getShaderProgramMap().getObj(0);
+    program = Resources.getShaderProgramMap().getObj("ct1");
 
-    textureMap.setObjCount(5);
-    textureMap.create();
-
-    textureMap.addObj(0, textureFactory.newTexture("samples/textures/banana.png", program));
-    textureMap.addObj(1, textureFactory.newTexture("samples/textures/grass_block.png", program));
-    textureMap.addObj(2, textureFactory.newTexture("samples/textures/grass_floor.png", program));
-    textureMap.addObj(3, textureFactory.newTexture("samples/textures/player_red.png", program));
+    textureMap.addObj("banana", textureFactory.newTexture("samples/textures/banana.png", program));
+    textureMap.addObj("grass_block", textureFactory.newTexture("samples/textures/grass_block.png", program));
+    textureMap.addObj("grass_floor", textureFactory.newTexture("samples/textures/grass_floor.png", program));
+    textureMap.addObj("player_red", textureFactory.newTexture("samples/textures/player_red.png", program));
     }
 }

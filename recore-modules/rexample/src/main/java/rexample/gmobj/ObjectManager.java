@@ -28,7 +28,7 @@ public class ObjectManager {
     grassBlock3.create();
     player.init();
 
-    program = Resources.getShaderProgramMap().getObj(0);
+    program = Resources.getShaderProgramMap().getObj("ct1");
   }
 
   public void draw() {
