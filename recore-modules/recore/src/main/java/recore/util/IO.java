@@ -57,7 +57,7 @@ public class IO {
         //Reads image from file
         InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
         if(stream == null) {
-          throw new IOException("IO Error! Check file path please: "+path);
+          throw new IOException("IO Error! Check file path: "+path);
         }
         byte[] fileBytes = stream.readAllBytes();
 
