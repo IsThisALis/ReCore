@@ -54,6 +54,18 @@
     </plugins>
   </build>
 
+ <dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.junit</groupId>
+      <artifactId>junit-bom</artifactId>
+      <version>5.12.1</version>
+      <type>pom</type>
+     <scope>import</scope>
+    </dependency>
+  </dependencies>
+ </dependencyManagement>
+
 <dependencies>
   <dependency>
     <groupId>org.lwjgl</groupId>
@@ -109,10 +121,17 @@
     <classifier>${native.target}</classifier>
     <scope>runtime</scope>
   </dependency>
+
   <dependency>
     <groupId>org.joml</groupId>
-    <artifactId>joml</artifactId>
-    <version>${joml.version}</version>
-  </dependency>
- </dependencies>
+      <artifactId>joml</artifactId>
+      <version>${joml.version}</version>
+    </dependency>
+
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
 </project>
