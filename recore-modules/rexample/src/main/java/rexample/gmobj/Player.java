@@ -21,6 +21,7 @@ public class Player {
 
   float speed = 5f;
   float velocity = 5f;
+  float newY;
 
   boolean jumping;
   boolean healable;
@@ -112,7 +113,7 @@ public class Player {
     if(jumping==true) {  
 
       velocity -= 9.8f * time.getDelta();
-      float newY = mesh.getPosition().y + velocity * time.getDelta();
+      newY = mesh.getPosition().y + velocity * time.getDelta();
 
       if(newY <= 0f) {
         newY = 0f;
