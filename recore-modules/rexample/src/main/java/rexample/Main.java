@@ -1,6 +1,6 @@
 package rexample;
 
-    // Game components imports
+    // Game imports
     // Resources
 import rexample.resources.TextureManager;
 import rexample.resources.Resources;
@@ -9,17 +9,19 @@ import rexample.resources.ResourceManager;
     // Game objects
 import rexample.gmobj.ObjectManager;
     // Interaction
-import rexample.interaction.Collizion;
+import rexample.interaction.*;
+
     // ReCore imports
     // Core
 import recore.core.ApplicationLogic;
+import recore.core.GameLoop;
 
     // Window
 import recore.graphics.window.Params;
 import recore.graphics.window.Window;
 
 public class Main implements ApplicationLogic {
-	    // Getting instances 
+	    // Getting instances
   private Params params = Params.getParams();
   private static Window window = Params.getWindowInst();
   private ShaderManager shaderManager = Resources.getShaderManager();
@@ -27,7 +29,7 @@ public class Main implements ApplicationLogic {
   private ResourceManager resourceManager = Resources.getResourceManager();
   private ObjectManager objectManager = new ObjectManager();
   private Collizion collizion = new Collizion();
-
+  private InputActions inputActions = new InputActions();
   private static Main main = new Main();
 
 	@Override
@@ -36,6 +38,7 @@ public class Main implements ApplicationLogic {
     params.setTitle("ReCore");
     params.setHeight(1200);
     params.setWidth(1920);
+    params.setVsyncStatus(true);
        // Initializing components
     window.init();
     window.setIcon("samples/textures/icon.png");
@@ -55,10 +58,12 @@ public class Main implements ApplicationLogic {
 	@Override
 	public void loop() {
           // Window and rendering loops
-		window.update();
+    GameLoop.getGameLoop().startFrame();
+    inputActions.update();
     collizion.update();
     objectManager.draw();
-        }
+    window.update();
+  }
 
 	@Override
 	public void update() {
