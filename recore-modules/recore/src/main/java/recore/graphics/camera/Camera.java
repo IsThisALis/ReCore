@@ -9,6 +9,7 @@ import recore.graphics.window.Params;
 
   // JOML imports
 import org.joml.Vector3f;
+import org.joml.Vector2f;
 import org.joml.Matrix4f;
 
   // OpenGL imports
@@ -16,19 +17,29 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Camera {
 
-    // Vector with camera coordinates
-  Vector3f position;
+    // Vector3f values
+  private Vector3f position;
+  private Vector2f FOV;
 
-    // Screen size parameters (coming from window parameters)
-  float screenWidth, screenHeight;
-    // Camera default zoom value
-  float zoom = 1.0f;
+    // float values
+  private float screenWidth;
+  private float screenHeight;
+  private float zoom = 1.0f;
+  private float w, h;
 
-    // Camera uniform location in shader 
-  int location;
+    // Array values
+  private float[] uniformData = new float[16];
 
-    // ShaderProgram used by camera
-  ShaderProgram attachedProgram;
+    // Int values
+  private int location;
+
+    // Instances values
+  private ShaderProgram attachedProgram;
+
+    // Matrix4f values 
+  private Matrix4f projectionMatrix = new Matrix4f();
+  private Matrix4f viewMatrix = new Matrix4f();
+  private Matrix4f VPMatrix = new Matrix4f();
 
 
     /**
@@ -40,6 +51,7 @@ public class Camera {
      */
   public Camera(float x, float y, ShaderProgram program) {
     position = new Vector3f(x, y, 0.0f);
+    FOV = new Vector2f();
     screenWidth = (float) Params.getParams().getWidth();
     screenHeight = (float) Params.getParams().getHeight();
     attachedProgram = program;
@@ -87,7 +99,7 @@ public class Camera {
      * @return View matrix (Matrix4f)
      */
   public Matrix4f getViewMatrix() {
-    return new Matrix4f().translate(-position.x, -position.y, -position.z);
+    return viewMatrix.identity().translate(-position.x, -position.y, -position.z);
   }
 
 
@@ -96,9 +108,9 @@ public class Camera {
       * @return Projection matrix (Matrix4f)
       */
   public Matrix4f getProjectionMatrix() {
-    float w = screenWidth / 2f / zoom;
-    float h = screenHeight / 2f / zoom;
-    return new Matrix4f().ortho2D(-w, w, -h, h);
+    w = screenWidth / 2f / zoom;
+    h = screenHeight / 2f / zoom;
+    return projectionMatrix.identity().ortho2D(-w, w, -h, h);
   }
 
 
@@ -116,10 +128,9 @@ public class Camera {
      */
   public void update() {
     attachedProgram.use();
-    Matrix4f vp = getVPMatrix();
-    float data[] = new float[16];
-    vp.get(data);
-    glUniformMatrix4fv(location, false, data);
+    VPMatrix = getVPMatrix();
+    VPMatrix.get(uniformData);
+    glUniformMatrix4fv(location, false, uniformData);
   }
 
 
@@ -147,5 +158,9 @@ public class Camera {
      */
   public float getZoom() {
     return zoom;
+  }
+
+  public Vector2f getFOV() {
+    return FOV.set(w, h);
   }
 }
