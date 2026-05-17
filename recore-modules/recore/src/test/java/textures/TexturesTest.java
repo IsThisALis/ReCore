@@ -20,8 +20,9 @@ public class TexturesTest {
   void init() {
     Window window = Params.getWindowInst();
     Params.getParams().setTitle("TexturesTest");
-    Params.getParams().setWidth(1080);;
+    Params.getParams().setWidth(1080);
     Params.getParams().setHeight(720);
+    Params.getParams().setVsyncStatus(true);
     window.init();
 
     program = new ShaderProgram();

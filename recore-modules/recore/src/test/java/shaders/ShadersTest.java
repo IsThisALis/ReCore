@@ -20,6 +20,7 @@ public class ShadersTest {
     Params.getParams().setTitle("ShadersTest");
     Params.getParams();
     Params.getParams().setHeight(720);
+    Params.getParams().setVsyncStatus(true);
     window.init();
     program = new ShaderProgram();
     shader = new Shader();

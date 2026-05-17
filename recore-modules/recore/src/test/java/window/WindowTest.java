@@ -16,6 +16,7 @@ public class WindowTest {
     params.setTitle("WindowTest");
     params.setWidth(1080);
     params.setHeight(720);
+    params.setVsyncStatus(true);
   }
 
     @Test 
