@@ -3,6 +3,7 @@ package recore.graphics.window;
   // ReCore imports
   // Core 
 import recore.core.ComponentLogic;
+import recore.core.GameLoop;
 
   // Util
 import recore.util.IO;
@@ -12,7 +13,8 @@ import recore.util.OS;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFW;
-import static org.lwjgl.glfw.GLFW.*; 
+import static org.lwjgl.glfw.GLFW.*;
+import org.lwjgl.glfw.GLFWVidMode;
 
   // OpenGL imports
 import org.lwjgl.opengl.GL;
@@ -22,6 +24,8 @@ public class Window implements ComponentLogic {
   
   // Gets parameters instance
   Params params;
+  long remainTime;
+  long frameDelayTime;
 
      /**
      * Initializing GLFW, OpenGL, window 
@@ -72,12 +76,24 @@ public class Window implements ComponentLogic {
         glfwMakeContextCurrent(params.getWindow());
         GL.createCapabilities();
 
-        glfwSwapInterval(1);
+        glfwSwapInterval(0);
       // Disabling depth 
         glDisable(GL_DEPTH_TEST);
 
       // Makes window visible
         glfwShowWindow(params.getWindow());
+
+
+        if (params.getVsyncStatus()) {
+            long monitor = GLFW.glfwGetPrimaryMonitor();
+            GLFWVidMode vidmode = GLFW.glfwGetVideoMode(monitor);
+            params.setFrameRateLimit(vidmode.refreshRate());
+            frameDelayTime = 1_000_000_000L / params.getFrameRateLimit();
+        }
+
+        if (!params.getVsyncStatus()) {
+            frameDelayTime = 1_000_000_000L / params.getFrameRateLimit();
+        }
     }
 
 
@@ -107,8 +123,13 @@ public class Window implements ComponentLogic {
        */ 
   @Override
     public void update() {
+      remainTime = frameDelayTime - GameLoop.getGameLoop().endFrame();
+      if (remainTime > 0) {
+            glfwWaitEventsTimeout(remainTime / 1_000_000_000.0);
+        } else {
+            glfwPollEvents();
+        }
       glfwSwapBuffers(params.getWindow());
-      glfwPollEvents();
     }
 
 
