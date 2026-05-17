@@ -9,6 +9,7 @@ import recore.graphics.window.Params;
 import recore.graphics.window.Window;
 
 import rephysics.collision.AABB;
+import rephysics.shapes.Square;
 
 public class Banana {
 
@@ -18,24 +19,11 @@ public class Banana {
 
   boolean cooldown = false;
 
-  float[] vertices = {
-    // x     y     z    u     v
-    0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
-    1.0f, -0.5f, 0.0f, 1.0f, 1.0f,
-    1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-    0.5f, -1.0f, 0.0f, 0.0f, 0.0f
-  };
-
-  int[] indices = {
-     0, 1, 2,
-     2, 3, 0
-  };
-
   public void create() {
     mesh = Resources.getScene().getObj(0);
-    mesh.init(vertices, indices, true);
+    mesh.init(Square.getVertices(), Square.getIndices(), true);
     mesh.setScale(0.65f, 0.65f);
-    mesh.setPosition(4.5f, -3.75f);
+    mesh.setPosition(1.5f, 3.75f);
   }
 
   public void draw() {
@@ -51,9 +39,5 @@ public class Banana {
     if(Collizion.getPlayerState()) {
       cooldown = true;
     }
-  }
-
-  public void setPosition(float x, float y) {
-    mesh.setPosition(x, y);
   }
 }
