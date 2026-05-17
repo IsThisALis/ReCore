@@ -6,7 +6,7 @@ import recore.util.Input;
 
 public class InputActions {
 
-  Input input;
+  private Input input;
 
   public InputActions() {
     input = new Input();
