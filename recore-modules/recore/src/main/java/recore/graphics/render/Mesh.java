@@ -17,7 +17,7 @@ import org.joml.Matrix4f;
 
 public class Mesh implements Renderable {
 
-      // Declares buffers for data
+      // Buffers for data
   private VertexBufferObject VBO;
   private VertexArrayObject VAO;
   private ElementBufferObject EBO;
@@ -38,6 +38,9 @@ public class Mesh implements Renderable {
   private Vector3f position = new Vector3f(0, 0, 0);
   private Vector3f rotation = new Vector3f(0, 0, 0);
   private Vector3f scale    = new Vector3f(1, 1, 1);
+
+      // Matrix4f values
+  private Matrix4f modelMatrix = new Matrix4f();
 
       /**
        * Basic constructor for creating mesh
@@ -62,17 +65,17 @@ public class Mesh implements Renderable {
        * @param vao VertexArrayObject to attach 
        * @param vbo VertexBufferObject to attach 
        * @param ebo ElementBufferObject to attach 
-       * @param textureUnit Texture to attach 
-       * @param shaderProgramUnit ShaderProgram to attach 
+       * @param texture Texture to attach 
+       * @param shaderProgram ShaderProgram to attach 
        */
-    public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, Texture textureUnit, ShaderProgram shaderProgramUnit) {
+    public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, Texture texture, ShaderProgram shaderProgram) {
           // Attaches buffers
       VBO = vbo;
       VAO = vao;
       EBO = ebo;
           // Attaches texture and ShaderProgram
-      texture = textureUnit;
-      shaderProgram = shaderProgramUnit;
+      this.texture = texture;
+      this.shaderProgram = shaderProgram;
       System.out.println("ReCore: New mesh initialized");
     } 
 
@@ -194,7 +197,7 @@ public class Mesh implements Renderable {
     }
 
   public Matrix4f buildModelMatrix() {
-    return new Matrix4f().translate(position).rotateZ(rotation.z).scale(scale);
+    return modelMatrix.identity().translate(position).rotateZ(rotation.z).scale(scale);
   }
 
       /**
