@@ -5,6 +5,7 @@ import rexample.interaction.Collizion;
 
 import recore.graphics.camera.Camera;
 import recore.graphics.render.Mesh;
+import recore.graphics.render.Renderer;
 
 import recore.util.Input;
 import recore.util.Time;
@@ -13,20 +14,20 @@ import rephysics.shapes.Square;
 
 public class Player {
 
-  Camera camera;
-  Mesh mesh;
+  private static Camera camera;
+  private Mesh mesh;
 
-  Time time = new Time();
-  Input input = new Input();
+  private Time time = new Time();
+  private Input input = new Input();
 
-  float speed = 5f;
-  float velocity = 5f;
-  float newY;
+  private float speed = 5f;
+  private float velocity = 5f;
+  private float newY;
 
-  boolean jumping;
-  boolean healable;
+  private boolean jumping;
+  private boolean healable;
   
-  int hp = 50;
+  private int hp = 50;
 
   public void init() {
     input.keyMapCreate();
@@ -47,7 +48,7 @@ public class Player {
     input();
     interact();
     camera.update();
-    mesh.draw();
+    Renderer.draw(mesh, camera);
     
   }
 
@@ -134,5 +135,9 @@ public class Player {
     if(healable && Collizion.getPlayerState()) {
         hp = 100;
     }
+  }
+
+  public static Camera getCamera() {
+    return camera;
   }
 }

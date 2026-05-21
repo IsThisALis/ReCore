@@ -1,7 +1,10 @@
 package rexample.gmobj;
 
 import rexample.resources.Resources;
+
 import recore.graphics.render.Mesh;
+import recore.graphics.render.Renderer;
+
 import rephysics.shapes.Square;
 
 public class Floor {
@@ -15,6 +18,6 @@ public class Floor {
   }
 
   public void draw() {
-    mesh.draw();
+    Renderer.draw(mesh, Player.getCamera());
   }
 }

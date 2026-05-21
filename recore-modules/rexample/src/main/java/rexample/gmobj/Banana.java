@@ -4,6 +4,7 @@ import rexample.interaction.Collizion;
 import rexample.resources.Resources;
 
 import recore.graphics.render.Mesh;
+import recore.graphics.render.Renderer;
 
 import recore.graphics.window.Params;
 import recore.graphics.window.Window;
@@ -23,14 +24,14 @@ public class Banana {
     mesh = Resources.getScene().getObj(0);
     mesh.init(Square.getVertices(), Square.getIndices(), true);
     mesh.setScale(0.65f, 0.65f);
-    mesh.setPosition(1.5f, 3.75f);
+    mesh.setPosition(1.5f, 1.75f);
   }
 
   public void draw() {
     interact();
     if(!cooldown) {
       window.blend(true);
-      mesh.draw();
+      Renderer.draw(mesh, Player.getCamera()); 
       window.blend(false);
     }
   }
