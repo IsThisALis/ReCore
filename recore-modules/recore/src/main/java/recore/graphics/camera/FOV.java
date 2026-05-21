@@ -1,21 +1,60 @@
 package recore.graphics.camera;
 
-import org.joml.Vector2f;
-
 import recore.graphics.render.Mesh;
 
 public class FOV {
 
-  private static Vector2f fov = new Vector2f();
-  private static Vector2f meshPosition = new Vector2f();
+  private float cLeft, cRight, cBottom, cTop;
+  private float mLeft, mRight, mBottom, mTop;
 
-  public static boolean inFov(Mesh mesh, Camera camera) {
-    meshPosition.x = mesh.getPosition().x;
-    meshPosition.y = mesh.getPosition().y;
+  private float meshX, meshY;
+  private float camX, camY;
 
-    fov.x = camera.getFOV().x;
-    fov.y = camera.getFOV().y;
+  private float w, h;
 
-    return fov.x >= meshPosition.x && fov.y >= meshPosition.y;
+  private float halfX, halfY;
+
+  public boolean inFov(Mesh mesh, Camera camera) {
+    w = camera.getFOV().x;
+    h = camera.getFOV().y;
+
+    meshX = mesh.getPosition().x;
+    meshY = mesh.getPosition().y;
+    halfX = getHalfWidth(mesh) * mesh.getScale().x;
+    halfY = getHalfHeight(mesh) * mesh.getScale().y;
+
+    camX = camera.getPosition().x;
+    camY = camera.getPosition().y;
+
+    cLeft = camX - w;
+    cRight = camX + w;
+    cBottom = camY - h;
+    cTop = camY + h;
+
+    mLeft = meshX - halfX;
+    mRight = meshX + halfX; 
+    mBottom = meshY - halfY;
+    mTop = meshY + halfY;
+
+    return !(mRight < cLeft || mLeft > cRight || mTop < cBottom || mBottom > cTop); 
+  }
+
+
+  private final float getHalfWidth(Mesh mesh) {
+    float max = 0;
+    for (int i = 0; i < mesh.getVertices().length; i += 5) {
+        float x = Math.abs(mesh.getVertices()[i]);
+        if (x > max) max = x;
+    }
+    return max;
+  }
+  
+  private final float getHalfHeight(Mesh mesh) {
+   float max = 0;
+    for (int i = 1; i < mesh.getVertices().length; i += 5) {
+        float x = Math.abs(mesh.getVertices()[i]);
+        if (x > max) max = x;
+    }
+    return max; 
   }
 }
