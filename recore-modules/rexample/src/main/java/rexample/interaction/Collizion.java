@@ -7,33 +7,32 @@ import rephysics.collision.AABB;
 import rexample.resources.Resources;
 
 public class Collizion implements ComponentLogic {
+    private AABB banana = new AABB();
+    private AABB player = new AABB();
 
-  AABB banana;
-  AABB player;
-  private static boolean playerCollided = false;
+    private static boolean playerState = false;
 
-  @Override
-  public void init() {
-    banana = new AABB();
-    banana.setMin(0.5f, -1.0f);
-    banana.setMax(1.0f, -0.5f);
+    @Override // recore.core.ComponentLogic
+    public void init() {
+        this.banana.setMin(0.5f, -1.0f);
+        this.banana.setMax(1.0f, -0.5f);
 
-    player = new AABB();
-    player.setMin(-0.25f, -0.25f);
-    player.setMax(0.25f, 0.25f);
-  }
+        this.player.setMin(0.5f, -1f);
+        this.player.setMax(1f, -0.5f);
+    }
 
-  @Override
-  public void update() {
-    playerCollided = AABB.AABBOverLap(banana, player, Resources.getScene().getObj(0), Resources.getScene().getObj(3));
-  }
+    @Override // recore.core.ComponentLogic
+    public void update() {
+        playerState = AABB.AABBOverLap(this.banana, this.player, Resources.getScene().getObj(0), Resources.getScene().getObj(3));
+    }
 
-  @Override
-  public void cleanup() {
-    //TODO: cleanup
-  }
+    @Override // recore.core.ComponentLogic
+    public void cleanup() {
+        this.banana = null;
+        this.player = null;
+    }
 
-  public static boolean getPlayerState() {
-    return playerCollided;
-  }
+    public static boolean getPlayerState() {
+        return playerState;
+    }
 }
