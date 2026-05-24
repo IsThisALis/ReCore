@@ -9,13 +9,14 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Input {
 
-  HashMap<String, Integer> keyMap = new HashMap<>();
-  Params params = Params.getParams();
+  private static final HashMap<String, Integer> keyMap = new HashMap<>();
+  private static final Params params = Params.getParams();
 
-  int scrollActionX, scrollActionY;
+  private static int scrollActionX, scrollActionY;
 
-    public void keyMapCreate() {
-        
+  private static long cursor;
+
+    static {
         keyMap.put("SPACE", 32);
         keyMap.put("APOSTROPHE", 39);
         keyMap.put("COMMA", 44);
@@ -137,35 +138,8 @@ public class Input {
         keyMap.put("RIGHT_SUPER", 347);
         keyMap.put("MENU", 348);
     }
-    
-    public int getKey(String key) {
-        return keyMap.get(key);
-    }
-    
-    public boolean keyContain(String key) {
-        return keyMap.containsKey(key);
-    }
-    
-    public int mapSize() {
-        return keyMap.size();
-    }
-    
-     public boolean keyPressed(int key) {
-       if(glfwGetKey(params.getWindow(), key) == GLFW_PRESS) { return true; } 
-       else { return false; }
-    }
 
-    public boolean keyReleased(int key) {
-       if(glfwGetKey(params.getWindow(), key) == GLFW_RELEASE) { return true; } 
-       else { return false; }
-    }
-
-    public boolean keyRepeated(int key) {
-       if(glfwGetKey(params.getWindow(), key) == GLFW_REPEAT) { return true; } 
-       else { return false; }
-    }
-
-    public void scrollCallback() {
+    public Input() {
       GLFWScrollCallbackI scrollCall = (window, xOffset, yOffset) -> {
 
         if(xOffset > 0) {
@@ -186,8 +160,48 @@ public class Input {
           };
 
         glfwSetScrollCallback(params.getWindow(), scrollCall);
+        glfwSetCursorPosCallback(params.getWindow(), cbfun) -> {
+        static void cursor_position_callback(window, double xpos, double ypos);
+        
+        }
     }
 
+    public static void setCursor(String pathToCursor) {
+      IO io = new IO();
+      cursor = glfwCreateCursor(io.loadImage(pathToCursor), 0, 0);
+      glfwSetCursor(params.getWindow(), cursor);
+    }
+
+    
+    public int getKey(String key) {
+        return keyMap.get(key);
+    }
+    
+    public boolean keyContain(String key) {
+        return keyMap.containsKey(key);
+    }
+    
+    public int mapSize() {
+        return keyMap.size();
+    }
+
+    
+     public boolean keyPressed(int key) {
+       if(glfwGetKey(params.getWindow(), key) == GLFW_PRESS) { return true; } 
+       else { return false; }
+    }
+
+    public boolean keyReleased(int key) {
+       if(glfwGetKey(params.getWindow(), key) == GLFW_RELEASE) { return true; } 
+       else { return false; }
+    }
+
+    public boolean keyRepeated(int key) {
+       if(glfwGetKey(params.getWindow(), key) == GLFW_REPEAT) { return true; } 
+       else { return false; }
+    }
+
+    
     public void resetScrollActionX() {
       scrollActionX = 0;
     }
