@@ -19,6 +19,7 @@ import recore.core.GameLoop;
     // Window
 import recore.graphics.window.Params;
 import recore.graphics.window.Window;
+import recore.util.Input;
 
 public class Main implements ApplicationLogic {
 	    // Getting instances
@@ -29,7 +30,7 @@ public class Main implements ApplicationLogic {
   private ResourceManager resourceManager = Resources.getResourceManager();
   private ObjectManager objectManager = new ObjectManager();
   private Collizion collizion = new Collizion();
-  private InputActions inputActions = new InputActions();
+  private InputActions inputActions;
   private static Main main = new Main();
 
 	@Override
@@ -42,6 +43,8 @@ public class Main implements ApplicationLogic {
        // Initializing components
     window.init();
     window.setIcon("samples/textures/icon.png");
+    Input.setCursor("samples/textures/cursor_default.png");
+    inputActions = new InputActions();
     shaderManager.init();
     textureManager.init();
     resourceManager.init();
