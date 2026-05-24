@@ -1,7 +1,21 @@
 package rephysics.shapes;
 
+import rephysics.collision.AABB;
+
 public class Square {
 
+    // Object collision, it is recommended to use this pre-set to avoid bugs
+  private static final AABB aabb = new AABB();
+
+
+    // Initializing collision data
+  static {
+    aabb.setMin(-0.25f, -0.25f);
+    aabb.setMax(0.25f, 0.25f);
+  }
+
+
+    // Object vertices
   private static final float[] vertices = {
     // x     y     z    u   v
     -0.25f, 0.25f, 0f, 0f, 1f,
@@ -10,6 +24,7 @@ public class Square {
     -0.25f,-0.25f, 0f, 0f, 0f
   };
 
+    // Object indices
   private static final int[] indices = {
      0, 1, 2,
      2, 3, 0
@@ -31,5 +46,14 @@ public class Square {
      */
   public static final int[] getIndices() {
     return indices;
+  }
+
+
+    /**
+     * Getter for collision data
+     * @return Object collision instance
+     */
+  public static final AABB getAABB() {
+    return aabb;
   }
 }
