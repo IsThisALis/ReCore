@@ -17,7 +17,6 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.glfw.GLFWImage;
-//import static org.lwjgl.system.MemoryUtil.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class IO {
