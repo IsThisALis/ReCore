@@ -159,12 +159,9 @@ public class Input {
         }
           };
 
-        glfwSetScrollCallback(params.getWindow(), scrollCall);
-        glfwSetCursorPosCallback(params.getWindow(), cbfun) -> {
-        static void cursor_position_callback(window, double xpos, double ypos);
-        
-        }
+        glfwSetScrollCallback(params.getWindow(), scrollCall);         
     }
+
 
     public static void setCursor(String pathToCursor) {
       IO io = new IO();
