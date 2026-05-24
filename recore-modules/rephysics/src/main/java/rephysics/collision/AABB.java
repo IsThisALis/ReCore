@@ -8,6 +8,9 @@ import recore.graphics.render.Mesh;
 
 public class AABB {
 
+    private Vector2f v = new Vector2f();
+    private Vector2f v1 = new Vector2f();
+
      /**
      * Lower left vertex of bounding box.
      */
@@ -19,9 +22,12 @@ public class AABB {
     private Vector2f max;
 
     /**
-     * 
+     * Utility class instance to reduce boilerplate with vectors 
      */ 
     private static VectorUtil vecutil = new VectorUtil(); 
+
+    private AABB copyto;
+
 
     /**
      * Constructor to generate an AABB given a minimum and maximum bound in the form of two vectors.
@@ -51,12 +57,25 @@ public class AABB {
      * @param aabb An AABB bounding box.
      */
     public final void set(final AABB aabb) {
-        Vector2f v = aabb.min;
+        v = aabb.min;
         min.x = v.x;
         min.y = v.y;
-        Vector2f v1 = aabb.max;
+        v1 = aabb.max;
         max.x = v1.x;
         max.y = v1.y;
+    }
+
+      /**
+       * Sets the current objects bounds equal to that of the passed AABB argument.
+       *
+       * @param min Lower bound of AABB vertex.
+       * @param max Higher bound of AABB vertex.
+       */
+    public final void set(final Vector2f min, final Vector2f max) {
+        /*vecutil.copy(this.min, min);
+        vecutil.copy(this.max, max);*/ 
+      this.min.set(min);
+      this.max.set(max);
     }
 
     /**
@@ -66,9 +85,10 @@ public class AABB {
      * @param y Y value 
      */
     public void setMin(float x, float y) {
-      min.x = x;
-      min.y = y;
+        min.x = x;
+        min.y = y;
     }
+
     /**
      * Setter for max variable for upper bound vertex 
      *
@@ -76,8 +96,8 @@ public class AABB {
      * @param y Y value 
      */
     public void setMax(float x, float y) {
-      max.x = x;
-      max.y = y;
+        max.x = x;
+        max.y = y;
     }
 
     /**
@@ -147,7 +167,12 @@ public class AABB {
      * @return New AABB that's the same as the current object.
      */
     public AABB copy() {
-        return new AABB(this.min, this.max);
+        if(copyto == null) {
+          copyto = new AABB();
+        }
+        copyto.set(this.min, this.max);
+
+        return copyto;
     }
 
     /**
