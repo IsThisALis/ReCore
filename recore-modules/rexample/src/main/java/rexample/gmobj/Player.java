@@ -2,7 +2,6 @@ package rexample.gmobj;
 
 import rexample.resources.Resources;
 import rexample.interaction.Collizion;
-
 import recore.graphics.camera.Camera;
 import recore.graphics.render.Mesh;
 import recore.graphics.render.Renderer;
@@ -18,7 +17,7 @@ public class Player {
   private Mesh mesh;
 
   private Time time = new Time();
-  private Input input = new Input();
+  private Input input;
 
   private float speed = 5f;
   private float velocity = 5f;
@@ -30,8 +29,8 @@ public class Player {
   private int hp = 50;
 
   public void init() {
-    input.keyMapCreate();
-    input.scrollCallback();
+
+    input = new Input();
 
     mesh = Resources.getScene().getObj(3);
     mesh.init(Square.getVertices(), Square.getIndices(), true);

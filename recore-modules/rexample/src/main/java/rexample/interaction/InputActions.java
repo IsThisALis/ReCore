@@ -10,7 +10,6 @@ public class InputActions {
 
   public InputActions() {
     input = new Input();
-    input.keyMapCreate();
   }
 
   public void update() {
