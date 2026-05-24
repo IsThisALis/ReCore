@@ -17,7 +17,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.glfw.GLFWImage;
-import static org.lwjgl.system.MemoryUtil.*;
+//import static org.lwjgl.system.MemoryUtil.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class IO {
@@ -133,4 +133,39 @@ public class IO {
           STBImage.stbi_image_free(pixels);
     }
 
+
+  public GLFWImage loadImage(String path) {
+    ByteBuffer imageBuffer = null;
+      try {
+
+        //Reads image from file
+        InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
+        if(stream == null) {
+          throw new IOException("IO Error! Check file path please: "+path);
+        }
+        byte[] fileBytes = stream.readAllBytes();
+
+        //Puts image in ByteBuffer
+        imageBuffer = BufferUtils.createByteBuffer(fileBytes.length);
+        imageBuffer.put(fileBytes);
+        imageBuffer.position(0);
+        
+        //Catches IOException like file not found
+      } catch(IOException e) {
+          System.out.println("Encountered IO exception: "+e);
+        }
+      
+        //Puts image data into IntBuffers
+        IntBuffer w = stack.mallocInt(1);
+        IntBuffer h = stack.mallocInt(1);
+        IntBuffer comp = stack.mallocInt(1);
+
+    ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
+    if (pixels == null) {
+        throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
+    }
+          GLFWImage image = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
+          STBImage.stbi_image_free(pixels);
+          return image;
+    }
 }
