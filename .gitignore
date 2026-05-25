@@ -31,7 +31,7 @@ bin
 
 # dev
 RExample
-*.dev
+.dev*
 
 # files
 .classpath
