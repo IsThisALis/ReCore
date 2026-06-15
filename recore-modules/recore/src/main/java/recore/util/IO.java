@@ -20,26 +20,24 @@ import org.lwjgl.glfw.GLFWImage;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class IO {
-    ByteBuffer imageBuffer;
-    MemoryStack stack = MemoryStack.stackPush();
 
 
    /**
-   * used to load files with text, do not use for loading images or something!
-   * @param path path to your file
-   * returns String 
+   * Used to load files to String.
+   * @param path path to file need to be loaded.
+   * @return File source in String.
    */ 
     public static String loadTextFile(String path) {
+    
+    try (InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);) {
 
-    //
-    InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
-    try {
       if (stream == null) {
-          throw new RuntimeException("Content not found");
+          throw new IOException("ReCore: cannot find file " + "[ " +path+ " ]");
       }
+
       return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
     } catch(IOException e) {
-        throw new RuntimeException("encountered unknown error while reading file with path: "+path);
+        throw new RuntimeException("ReCore: Encountered unknown error while loading file " + "[ " + path + " ]" + "[ " + e + " ]");
     }
   }
 
@@ -47,43 +45,43 @@ public class IO {
   /**
    * Loads image as texture and sets parameters, loads content from resources folder
    * @param path Path to your image file like assets/textures/image.png
-   * returns data directly to the texture parameters
+   * @return GLFWImage ata directly to the texture parameters
    */
   public void loadTexture(String path, Texture texture) {
-    ByteBuffer imageBuffer = null;
-      try {
+      ByteBuffer imageBuffer;
+      try (MemoryStack stack = MemoryStack.stackPush()) {
 
-        //Reads image from file
+          // Reads image from file
         InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
         if(stream == null) {
           throw new IOException("IO Error! Check file path: "+path);
         }
         byte[] fileBytes = stream.readAllBytes();
+        stream.close(); 
 
-        //Puts image in ByteBuffer
+          // Puts raw image data in ByteBuffer
         imageBuffer = BufferUtils.createByteBuffer(fileBytes.length);
         imageBuffer.put(fileBytes);
         imageBuffer.position(0);
-        
-        //Catches IOException like file not found
-      } catch(IOException e) {
-          System.out.println("Encountered IO exception: "+e);
-        }
-      
-        //Puts image data into IntBuffers
+            
+
+          // Puts image data into IntBuffers
         IntBuffer w = stack.mallocInt(1);
         IntBuffer h = stack.mallocInt(1);
         IntBuffer comp = stack.mallocInt(1);
-        
-        //Loads image using STB
+      
+
+          // Loads image with STB
         STBImage.stbi_set_flip_vertically_on_load(true);
         ByteBuffer image = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
 
-        //Transfers texture parameters to int
+      
+          // Transfers texture parameters to int variables
         int height = h.get();
         int width = w.get();
 
-        //Throws exception if texture not loaded
+
+          // Throws exception if texture image not loaded
         if (image == null) {
           throw new RuntimeException("Error while loading texture: "+STBImage.nstbi_failure_reason());
         }
@@ -92,79 +90,102 @@ public class IO {
         texture.getParams().setHeight(height);
         texture.getParams().setWidth(width);
         texture.getParams().setImage(image);
+
+      } catch(IOException e) {
+          System.out.println("ReCore: Encountered IO exception while loading file " + "[ " + path + " ] " + "[ " + e + " ]");
+        }
     }
   
-  public void loadIcon(long window, String path) {
-    ByteBuffer imageBuffer = null;
-      try {
 
-        //Reads image from file
+
+  public void loadIcon(long window, String path) {
+      ByteBuffer imageBuffer = null;
+
+      try (MemoryStack stack = MemoryStack.stackPush()) {
+
+
         InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
         if(stream == null) {
-          throw new IOException("IO Error! Check file path please: "+path);
+          throw new IOException("ReCore: IO Error! Check file path please: "+path);
         }
-        byte[] fileBytes = stream.readAllBytes();
 
-        //Puts image in ByteBuffer
+
+          // Loads and pushes icon image data to buffer.
+        byte[] fileBytes = stream.readAllBytes();
         imageBuffer = BufferUtils.createByteBuffer(fileBytes.length);
         imageBuffer.put(fileBytes);
         imageBuffer.position(0);
         
-        //Catches IOException like file not found
-      } catch(IOException e) {
-          System.out.println("Encountered IO exception: "+e);
-        }
       
-        //Puts image data into IntBuffers
+          // Puts image data into IntBuffers
         IntBuffer w = stack.mallocInt(1);
         IntBuffer h = stack.mallocInt(1);
         IntBuffer comp = stack.mallocInt(1);
 
-    ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
-    if (pixels == null) {
-        throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
+
+        ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
+
+        if (pixels == null) {
+          throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
+        }
+
+        GLFWImage.Buffer icons = GLFWImage.malloc(1);
+        GLFWImage icon = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
+
+        icons.put(0, icon); 
+        glfwSetWindowIcon(window, icons);
+        icon.free();
+
+        STBImage.stbi_image_free(pixels);
+        icons.free();
+
+        } catch(IOException e) {
+          System.out.println("Encountered IO exception: "+e);
+        }
     }
-          GLFWImage.Buffer icons = GLFWImage.malloc(1);
-          GLFWImage icon = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
-          icons.put(0, icon); 
-          glfwSetWindowIcon(window, icons);
-          icon.free();
-          STBImage.stbi_image_free(pixels);
-    }
+
 
 
   public GLFWImage loadImage(String path) {
-    ByteBuffer imageBuffer = null;
-      try {
+      ByteBuffer imageBuffer = null;
+      try (MemoryStack stack = MemoryStack.stackPush()) {
 
         //Reads image from file
         InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
         if(stream == null) {
           throw new IOException("IO Error! Check file path please: "+path);
         }
+
+
         byte[] fileBytes = stream.readAllBytes();
+        stream.close();
 
         //Puts image in ByteBuffer
         imageBuffer = BufferUtils.createByteBuffer(fileBytes.length);
         imageBuffer.put(fileBytes);
         imageBuffer.position(0);
         
-        //Catches IOException like file not found
-      } catch(IOException e) {
-          System.out.println("Encountered IO exception: "+e);
-        }
       
         //Puts image data into IntBuffers
         IntBuffer w = stack.mallocInt(1);
         IntBuffer h = stack.mallocInt(1);
         IntBuffer comp = stack.mallocInt(1);
 
-    ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
-    if (pixels == null) {
-        throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
-    }
-          GLFWImage image = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
-          STBImage.stbi_image_free(pixels);
-          return image;
+
+        ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
+        if (pixels == null) {
+          throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
+        }
+
+
+        GLFWImage image = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
+        STBImage.stbi_image_free(pixels);
+
+
+        return image;
+
+    } catch(IOException e) {
+          throw new RuntimeException("Encountered IO exception: "+e);
+        }
     }
 }
