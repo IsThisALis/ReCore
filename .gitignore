@@ -40,3 +40,4 @@ dependency-reduced-pom.xml
 
 # backup files/dirs 
 *.bak
+.*
