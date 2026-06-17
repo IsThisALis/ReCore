@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
     // JOML imports
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Matrix4f;
 
@@ -59,6 +60,8 @@ public class Mesh implements Renderable {
       shaderProgram = shaderProgramUnit;
       System.out.println("ReCore: New mesh initialized");
     }
+
+
       /**
        * Advanced constructor for creating mesh
        * Renders with texture
@@ -78,6 +81,7 @@ public class Mesh implements Renderable {
       this.shaderProgram = shaderProgram;
       System.out.println("ReCore: New mesh initialized");
     } 
+
 
     /**
      * Imitializes mesh
@@ -130,6 +134,7 @@ public class Mesh implements Renderable {
       location = glGetUniformLocation(shaderProgram.getId(), "uModelMatrix"); 
     }
 
+
     /**
      * Updates data in buffers, can be used for controlling object 
      *  @param vertices new position and uv mapping attributes
@@ -155,8 +160,9 @@ public class Mesh implements Renderable {
       glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices);
     }
 
+
     /**
-     * Deletes buffers and their data
+     * Deletes buffers and data
      */
   @Override
     public void cleanup() {
@@ -174,6 +180,7 @@ public class Mesh implements Renderable {
       EBO = null;
       VAO = null;
     }
+
 
     /**
      * Draws object with ShaderProgram and its texture if used
@@ -200,6 +207,7 @@ public class Mesh implements Renderable {
     return modelMatrix.identity().translate(position).rotateZ(rotation.z).scale(scale);
   }
 
+
       /**
        * Moves mesh to position 
        *
@@ -214,7 +222,21 @@ public class Mesh implements Renderable {
   }
 
 
-  //   <---   SETTERS --->
+  public void changeTexture(Texture texture) {
+    this.texture = texture;
+  }
+
+  //   <---   GETTERS --->
+
+
+   /**
+    * Getter for attached to mesh texture.
+    * @return Texture class instance.
+    */
+  public Texture getTexture() {
+    return this.texture;
+  }
+
 
   /**
    * Getter for mesh position
@@ -256,7 +278,7 @@ public class Mesh implements Renderable {
   }
 
 
-  //   <---  GETTERS   --->
+  //   <---  SETTERS   --->
 
 
     /**
@@ -269,6 +291,27 @@ public class Mesh implements Renderable {
     position.x = x;
     position.y = y;
   }
+
+    /**
+     * Setter for object position in world.
+     *
+     * @param position New position.
+     */
+  public void setPosition(Vector2f position) {
+    this.position.x = position.x;
+    this.position.y = position.y;
+  }
+
+    /**
+     * Setter for object position in world.
+     *
+     * @param position New position.
+     */
+  public void setPosition(Vector3f position) {
+    this.position.x = position.x;
+    this.position.y = position.y;
+  }
+
 
     /**
      * Setter for object scale 
