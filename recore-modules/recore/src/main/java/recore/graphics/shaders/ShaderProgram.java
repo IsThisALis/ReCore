@@ -7,14 +7,21 @@ import static org.lwjgl.opengl.GL20.*;
   // Java util imports
 import java.util.concurrent.ConcurrentHashMap;
 
+import recore.util.NIO;
+
 public class ShaderProgram {
+
       // Program identifier given by OpenGL
     private int id;
+
       // Stores shader we are working with
     private Shader attachedShader;
-      // Stores shaders, allows to switch shaders
-    private final ConcurrentHashMap<String, Shader> shaderCache = new ConcurrentHashMap<>();
+
+      // Stores shaders
+    private final ConcurrentHashMap<String, Shader> shaders = new ConcurrentHashMap<>();
     
+      // Cache path 
+    private String cachePath;
 
     /**
      * Creates new OpenGL shader program
@@ -24,10 +31,10 @@ public class ShaderProgram {
     }
 
     
-    /**
-     * Attaches shader to the program and context (attachedShader)
-     * @param shader Shader to be attached
-     */
+      /**
+       * Attaches shader to the program and context (attachedShader)
+       * @param shader Shader to be attached
+       */
     public void attachShader(Shader shader) {
         glAttachShader(id, shader.getId());
         attachedShader = shader;
@@ -64,9 +71,9 @@ public class ShaderProgram {
     }
 
 
-        /**
-         * Deletes attached shader
-         */
+      /**
+       * Deletes attached shader
+       */
     public void deleteShader() {
         if (attachedShader != null) {
             glDeleteShader(attachedShader.getId());
@@ -74,19 +81,19 @@ public class ShaderProgram {
     }
     
 
-    /**
-     * Getter for program identifier
-     * @return Shader program id
-     */
+     /**
+      * Getter for program identifier
+      * @return Shader program id
+      */
     public int getId() {
         return id;
     }
 
     
-    /**
-     * Checks program link status
-     * @return Link status 
-     */
+      /**
+       * Checks program link status
+       * @return Link status 
+       */
     public boolean checkStatus() {
         int status = glGetProgrami(id, GL_LINK_STATUS);
         if (status != GL_TRUE) {
@@ -102,16 +109,61 @@ public class ShaderProgram {
        * @param shader shader to store
        */
     public void putShader(String key, Shader shader) {
-      shaderCache.put(key, shader);
+      shaders.put(key, shader);
     }
 
 
     /**
-     * Returns shader from storage 
-     * @param key keyword to get shader
-     * @return Shader
+     * Returns shader from storage.
+     * @param key keyword to get shader.
+     * @return Shader class instance.
      */
     public Shader getShader(String key) {
-      return shaderCache.get(key);
+      return shaders.get(key);
+    }
+
+
+      /**
+       * Sets path to cachefile.
+       * Format: folder/to/file/filename.
+       * @param value New shader cachefile path.
+       */
+    public void setCachePath(String value) {
+      cachePath = value + ".bin";
+    }
+
+
+      /**
+       * Getter for cachefile path.
+       * @return Path to cachefile as String.
+       */
+    public String getCachePath() {
+      return cachePath;
+    }
+
+
+       /**
+        * Getter for cachefile status.
+        * False - not exists.
+        * True - saved on path.
+        */
+    public boolean hasCache() {
+      return NIO.isFile(NIO.makePath(cachePath));
+    }
+
+
+      /**
+       * Caches shader program in cachefile with path.
+       */
+    public void cache() {
+      ShaderCache.writeShaderCache(this); 
+    }
+
+
+      /**
+       * Loads cache from cachefile.
+       */
+    public void loadCache() {
+      if (hasCache()) ShaderCache.loadCache(this);
     }
 }
