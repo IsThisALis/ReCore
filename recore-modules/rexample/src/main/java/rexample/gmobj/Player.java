@@ -17,7 +17,6 @@ public class Player {
   private Mesh mesh;
 
   private Time time = new Time();
-  private Input input;
 
   private float speed = 5f;
   private float velocity = 5f;
@@ -29,8 +28,6 @@ public class Player {
   private int hp = 50;
 
   public void init() {
-
-    input = new Input();
 
     mesh = Resources.getScene().getObj(3);
     mesh.init(Square.getVertices(), Square.getIndices(), true);
@@ -44,25 +41,25 @@ public class Player {
 
   public void draw() {
     time.tick();
-    input();
+    Input();
     interact();
     camera.update();
     Renderer.draw(mesh, camera);
     
   }
 
-  public void input() {
+  public void Input() {
     float x = 0f;
 
-    if(input.keyPressed(input.getKey("A"))) {
+    if(Input.keyPressed(Input.getKey("A"))) {
       x=-0.25f;
     }
 
-    if(input.keyPressed(input.getKey("D"))) {
+    if(Input.keyPressed(Input.getKey("D"))) {
       x=0.25f;
     }
 
-    if(input.keyPressed(input.getKey("E"))) {
+    if(Input.keyPressed(Input.getKey("E"))) {
       mesh.setScale(1.25f, 1.25f);
       speed = 2.5f;
       if(!jumping) {
@@ -70,7 +67,7 @@ public class Player {
       }
     }
 
-    if(input.keyPressed(input.getKey("C"))) {
+    if(Input.keyPressed(Input.getKey("C"))) {
       mesh.setScale(0.25f, 0.25f);
       speed = 7.25f;
       if(!jumping) {
@@ -78,26 +75,26 @@ public class Player {
       }
     } 
 
-    if(input.keyPressed(input.getKey("SPACE"))) {
+    if(Input.keyPressed(Input.getKey("SPACE"))) {
       jumping = true;
     }
 
-    if(input.getScrollActionY() == 1) {
+    if(Input.getScrollY()  == 1.0) {
       camera.addZoom(1.1f);
     }
 
-    if(input.getScrollActionY() == -1) {
+    if(Input.getScrollY() == -1.0) {
       if(camera.getZoom() >= 1.1f) {
         camera.subZoom(-1.1f);
       }
     }
 
-    if(input.keyReleased(input.getKey("SPACE")) && jumping == false) {
+    if(Input.keyReleased(Input.getKey("SPACE")) && jumping == false) {
       velocity = 5f;
     }
 
 
-    if(input.keyReleased(input.getKey("C")) && input.keyReleased(input.getKey("E"))) {
+    if(Input.keyReleased(Input.getKey("C")) && Input.keyReleased(Input.getKey("E"))) {
       mesh.setScale(0.75f, 0.75f);
       speed = 5f;
     }
@@ -105,7 +102,7 @@ public class Player {
     camera.move(x, 0f, speed, time.getDelta()); 
     mesh.setPosition(camera.getPosition().x, camera.getPosition().y);
 
-    input.resetScrollActionY();
+    Input.resetScrollY();
   }
 
   public void interact() {
