@@ -20,12 +20,13 @@ public class Camera {
     // Vector3f values
   private Vector3f position;
   private Vector2f FOV;
+  private Vector2f cache;
 
     // float values
-  private float screenWidth;
-  private float screenHeight;
+  private float screenWidth, screenHeight;
   private float zoom = 1.0f;
   private float w, h;
+  private float wX, wY;
 
     // Array values
   private float[] uniformData = new float[16];
@@ -43,29 +44,32 @@ public class Camera {
 
 
     /**
-     * Constructor to initialize camera 
-     * Requires OpenGL context 
-     * @param x Camera start x 
-     * @param y Camera start y 
-     * @param program ShaderProgram attaching to camera (Need shaders with camera support)
+     * Constructor to initialize camera.
+     * Requires OpenGL context.
+     * @param x Camera start x.
+     * @param y Camera start y.
+     * @param program ShaderProgram attaching to camera (Need shaders with camera support).
      */
   public Camera(float x, float y, ShaderProgram program) {
     position = new Vector3f(x, y, 0.0f);
     FOV = new Vector2f();
+    cache = new Vector2f();
+
     screenWidth = (float) Params.getParams().getWidth();
     screenHeight = (float) Params.getParams().getHeight();
+
     attachedProgram = program;
     location = glGetUniformLocation(attachedProgram.getId(), "uVPMatrix");
   }
   
 
     /**
-     * Moving camera by x and y 
-     * Uses speed and time delta between frames to get smooth moving 
-     * @param x Value adding to x 
-     * @param y Value adding to y 
-     * @param speed Camera speed value 
-     * @param timeDelta Time delta between past and now frames 
+     * Moving camera by x and y.
+     * Uses speed and time delta between frames to get smooth moving.
+     * @param x Value adding to x.
+     * @param y Value adding to y.
+     * @param speed Camera speed value.
+     * @param timeDelta Time delta between past and now frames.
      */
   public void move(float x, float y, float speed, float timeDelta) { 
     position.y += y*speed*timeDelta;
@@ -75,19 +79,24 @@ public class Camera {
 
 
     /**
-     * Setter for camera position 
-     * @param x Camera x coordinate
-     * @param y Camera y coordinate 
+     * Setter for camera position.
+     * @param x Camera x coordinate.
+     * @param y Camera y coordinate.
      */
   public void setPosition(float x, float y) {
     position.y = y;
     position.x = x;
   }
 
+  public void setPosition(Vector2f position) {
+    this.position.x = position.x;
+    this.position.y = position.y;
+  }
+
 
     /**
-     * Getter for camera position 
-     * @return Position (Vector3f)
+     * Getter for camera position.
+     * @return Position (Vector3f).
      */
   public Vector3f getPosition() {
     return position;
@@ -95,8 +104,8 @@ public class Camera {
 
 
     /**
-     * Getter for view matrix 
-     * @return View matrix (Matrix4f)
+     * Getter for view matrix.
+     * @return View matrix (Matrix4f).
      */
   public Matrix4f getViewMatrix() {
     return viewMatrix.identity().translate(-position.x, -position.y, -position.z);
@@ -104,8 +113,8 @@ public class Camera {
 
 
      /**
-      * Getter to calculate prjection matrix 
-      * @return Projection matrix (Matrix4f)
+      * Getter to calculate prjection matrix.
+      * @return Projection matrix (Matrix4f).
       */
   public Matrix4f getProjectionMatrix() {
     w = screenWidth / 2f / zoom;
@@ -115,8 +124,8 @@ public class Camera {
 
 
     /**
-     * Getter to calculate view projection matrix 
-     * @return View projection matrix (Matrix4f)
+     * Getter to calculate view projection matrix. 
+     * @return View projection matrix (Matrix4f).
      */
   public Matrix4f getVPMatrix() {
     return getProjectionMatrix().mul(getViewMatrix());
@@ -124,7 +133,7 @@ public class Camera {
 
 
     /**
-     * Updates data in shaders 
+     * Updates data in shaders.
      */
   public void update() {
     attachedProgram.use();
@@ -135,8 +144,8 @@ public class Camera {
 
 
     /**
-     * Method to increase zoom value 
-     * @param value Multiplicates zoom by this value 
+     * Method to increase zoom value.
+     * @param value Multiplicates zoom by this value.
      */
   public void addZoom(float value) {
     zoom *= value;
@@ -144,8 +153,8 @@ public class Camera {
 
 
     /**
-     * Method to reduce zoom value
-     * @param value Divides zoom by this value 
+     * Method to reduce zoom value.
+     * @param value Divides zoom by this value.
      */
   public void subZoom(float value) {
     zoom /= -value;
@@ -160,7 +169,19 @@ public class Camera {
     return zoom;
   }
 
+    /**
+     * Getter for camera field of view (FOV).
+     * @return Vector2f with camera field of view in height and width
+     */
   public Vector2f getFOV() {
     return FOV.set(w, h);
+  }
+
+
+  public Vector2f pixelsToWorld(float screenX, float screenY) {
+    wX = screenX - screenWidth / 2f;
+    wY = screenHeight / 2f - screenY;
+    cache.set(wX, wY);
+    return cache;
   }
 }
