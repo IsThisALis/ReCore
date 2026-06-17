@@ -3,7 +3,7 @@ package util;
 import org.junit.jupiter.api.Test;
 import recore.util.IO;
 
-public class UtilTest {
+public class IOTest {
 
     @Test
   void loadString() {
