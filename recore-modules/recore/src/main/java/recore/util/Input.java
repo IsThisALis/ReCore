@@ -4,15 +4,21 @@ import java.util.HashMap;
 
 import recore.graphics.window.*;
 
+import org.lwjgl.glfw.GLFWCursorPosCallbackI;
 import org.lwjgl.glfw.GLFWScrollCallbackI;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Input {
 
   private static final HashMap<String, Integer> keyMap = new HashMap<>();
+  private static final HashMap<String, Integer> mouseMap = new HashMap<>();
   private static final Params params = Params.getParams();
 
-  private static int scrollActionX, scrollActionY;
+  private static double scrollValueX, scrollValueY;
+  public static float mouseX, mouseY;
+  private static double[] mxpos = new double[1];
+  private static double[] mypos = new double[1];
 
   private static long cursor;
 
@@ -137,81 +143,131 @@ public class Input {
         keyMap.put("RIGHT_ALT", 346);
         keyMap.put("RIGHT_SUPER", 347);
         keyMap.put("MENU", 348);
+
+        mouseMap.put("MOUSE_1", 0);
+        mouseMap.put("MOUSE_2", 1);
+        mouseMap.put("MOUSE_3", 2);
+        mouseMap.put("MOUSE_4", 3);
+        mouseMap.put("MOUSE_5", 4);
+        mouseMap.put("MOUSE_6", 5);
+        mouseMap.put("MOUSE_7", 6);
+        mouseMap.put("MOUSE_8", 7);
+
+        mouseMap.put("MOUSE_LEFT", 0);
+        mouseMap.put("MOUSE_RIGHT", 1);
+        mouseMap.put("MOUSE_MIDDLE", 2);
+        mouseMap.put("MOUSE_LAST", 7);
     }
 
-    public Input() {
-      GLFWScrollCallbackI scrollCall = (window, xOffset, yOffset) -> {
+    static {
+      GLFWScrollCallbackI scrollCallback = (window, xOffset, yOffset) -> {
+        scrollValueX = xOffset;
+        scrollValueY = yOffset;
+      };
 
-        if(xOffset > 0) {
-          scrollActionX = 1;
-        }
-
-        if(xOffset < 0) {
-          scrollActionX = -1;
-        }
-
-        if(yOffset > 0) {
-          scrollActionY = 1;
-        }
-
-        if(yOffset < 0) {
-          scrollActionY = -1;
-        }
-          };
-
-        glfwSetScrollCallback(params.getWindow(), scrollCall);         
+      glfwSetScrollCallback(params.getWindow(), scrollCallback);
     }
 
 
-    public static void setCursor(String pathToCursor) {
+    public static void setCursor(String pathToCursorImage) {
       IO io = new IO();
-      cursor = glfwCreateCursor(io.loadImage(pathToCursor), 0, 0);
+      if(pathToCursorImage == null) {
+        cursor = glfwCreateStandardCursor(0x00036001);
+      }
+
+
+      cursor = glfwCreateCursor(io.loadImage(pathToCursorImage), 0, 0);
       glfwSetCursor(params.getWindow(), cursor);
+
+
+      GLFWCursorPosCallbackI curorPosCallback = (window, xpos, ypos) -> {
+        mouseX = (float) xpos;
+        mouseY = (float) ypos;
+      };
+
+      glfwSetCursorPosCallback(params.getWindow(), curorPosCallback);
     }
 
     
-    public int getKey(String key) {
+    public static int getKey(String key) {
         return keyMap.get(key);
     }
+
+    public static int getMouseKey(String key) {
+      return mouseMap.get(key);
+    }
+
     
-    public boolean keyContain(String key) {
+    public static boolean keyContain(String key) {
         return keyMap.containsKey(key);
     }
+
+    public static boolean mouseKeyContain(String key) {
+      return mouseMap.containsKey(key);
+    }
+
     
-    public int mapSize() {
+    public static int keyMapSize() {
         return keyMap.size();
     }
 
-    
-     public boolean keyPressed(int key) {
+    public static int mouseMapSize() {
+      return mouseMap.size();
+    }
+
+   
+     public static boolean mouseKeyPressed(int key) {
+       if(glfwGetMouseButton(params.getWindow(), key) == GLFW_PRESS) { return true; } 
+       else { return false; }
+    }
+
+    public static  boolean mouseKeyReleased(int key) {
+       if(glfwGetMouseButton(params.getWindow(), key) == GLFW_RELEASE) { return true; } 
+       else { return false; }
+    }
+
+    public static boolean mouseKeyRepeated(int key) {
+       if(glfwGetMouseButton(params.getWindow(), key) == GLFW_REPEAT) { return true; } 
+       else { return false; }
+    }
+
+
+
+     public static boolean keyPressed(int key) {
        if(glfwGetKey(params.getWindow(), key) == GLFW_PRESS) { return true; } 
        else { return false; }
     }
 
-    public boolean keyReleased(int key) {
+    public static boolean keyReleased(int key) {
        if(glfwGetKey(params.getWindow(), key) == GLFW_RELEASE) { return true; } 
        else { return false; }
     }
 
-    public boolean keyRepeated(int key) {
+    public static boolean keyRepeated(int key) {
        if(glfwGetKey(params.getWindow(), key) == GLFW_REPEAT) { return true; } 
        else { return false; }
     }
 
+    public static void getCursorPos() {
+      glfwGetCursorPos(params.getWindow(), mxpos, mypos);
+      mouseX = (float) mxpos[0];
+      mouseY = (float) mypos[0];
+    }
+
     
-    public void resetScrollActionX() {
-      scrollActionX = 0;
+    public static void resetScrollX() {
+      scrollValueX = 0;
     }
 
-    public void resetScrollActionY() {
-      scrollActionY = 0;
+    public static void resetScrollY() {
+      scrollValueY = 0;
     }
 
-    public int getScrollActionX() {
-      return scrollActionX;    
+    public static double getScrollX() {
+      return scrollValueX;    
     }
 
-    public int getScrollActionY() {
-      return scrollActionY;
+    public static double getScrollY() {
+      return scrollValueY;
     }
 }
