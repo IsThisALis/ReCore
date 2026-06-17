@@ -8,6 +8,7 @@ import rexample.resources.ShaderManager;
 import rexample.resources.ResourceManager;
     // Game objects
 import rexample.gmobj.ObjectManager;
+
     // Interaction
 import rexample.interaction.*;
 
@@ -30,7 +31,8 @@ public class Main implements ApplicationLogic {
   private ResourceManager resourceManager = Resources.getResourceManager();
   private ObjectManager objectManager = new ObjectManager();
   private Collizion collizion = new Collizion();
-  private InputActions inputActions;
+  private InputActions inputActions = new InputActions();
+
   private static Main main = new Main();
 
 	@Override
@@ -44,7 +46,6 @@ public class Main implements ApplicationLogic {
     window.init();
     window.setIcon("samples/textures/icon.png");
     Input.setCursor("samples/textures/cursor_default.png");
-    inputActions = new InputActions();
     shaderManager.init();
     textureManager.init();
     resourceManager.init();
