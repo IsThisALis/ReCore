@@ -8,12 +8,6 @@ A lightweight Java game engine built on LWJGL 3
 
 ---
 
-## Warning
-
-> **Platform:** Windows, Mac is not supported in alpha (see [Issues](https://github.com/IsThisALis/ReCore/issues)).
-
----
-
 ## Features
 
 - **Component logic** -- `init()`, `update()`, `cleanup()` via `ComponentLogic`
@@ -29,7 +23,7 @@ A lightweight Java game engine built on LWJGL 3
 | **JDK** | 21 |
 | **Build tool** | Maven 3.6+ |
 | **GPU** | OpenGL 3.3+ compatible |
-| **OS** | Linux |
+| **OS** | Linux, Windows, MacOS |
 
 ---
 
