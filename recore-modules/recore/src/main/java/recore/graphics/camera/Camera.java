@@ -35,7 +35,7 @@ public class Camera {
   private int location;
 
     // Instances values
-  private ShaderProgram attachedProgram;
+  private ShaderProgram program;
 
     // Matrix4f values 
   private Matrix4f projectionMatrix = new Matrix4f();
@@ -58,8 +58,26 @@ public class Camera {
     screenWidth = (float) Params.getParams().getWidth();
     screenHeight = (float) Params.getParams().getHeight();
 
-    attachedProgram = program;
-    location = glGetUniformLocation(attachedProgram.getId(), "uVPMatrix");
+    this.program = program;
+    location = glGetUniformLocation(program.getId(), "uVPMatrix");
+  }
+
+
+  /**
+     * Constructor to initialize camera.
+     * Requires OpenGL context.
+     * @param program ShaderProgram attaching to camera (Need shaders with camera support).
+     */
+  public Camera(ShaderProgram program) {
+    position = new Vector3f(0f, 0f, 0f);
+    FOV = new Vector2f();
+    cache = new Vector2f();
+
+    screenWidth = (float) Params.getParams().getWidth();
+    screenHeight = (float) Params.getParams().getHeight();
+
+    this.program = program;
+    location = glGetUniformLocation(program.getId(), "uVPMatrix");
   }
   
 
@@ -88,6 +106,10 @@ public class Camera {
     position.x = x;
   }
 
+    /**
+     * Setter for camera position.
+     * @param position New position values in vector.
+     */
   public void setPosition(Vector2f position) {
     this.position.x = position.x;
     this.position.y = position.y;
@@ -113,7 +135,7 @@ public class Camera {
 
 
      /**
-      * Getter to calculate prjection matrix.
+      * Getter to calculate projection matrix.
       * @return Projection matrix (Matrix4f).
       */
   public Matrix4f getProjectionMatrix() {
@@ -134,9 +156,10 @@ public class Camera {
 
     /**
      * Updates data in shaders.
+     * Always call this method at the end of frame.
      */
   public void update() {
-    attachedProgram.use();
+    program.use();
     VPMatrix = getVPMatrix();
     VPMatrix.get(uniformData);
     glUniformMatrix4fv(location, false, uniformData);
@@ -162,16 +185,26 @@ public class Camera {
 
 
     /**
-     * Getter for camera zoom value
-     * @return Zoom value
+     * Setter for zoom value, overwrites current value.
+     * @param value New zoom value.
+     */
+  public void setZoom(float value) {
+    zoom = value;
+  }
+
+
+    /**
+     * Getter for camera zoom value.
+     * @return Zoom value.
      */
   public float getZoom() {
     return zoom;
   }
 
+
     /**
      * Getter for camera field of view (FOV).
-     * @return Vector2f with camera field of view in height and width
+     * @return Vector2f with camera field of view in height and width.
      */
   public Vector2f getFOV() {
     return FOV.set(w, h);
