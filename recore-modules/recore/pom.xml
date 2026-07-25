@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.gfs</groupId>
+  <groupId>com.isthisalis</groupId>
   <artifactId>recore</artifactId>
-  <version>0.0.5-alpha</version>
+  <version>1.6.0-alpha</version>
 
   <name>ReCore</name>
   <url>t.me/GlowingFoxStudios</url>
@@ -16,7 +16,7 @@
     <maven.compiler.target>21</maven.compiler.target>
     
     <lwjgl.version>3.4.1</lwjgl.version>
-    <joml.version>1.10.8</joml.version>
+    <joml.version>1.10.9</joml.version>
   </properties>
 
     <profiles>
@@ -70,11 +70,6 @@
   <dependency>
     <groupId>org.lwjgl</groupId>
     <artifactId>lwjgl</artifactId>
-    <version>${lwjgl.version}</version>
-  </dependency>
-  <dependency>
-    <groupId>org.lwjgl</groupId>
-    <artifactId>lwjgl-assimp</artifactId>
     <version>${lwjgl.version}</version>
   </dependency>
   <dependency>
