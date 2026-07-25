@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.gfs</groupId>
+  <groupId>com.isthisalis</groupId>
   <artifactId>rexample</artifactId>
-  <version>0.0.5-alpha</version>
+  <version>1.6.0-alpha</version>
 
   <name>RExample</name>
   <url>t.me/GlowingFoxStudios</url>
@@ -14,7 +14,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
-    <recore.version>0.0.5-alpha</recore.version>
   </properties>
 
   <build>
@@ -45,7 +44,7 @@
             <configuration>
                 <transformers>
                     <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>rexample.Main</mainClass>
+                        <mainClass>com.isthisalis.rexample.Main</mainClass>
                     </transformer>
                 </transformers>
             </configuration>
@@ -57,14 +56,14 @@
 
 <dependencies>
   <dependency>
-    <groupId>org.gfs</groupId>
+    <groupId>com.isthisalis</groupId>
     <artifactId>recore</artifactId>
-    <version>${recore.version}</version>
+    <version>${version}</version>
   </dependency>
   <dependency>
-    <groupId>org.gfs</groupId>
+    <groupId>com.isthisalis</groupId>
     <artifactId>rephysics</artifactId>
-    <version>${recore.version}</version>
+    <version>${version}</version>
   </dependency>
   <dependency>
 		<groupId>org.junit.jupiter</groupId>
