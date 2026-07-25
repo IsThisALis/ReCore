@@ -1,0 +1,62 @@
+import org.gradle.internal.os.OperatingSystem
+
+plugins {
+  id 'java'
+  id 'application'
+}
+
+project.ext.lwjglVersion = "3.4.1"
+project.ext.jomlVersion = "1.10.9"
+
+switch (OperatingSystem.current()) {
+	case OperatingSystem.LINUX:
+		project.ext.lwjglNatives = "natives-linux"
+		def osArch = System.getProperty("os.arch")
+		if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+			project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+		} else if  (osArch.startsWith("ppc")) {
+			project.ext.lwjglNatives += "-ppc64le"
+		} else if  (osArch.startsWith("riscv")) {
+			project.ext.lwjglNatives += "-riscv64"
+		}
+		break
+	case OperatingSystem.MAC_OS:
+		project.ext.lwjglNatives = "natives-macos"
+		break
+	case OperatingSystem.WINDOWS:
+		project.ext.lwjglNatives = "natives-windows"
+		break
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+	implementation "org.lwjgl:lwjgl"
+	implementation "org.lwjgl:lwjgl-glfw"
+	implementation "org.lwjgl:lwjgl-opengl"
+	implementation "org.lwjgl:lwjgl-stb"
+	implementation "org.lwjgl:lwjgl::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-glfw::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-opengl::$lwjglNatives"
+	implementation "org.lwjgl:lwjgl-stb::$lwjglNatives"
+	implementation "org.joml:joml:${jomlVersion}"
+
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+  compileOnly 'org.projectlombok:lombok:1.18.46'
+  annotationProcessor 'org.projectlombok:lombok:1.18.46'
+}
+
+tasks.named ('test', Test) {
+    useJUnitPlatform()
+    maxHeapSize = '1G'
+
+    testLogging {
+      events "passed"
+    }
+  }
