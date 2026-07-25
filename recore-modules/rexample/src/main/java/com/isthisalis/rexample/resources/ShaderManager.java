@@ -1,8 +1,8 @@
-package rexample.resources;
+package com.isthisalis.rexample.resources;
 
-import recore.graphics.shaders.*;
+import com.isthisalis.recore.graphics.shaders.*;
 
-import recore.util.IO;
+import com.isthisalis.recore.util.IO;
 
 public class ShaderManager {
 

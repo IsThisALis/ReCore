@@ -1,8 +1,8 @@
-package rexample.resources;
+package com.isthisalis.rexample.resources;
 
-import recore.graphics.shaders.ShaderProgram;
+import com.isthisalis.recore.graphics.shaders.ShaderProgram;
 
-import recore.graphics.textures.TextureMap;
+import com.isthisalis.recore.graphics.textures.TextureMap;
 
 public class TextureManager {
 

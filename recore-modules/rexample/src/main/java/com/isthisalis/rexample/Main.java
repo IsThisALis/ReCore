@@ -1,26 +1,26 @@
-package rexample;
+package com.isthisalis.rexample;
 
     // Game imports
     // Resources
-import rexample.resources.TextureManager;
-import rexample.resources.Resources;
-import rexample.resources.ShaderManager;
-import rexample.resources.ResourceManager;
+import com.isthisalis.rexample.resources.TextureManager;
+import com.isthisalis.rexample.resources.Resources;
+import com.isthisalis.rexample.resources.ShaderManager;
+import com.isthisalis.rexample.resources.ResourceManager;
     // Game objects
-import rexample.gmobj.ObjectManager;
+import com.isthisalis.rexample.gmobj.ObjectManager;
 
     // Interaction
-import rexample.interaction.*;
+import com.isthisalis.rexample.interaction.*;
 
     // ReCore imports
     // Core
-import recore.core.ApplicationLogic;
-import recore.core.GameLoop;
+import com.isthisalis.recore.core.ApplicationLogic;
+import com.isthisalis.recore.core.GameLoop;
 
     // Window
-import recore.graphics.window.Params;
-import recore.graphics.window.Window;
-import recore.util.Input;
+import com.isthisalis.recore.graphics.window.Params;
+import com.isthisalis.recore.graphics.window.Window;
+import com.isthisalis.recore.util.Input;
 
 public class Main implements ApplicationLogic {
 	    // Getting instances
@@ -31,7 +31,6 @@ public class Main implements ApplicationLogic {
   private ResourceManager resourceManager = Resources.getResourceManager();
   private ObjectManager objectManager = new ObjectManager();
   private Collizion collizion = new Collizion();
-  private InputActions inputActions = new InputActions();
 
   private static Main main = new Main();
 
@@ -63,7 +62,7 @@ public class Main implements ApplicationLogic {
 	public void loop() {
           // Window and rendering loops
     GameLoop.getGameLoop().startFrame();
-    inputActions.update();
+    InputActions.update();
     collizion.update();
     objectManager.draw();
     window.update();
@@ -84,5 +83,4 @@ public class Main implements ApplicationLogic {
         main.loop();
       }
 	}
-
 }

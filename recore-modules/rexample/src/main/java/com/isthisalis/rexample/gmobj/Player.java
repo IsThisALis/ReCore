@@ -1,20 +1,22 @@
-package rexample.gmobj;
+package com.isthisalis.rexample.gmobj;
 
-import rexample.resources.Resources;
-import rexample.interaction.Collizion;
-import recore.graphics.camera.Camera;
-import recore.graphics.render.Mesh;
-import recore.graphics.render.Renderer;
+import com.isthisalis.rexample.resources.Resources;
+import com.isthisalis.rexample.interaction.Collizion;
+import com.isthisalis.recore.graphics.camera.Camera;
+import com.isthisalis.recore.graphics.material.Material;
+import com.isthisalis.recore.graphics.render.Mesh;
+import com.isthisalis.recore.graphics.render.Renderer;
 
-import recore.util.Input;
-import recore.util.Time;
+import com.isthisalis.recore.util.Input;
+import com.isthisalis.recore.util.Time;
 
-import rephysics.shapes.Square;
+import com.isthisalis.rephysics.shapes.Square;
 
 public class Player {
 
   private static Camera camera;
   private Mesh mesh;
+  private Material material;
 
   private Time time = new Time();
 
@@ -30,6 +32,7 @@ public class Player {
   public void init() {
 
     mesh = Resources.getScene().getObj(3);
+    material = Resources.getMaterialMap().getObj("player");
     mesh.init(Square.getVertices(), Square.getIndices(), true);
     mesh.setPosition(0f, 0f);
     mesh.setScale(0.75f, 0.75f);
@@ -44,7 +47,7 @@ public class Player {
     Input();
     interact();
     camera.update();
-    Renderer.draw(mesh, camera);
+    Renderer.draw(mesh, material, camera);
     
   }
 

@@ -1,8 +1,9 @@
-package rexample.resources;
+package com.isthisalis.rexample.resources;
 
-import recore.graphics.textures.TextureMap;
-import recore.graphics.shaders.ShaderProgramMap;
-import recore.graphics.render.scene.Scene;;
+import com.isthisalis.recore.graphics.textures.TextureMap;
+import com.isthisalis.recore.graphics.shaders.ShaderProgramMap;
+import com.isthisalis.recore.graphics.material.MaterialMap;
+import com.isthisalis.recore.graphics.render.scene.Scene;
 
 public class Resources {
 
@@ -13,7 +14,9 @@ public class Resources {
   private static MeshFactory meshFactory = new MeshFactory();
   private static TextureManager textureManager = new TextureManager();
   private static Scene scene = new Scene();
-  private static ResourceManager resourceManager = new ResourceManager(); 
+  private static MaterialMap materialMap = new MaterialMap();
+  private static ResourceManager resourceManager = new ResourceManager();
+  
 
   public static ShaderManager getShaderManager() {
     return shaderManager;
@@ -45,5 +48,9 @@ public class Resources {
 
   public static MeshFactory getMeshFactory() {
     return meshFactory;
+  }
+
+  public static MaterialMap getMaterialMap() {
+    return materialMap;
   }
 }

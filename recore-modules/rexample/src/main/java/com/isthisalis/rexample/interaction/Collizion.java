@@ -1,10 +1,10 @@
-package rexample.interaction;
+package com.isthisalis.rexample.interaction;
 
-import recore.core.ComponentLogic;
+import com.isthisalis.recore.core.ComponentLogic;
 
-import rephysics.collision.AABB;
+import com.isthisalis.rephysics.collision.AABB;
 
-import rexample.resources.Resources;
+import com.isthisalis.rexample.resources.Resources;
 
 public class Collizion implements ComponentLogic {
     private AABB banana = new AABB();

@@ -1,9 +1,11 @@
-package rexample.gmobj;
+package com.isthisalis.rexample.gmobj;
 
-import rexample.resources.Resources;
-import recore.graphics.shaders.ShaderProgram;
-import recore.graphics.window.Params;
-import recore.graphics.window.Window;
+import com.isthisalis.rexample.gui.GUIManager;
+import com.isthisalis.rexample.resources.Resources;
+
+import com.isthisalis.recore.graphics.shaders.ShaderProgram;
+import com.isthisalis.recore.graphics.window.Params;
+import com.isthisalis.recore.graphics.window.Window;
 
 public class ObjectManager {
 
@@ -21,6 +23,8 @@ public class ObjectManager {
     grassBlock.create();
     player.init();
 
+    GUIManager.init();
+
     program = Resources.getShaderProgramMap().getObj("ct1");
   }
 
@@ -33,5 +37,8 @@ public class ObjectManager {
 
     grassBlock.draw();
     player.draw();
+
+    GUIManager.update();
+    GUIManager.render();
   }
 }
