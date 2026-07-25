@@ -23,11 +23,11 @@
 hs_err_pid*
 replay_pid*
 
-# dirs
+# Gradle & Maven
 .settings
-.git
 target
 bin
+build
 
 # dev
 RExample
@@ -41,3 +41,6 @@ dependency-reduced-pom.xml
 # backup files/dirs 
 *.bak
 .*
+
+# Utils
+.git
