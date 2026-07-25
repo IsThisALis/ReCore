@@ -3,12 +3,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.AfterEach;
 
-import recore.graphics.shaders.Shader;
-import recore.graphics.shaders.ShaderProgram;
-import recore.graphics.textures.Texture;
+import com.isthisalis.recore.graphics.shaders.Shader;
+import com.isthisalis.recore.graphics.shaders.ShaderProgram;
+import com.isthisalis.recore.graphics.textures.Texture;
 
-import recore.graphics.window.*;
-import recore.util.IO;
+import com.isthisalis.recore.graphics.window.*;
+import com.isthisalis.recore.util.IO;
 
 public class TexturesTest {
 

@@ -1,7 +1,7 @@
 package util;
 
 import org.junit.jupiter.api.Test;
-import recore.util.IO;
+import com.isthisalis.recore.util.IO;
 
 public class IOTest {
 

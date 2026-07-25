@@ -3,11 +3,11 @@ package shaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-import recore.graphics.shaders.Shader;
-import recore.graphics.shaders.ShaderProgram;
+import com.isthisalis.recore.graphics.shaders.Shader;
+import com.isthisalis.recore.graphics.shaders.ShaderProgram;
 
-import recore.graphics.window.Params;
-import recore.util.IO;
+import com.isthisalis.recore.graphics.window.Params;
+import com.isthisalis.recore.util.IO;
 
 /**
  * CacheTest

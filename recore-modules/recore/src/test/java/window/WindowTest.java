@@ -1,7 +1,7 @@
 package window;
 
-import recore.graphics.window.Params;
-import recore.graphics.window.Window;
+import com.isthisalis.recore.graphics.window.Params;
+import com.isthisalis.recore.graphics.window.Window;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

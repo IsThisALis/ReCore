@@ -3,17 +3,18 @@ package mesh;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 
-import recore.graphics.render.ElementBufferObject;
-import recore.graphics.render.Mesh;
-import recore.graphics.render.VertexArrayObject;
-import recore.graphics.render.VertexBufferObject;
-import recore.graphics.shaders.Shader;
-import recore.graphics.shaders.ShaderProgram;
-import recore.graphics.textures.Texture;
+import com.isthisalis.recore.graphics.render.ElementBufferObject;
+import com.isthisalis.recore.graphics.render.Mesh;
+import com.isthisalis.recore.graphics.render.VertexArrayObject;
+import com.isthisalis.recore.graphics.render.VertexBufferObject;
+import com.isthisalis.recore.graphics.shaders.Shader;
+import com.isthisalis.recore.graphics.shaders.ShaderProgram;
+import com.isthisalis.recore.graphics.textures.Texture;
 
-import recore.graphics.window.*;
-import recore.util.IO;
+import com.isthisalis.recore.graphics.window.*;
+import com.isthisalis.recore.util.IO;
 
 public class MeshTest {
 
@@ -21,15 +22,18 @@ public class MeshTest {
   static Shader shader;
   static Texture texture;
 
-    @BeforeEach
-  void init() {
+    @BeforeAll
+  static void init() {
     Window window = Params.getWindowInst();
     Params.getParams().setTitle("TexturesTest");
     Params.getParams().setWidth(1080);
     Params.getParams().setHeight(720);
     Params.getParams().setVsyncStatus(true);
     window.init();
+  }
 
+    @BeforeEach
+  void assets() {
     program = new ShaderProgram();
     texture = new Texture();
     texture.getParams().setUniform("ourTexture", 0);
@@ -56,7 +60,7 @@ public class MeshTest {
         VertexBufferObject vbo = new VertexBufferObject();
         ElementBufferObject ebo = new ElementBufferObject();
 
-        Mesh mesh = new Mesh(vao, vbo, ebo, texture, program);
+        Mesh mesh = new Mesh(vao, vbo, ebo, program);
 
         float[] vertices = {
           // x     y     z    u   v
