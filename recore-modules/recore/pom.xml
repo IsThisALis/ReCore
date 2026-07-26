@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.isthisalis</groupId>
   <artifactId>recore</artifactId>
-  <version>1.6.0-alpha</version>
+  <version>1.6.0</version>
 
   <name>ReCore</name>
   <url>t.me/GlowingFoxStudios</url>
@@ -49,6 +49,19 @@
       <configuration>
         <source>21</source>
         <target>21</target>
+			</configuration>
+    </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<annotationProcessorPaths>
+					<path>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+						<version>1.18.46</version>
+					</path>
+				</annotationProcessorPaths>
 			</configuration>
 		</plugin>
     </plugins>
@@ -128,5 +141,12 @@
     <artifactId>junit-jupiter</artifactId>
     <scope>test</scope>
   </dependency>
+
+  <dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.18.46</version>
+		<scope>provided</scope>
+	</dependency>
 </dependencies>
 </project>
