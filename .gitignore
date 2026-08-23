@@ -1,3 +1,28 @@
+# Created by https://www.toptal.com/developers/gitignore/api/git,visualstudiocode,java,maven,gradle,backup
+# Edit at https://www.toptal.com/developers/gitignore?templates=git,visualstudiocode,java,maven,gradle,backup
+
+### Backup ###
+*.bak
+*.gho
+*.ori
+*.orig
+*.tmp
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+### Java ###
 # Compiled class file
 *.class
 
@@ -10,7 +35,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package files
+# Package Files #
 *.jar
 *.war
 *.nar
@@ -23,24 +48,74 @@
 hs_err_pid*
 replay_pid*
 
-# Gradle & Maven
-.settings
-target
-bin
-build
-
-# dev
-RExample
-.dev*
-
-# files
-.classpath
-.project
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
 dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
 
-# backup files/dirs 
-*.bak
-.*
+# Eclipse m2e generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
 
-# Utils
-.git
+### VisualStudioCode ###
+.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+### Gradle ###
+.gradle
+**/build/
+!src/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Avoid ignore Gradle wrappper properties
+!gradle-wrapper.properties
+
+# Cache of project
+.gradletasknamecache
+
+# Eclipse Gradle plugin generated files
+# Eclipse Core
+# JDT-specific (Eclipse Java Development Tools)
+
+### Gradle Patch ###
+# Java heap dump
+*.hprof
+
+### Test & Dev ###
+
+test
+.settings
+.factorypath
+.dev
+# End of https://www.toptal.com/developers/gitignore/api/git,visualstudiocode,java,maven,gradle,backup
