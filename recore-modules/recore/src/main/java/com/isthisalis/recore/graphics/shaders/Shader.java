@@ -1,21 +1,41 @@
 package com.isthisalis.recore.graphics.shaders;
 
-    // OpenGL imports
+  // OpenGL imports
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL20.*;
+
+  // Lombok import
+import lombok.Getter;
 
 public class Shader {
 
       // Shader identifier
-    private int id;
+    private @Getter int id;
       // String representing shader type 
     private String shaderType;
-    
-    
+   
+    public Shader() {}
+   
+    public Shader(String code, String type) {
+      if (type.toLowerCase().contains("vertex")) {
+          id = glCreateShader(GL_VERTEX_SHADER);
+      }
+      if (type.toLowerCase().contains("fragment")) {
+          id = glCreateShader(GL_FRAGMENT_SHADER);
+      } else {
+            // Throwss exception when type invalid
+          throw new IllegalArgumentException("ReCore: Unknown shader type: "+type);
+        }
+      glShaderSource(id, code);
+      glCompileShader(id);
+    }
+
+
       /**
        * Custom. Uploads shader code to OpenGL
        * @param source Shader code
        */
+      @Deprecated
     public void uploadSource(CharSequence source) {
         glShaderSource(id, source);
     }
@@ -25,6 +45,7 @@ public class Shader {
        * Custom. Use only if you made custom method to create shader 
        * @param id Shader to compile 
        */
+      @Deprecated
     public void compile(int id) {
         glCompileShader(id);
         if(!checkStatus()) {
@@ -39,8 +60,7 @@ public class Shader {
        * @return Shader compile state 
        */
     public boolean checkStatus() {
-    int status = glGetShaderi(id, GL_COMPILE_STATUS);
-    if (status != GL_TRUE && id == 0) {
+      if (glGetShaderi(id, GL_COMPILE_STATUS) != GL_TRUE && id == 0) {
         return false;
       }
       return true;
@@ -52,6 +72,7 @@ public class Shader {
        * @param type Text shader type (vertex/fragment)
        * @return OpenGL shader type (Int)
        */
+      @Deprecated
     public int getShaderType(String type) {
       shaderType = type;
         // Checks shader type
@@ -70,17 +91,8 @@ public class Shader {
       /**
        * Deletes this shader 
        */
-    public void deleteShader() {
+    public void delete() {
         glDeleteShader(id);
-    }
-
-
-      /**
-       * Getter for shader identifier 
-       * @return Shader id
-       */
-    public int getId() {
-        return id;
     }
 
 
@@ -88,6 +100,7 @@ public class Shader {
       * Creates shader from source and type 
       * @param source code of your shader
       */
+      @Deprecated
     public void createShader(String source) {
         id = glCreateShader(getShaderType(shaderType));
             // Check to be sure shader created
