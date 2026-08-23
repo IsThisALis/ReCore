@@ -3,6 +3,7 @@ package com.isthisalis.recore.graphics.shaders;
 import com.isthisalis.recore.util.NIO;
 
 import java.nio.IntBuffer;
+import java.nio.file.Path;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL41.*;
@@ -20,7 +21,7 @@ public class ShaderCache {
       IntBuffer len = stack.mallocInt(1);
       glGetProgramiv(program.getId(), GL_PROGRAM_BINARY_LENGTH, len);
 
-      if (len.get(0) == 0) throw new RuntimeException("No shader cache found in program");
+      if (len.get(0) == 0) throw new RuntimeException("No shader data found in program");
 
       ByteBuffer bin = stack.malloc(len.get(0));
       IntBuffer format = stack.mallocInt(1);
@@ -32,7 +33,7 @@ public class ShaderCache {
       data.put(bin.duplicate());
       data.flip();
       
-      NIO.write(NIO.makePath(program.getCachePath()), data);
+      NIO.write(Path.of(program.getCachePath() + ".bin"), data);
       return true;
     } catch (Exception e) {
         System.out.println("ReCore: Error in writing shader cache " + e.getMessage());
@@ -42,7 +43,7 @@ public class ShaderCache {
 
 
   public static boolean loadCache(ShaderProgram program) {
-    ByteBuffer data = NIO.loadByteBuffer(NIO.makePath(program.getCachePath()));
+    ByteBuffer data = NIO.loadByteBuffer(NIO.makePath(program.getCachePath() + ".bin"));
     if (data == null || data.remaining() < 4 ) return false;
 
     try (MemoryStack stack = MemoryStack.stackPush()) {
