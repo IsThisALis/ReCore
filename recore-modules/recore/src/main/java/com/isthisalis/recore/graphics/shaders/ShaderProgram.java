@@ -1,27 +1,35 @@
 package com.isthisalis.recore.graphics.shaders;
 
-  // OpenGL imports
+// OpenGL imports
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL20.*;
 
-  // Java util imports
+// Java imports
 import java.util.concurrent.ConcurrentHashMap;
+import java.nio.file.Files;
 
 import com.isthisalis.recore.util.NIO;
+
+import lombok.Getter;
+import lombok.Setter;
 
 public class ShaderProgram {
 
       // Program identifier given by OpenGL
-    private int id;
+    private @Getter int id;
 
       // Stores shader we are working with
     private Shader attachedShader;
 
-      // Stores shaders
+    /**
+     * Storing shaders.
+     */
     private final ConcurrentHashMap<String, Shader> shaders = new ConcurrentHashMap<>();
     
-      // Cache path 
-    private String cachePath;
+    /**
+    * Path to external shader program cache.
+    */
+    private @Getter @Setter String cachePath;
 
     /**
      * Creates new OpenGL shader program
@@ -66,6 +74,7 @@ public class ShaderProgram {
       /**
        * Deletes shader program 
        */
+      @Deprecated 
     public void deleteShaderProgram() {
         glDeleteProgram(id);
     }
@@ -78,15 +87,6 @@ public class ShaderProgram {
         if (attachedShader != null) {
             glDeleteShader(attachedShader.getId());
         }
-    }
-    
-
-     /**
-      * Getter for program identifier
-      * @return Shader program id
-      */
-    public int getId() {
-        return id;
     }
 
     
@@ -123,32 +123,13 @@ public class ShaderProgram {
     }
 
 
-      /**
-       * Sets path to cachefile.
-       * Format: folder/to/file/filename.
-       * @param value New shader cachefile path.
-       */
-    public void setCachePath(String value) {
-      cachePath = value + ".bin";
-    }
-
-
-      /**
-       * Getter for cachefile path.
-       * @return Path to cachefile as String.
-       */
-    public String getCachePath() {
-      return cachePath;
-    }
-
-
        /**
         * Getter for cachefile status.
         * False - not exists.
         * True - saved on path.
         */
     public boolean hasCache() {
-      return NIO.isFile(NIO.makePath(cachePath));
+      return Files.exists(NIO.makePath(cachePath));
     }
 
 
