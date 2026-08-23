@@ -10,5 +10,5 @@ project(':recore').projectDir = file('recore-modules/recore')
 include('rephysics')
 project(':rephysics').projectDir = file('recore-modules/rephysics')
 
-include('rexample') 
-project(':rexample').projectDir = file('recore-modules/rexample')
+//include('rexample') 
+//project(':rexample').projectDir = file('recore-modules/rexample')
