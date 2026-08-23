@@ -19,14 +19,16 @@ import org.lwjgl.stb.STBImage;
 import org.lwjgl.glfw.GLFWImage;
 import static org.lwjgl.glfw.GLFW.*;
 
+@Deprecated
 public class IO {
 
 
-   /**
-   * Used to load files to String.
-   * @param path path to file need to be loaded.
-   * @return File source in String.
-   */ 
+    /**
+    * Used to load files to String.
+    * @param path path to file need to be loaded.
+    * @return File source in String.
+    */ 
+    @Deprecated
     public static String loadTextFile(String path) {
     
     try (InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);) {
@@ -47,7 +49,8 @@ public class IO {
    * @param path Path to your image file like assets/textures/image.png
    * @return GLFWImage ata directly to the texture parameters
    */
-  public void loadTexture(String path, Texture texture) {
+  @Deprecated
+  public Texture loadTexture(String path) {
       ByteBuffer imageBuffer;
       try (MemoryStack stack = MemoryStack.stackPush()) {
 
@@ -86,18 +89,16 @@ public class IO {
           throw new RuntimeException("Error while loading texture: "+STBImage.nstbi_failure_reason());
         }
 
-        //Sets texture data
-        texture.getParams().setHeight(height);
-        texture.getParams().setWidth(width);
-        texture.getParams().setImage(image);
+        return new Texture(width, height, image);
 
       } catch(IOException e) {
           System.out.println("ReCore: Encountered IO exception while loading file " + "[ " + path + " ] " + "[ " + e + " ]");
+          return new Texture(0, 0, null);
         }
     }
   
 
-
+  @Deprecated
   public void loadIcon(long window, String path) {
       ByteBuffer imageBuffer = null;
 
@@ -145,7 +146,7 @@ public class IO {
     }
 
 
-
+  @Deprecated
   public GLFWImage loadImage(String path) {
       ByteBuffer imageBuffer = null;
       try (MemoryStack stack = MemoryStack.stackPush()) {
