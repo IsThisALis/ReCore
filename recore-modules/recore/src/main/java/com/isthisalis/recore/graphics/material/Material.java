@@ -1,29 +1,23 @@
 package com.isthisalis.recore.graphics.material;
 
-import java.util.HashMap;
-
-import static org.lwjgl.opengl.GL20.*;
-
 import com.isthisalis.recore.graphics.shaders.ShaderProgram;
 import com.isthisalis.recore.graphics.textures.Texture;
-import com.isthisalis.recore.graphics.window.Params;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 /**
  * Material
  */
+@RequiredArgsConstructor
 public class Material {
 
-  private float scaleX, scaleY;
-  private boolean transparent = false;
+  private @Getter @Setter float scaleX, scaleY;
+  private @Getter @Setter boolean transparent = false;
 
-  private Texture texture;
-  private ShaderProgram program;
-
-
-  public Material(Texture texture, ShaderProgram program) {
-    this.texture = texture;
-    this.program = program;
-  }
+  private final Texture texture;
+  private final ShaderProgram program;
 
 
   public void setScale(float x, float y) {
@@ -31,30 +25,8 @@ public class Material {
     scaleY = y;
   }
 
-
-  public void setTexture(Texture texture) {
-    this.texture = texture;
-  }
-
-
-  public void setTransparency(boolean value) {
-    transparent = value;
-  }
-
-
   public void bind() {
     program.use();
     texture.bind();
-    if (transparent) Params.getWindowInst().blend(true);
-  }
-
-
-  public ShaderProgram getProgram() {
-    return program;
-  }
-
-
-  public Texture getTexture() {
-    return texture;
   }
 }
