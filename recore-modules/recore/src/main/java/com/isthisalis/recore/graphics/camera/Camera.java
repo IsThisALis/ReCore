@@ -4,10 +4,11 @@ package com.isthisalis.recore.graphics.camera;
   // Shaders 
 import com.isthisalis.recore.graphics.shaders.ShaderProgram;
 
-  // Window parameters
-import com.isthisalis.recore.graphics.window.Params;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
-  // JOML imports
+// JOML imports
 import org.joml.Vector3f;
 import org.joml.Vector2f;
 import org.joml.Matrix4f;
@@ -18,24 +19,22 @@ import static org.lwjgl.opengl.GL20.*;
 public class Camera {
 
     // Vector3f values
-  private Vector3f position;
+  private @Getter Vector3f position;
   private Vector2f FOV;
   private Vector2f cache;
 
     // float values
   private float screenWidth, screenHeight;
-  private float zoom = 1.0f;
+  private @Getter @Setter float zoom = 1.0f;
   private float w, h;
   private float wX, wY;
 
     // Array values
   private float[] uniformData = new float[16];
 
-    // Int values
-  private int location;
-
     // Instances values
   private ShaderProgram program;
+  private final @Getter Configuration config;
 
     // Matrix4f values 
   private Matrix4f projectionMatrix = new Matrix4f();
@@ -46,38 +45,16 @@ public class Camera {
     /**
      * Constructor to initialize camera.
      * Requires OpenGL context.
-     * @param x Camera start x.
-     * @param y Camera start y.
-     * @param program ShaderProgram attaching to camera (Need shaders with camera support).
+     * @param config Camera configuration.
      */
-  public Camera(float x, float y, ShaderProgram program) {
-    position = new Vector3f(x, y, 0.0f);
+  public Camera(@NonNull Configuration config) {
+    this.config = config;
+    position = new Vector3f(config.getPos().getX(), config.getPos().getY(), 0f);
     FOV = new Vector2f();
     cache = new Vector2f();
 
-    screenWidth = (float) Params.getParams().getWidth();
-    screenHeight = (float) Params.getParams().getHeight();
-
-    this.program = program;
-    location = glGetUniformLocation(program.getId(), "uVPMatrix");
-  }
-
-
-  /**
-     * Constructor to initialize camera.
-     * Requires OpenGL context.
-     * @param program ShaderProgram attaching to camera (Need shaders with camera support).
-     */
-  public Camera(ShaderProgram program) {
-    position = new Vector3f(0f, 0f, 0f);
-    FOV = new Vector2f();
-    cache = new Vector2f();
-
-    screenWidth = (float) Params.getParams().getWidth();
-    screenHeight = (float) Params.getParams().getHeight();
-
-    this.program = program;
-    location = glGetUniformLocation(program.getId(), "uVPMatrix");
+    screenWidth = (float) config.getWindow().getWidth();
+    screenHeight = (float) config.getWindow().getHeight();
   }
   
 
@@ -113,15 +90,6 @@ public class Camera {
   public void setPosition(Vector2f position) {
     this.position.x = position.x;
     this.position.y = position.y;
-  }
-
-
-    /**
-     * Getter for camera position.
-     * @return Position (Vector3f).
-     */
-  public Vector3f getPosition() {
-    return position;
   }
 
 
@@ -162,7 +130,7 @@ public class Camera {
     program.use();
     VPMatrix = getVPMatrix();
     VPMatrix.get(uniformData);
-    glUniformMatrix4fv(location, false, uniformData);
+    glUniformMatrix4fv(config.getUniform().location(), false, uniformData);
   }
 
 
@@ -181,24 +149,6 @@ public class Camera {
      */
   public void subZoom(float value) {
     zoom /= -value;
-  }
-
-
-    /**
-     * Setter for zoom value, overwrites current value.
-     * @param value New zoom value.
-     */
-  public void setZoom(float value) {
-    zoom = value;
-  }
-
-
-    /**
-     * Getter for camera zoom value.
-     * @return Zoom value.
-     */
-  public float getZoom() {
-    return zoom;
   }
 
 
