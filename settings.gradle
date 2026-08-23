@@ -1,0 +1,14 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'recore-complete'
+
+include('recore')
+project(':recore').projectDir = file('recore-modules/recore')
+
+include('rephysics')
+project(':rephysics').projectDir = file('recore-modules/rephysics')
+
+include('rexample') 
+project(':rexample').projectDir = file('recore-modules/rexample')
