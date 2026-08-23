@@ -2,7 +2,7 @@
 
 A lightweight Java game engine built on LWJGL 3
 
-![Version](https://img.shields.io/badge/version-0.0.5--alpha-blue)
+![Version](https://img.shields.io/badge/version-0.0.6--alpha-blue) (**WiP**) 
 ![Java](https://img.shields.io/badge/java-21-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -10,9 +10,8 @@ A lightweight Java game engine built on LWJGL 3
 
 ## Features
 
-- **Component logic** -- `init()`, `update()`, `cleanup()` via `ComponentLogic`
 - **Lightweight** -- Minimal dependencies
-- **Simple API** -- simple methods with no need to learn OpenGL
+- **Simple API** -- simple methods with no need to learn OpenGL, only GLSL (shaders) 
 
 ---
 
@@ -21,7 +20,7 @@ A lightweight Java game engine built on LWJGL 3
 | Category | Requirement |
 | :--- | :--- |
 | **JDK** | 21 |
-| **Build tool** | Maven 3.6+ |
+| **Build tool** | Maven latest / Gradle latest|
 | **GPU** | OpenGL 3.3+ compatible |
 | **OS** | Linux, Windows, MacOS |
 
