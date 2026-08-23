@@ -1,7 +1,8 @@
 package textures;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import com.isthisalis.recore.graphics.shaders.Shader;
 import com.isthisalis.recore.graphics.shaders.ShaderProgram;
@@ -16,22 +17,21 @@ public class TexturesTest {
   static Shader shader;
   static Texture texture;
 
-    @BeforeEach
-  void init() {
-    Window window = Params.getWindowInst();
-    Params.getParams().setTitle("TexturesTest");
-    Params.getParams().setWidth(1080);
-    Params.getParams().setHeight(720);
-    Params.getParams().setVsyncStatus(true);
-    window.init();
+    @BeforeAll
+  static void init() {
+    Window window = new Window();
+    window.init(Configuration.builder()
+    .width(320)
+    .height(240)
+    .vsync(true)
+    .title("MeshTest")
+    .build(), null);
 
     program = new ShaderProgram();
-    texture = new Texture();
-    texture.getParams().setUniform("ourTexture", 0);
   }
 
-    @AfterEach
-  void cleanup() {
+    @AfterAll
+  static void cleanup() {
     program = null;
     shader = null;
     texture = null;
@@ -39,12 +39,11 @@ public class TexturesTest {
 
     @RepeatedTest(10)
   void load() {
-        texture.getParams().setPath("tests/banana.png");
 
         IO io = new IO();
-        io.loadTexture("tests/banana.png", texture);
+        texture = io.loadTexture("tests/banana.png");
         io = null;
 
-        texture.createTexture(program);
+        texture.createTexture(program, "ourTexture");
   }
 }    

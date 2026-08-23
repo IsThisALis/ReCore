@@ -5,12 +5,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
-import com.isthisalis.recore.graphics.render.ElementBufferObject;
-import com.isthisalis.recore.graphics.render.Mesh;
-import com.isthisalis.recore.graphics.render.VertexArrayObject;
-import com.isthisalis.recore.graphics.render.VertexBufferObject;
-import com.isthisalis.recore.graphics.shaders.Shader;
-import com.isthisalis.recore.graphics.shaders.ShaderProgram;
+import com.isthisalis.recore.graphics.render.*;
+import com.isthisalis.recore.graphics.shaders.*;
 import com.isthisalis.recore.graphics.textures.Texture;
 
 import com.isthisalis.recore.graphics.window.*;
@@ -24,19 +20,18 @@ public class MeshTest {
 
     @BeforeAll
   static void init() {
-    Window window = Params.getWindowInst();
-    Params.getParams().setTitle("TexturesTest");
-    Params.getParams().setWidth(1080);
-    Params.getParams().setHeight(720);
-    Params.getParams().setVsyncStatus(true);
-    window.init();
+    Window window = new Window();
+    window.init(Configuration.builder()
+    .width(320)
+    .height(240)
+    .vsync(true)
+    .title("MeshTest")
+    .build(), null);
   }
 
     @BeforeEach
   void assets() {
     program = new ShaderProgram();
-    texture = new Texture();
-    texture.getParams().setUniform("ourTexture", 0);
   }
 
     @AfterEach
@@ -48,13 +43,11 @@ public class MeshTest {
 
     @RepeatedTest(10)
   void load() {
-        texture.getParams().setPath("tests/banana.png");
 
         IO io = new IO();
-        io.loadTexture("tests/banana.png", texture);
-        io = null;
+        texture = io.loadTexture("tests/banana.png");
 
-        texture.createTexture(program);
+        texture.createTexture(program, "ourTexture");
 
         VertexArrayObject vao = new VertexArrayObject();
         VertexBufferObject vbo = new VertexBufferObject();

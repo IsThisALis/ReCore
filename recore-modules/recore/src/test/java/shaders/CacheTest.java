@@ -1,12 +1,12 @@
 package shaders;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.RepeatedTest;
 
 import com.isthisalis.recore.graphics.shaders.Shader;
 import com.isthisalis.recore.graphics.shaders.ShaderProgram;
-
-import com.isthisalis.recore.graphics.window.Params;
+import com.isthisalis.recore.graphics.window.Configuration;
+import com.isthisalis.recore.graphics.window.Window;
 import com.isthisalis.recore.util.IO;
 
 /**
@@ -16,13 +16,15 @@ public class CacheTest {
 
   private static ShaderProgram program;
 
-    @BeforeEach
-  void init() {
-    Params.getParams().setTitle("CacheTest");
-    Params.getParams().setWidth(1080);
-    Params.getParams().setHeight(720);
-    Params.getWindowInst().init();
-
+    @BeforeAll
+  static void init() {
+    Window window = new Window();
+    window.init(Configuration.builder()
+    .width(320)
+    .height(240)
+    .vsync(true)
+    .title("MeshTest")
+    .build(), null);
     program = new ShaderProgram();
     program.setCachePath("test/shadercache/program");
   }

@@ -1,6 +1,6 @@
 package window;
 
-import com.isthisalis.recore.graphics.window.Params;
+import com.isthisalis.recore.graphics.window.Configuration;
 import com.isthisalis.recore.graphics.window.Window;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -8,20 +8,21 @@ import org.junit.jupiter.api.Test;
 
 public class WindowTest {
 
-  static Window window = Params.getWindowInst();
-  static Params params = Params.getParams();
+  static Window window;
 
     @BeforeAll
-  static void createInst() {
-    params.setTitle("WindowTest");
-    params.setWidth(1080);
-    params.setHeight(720);
-    params.setVsyncStatus(true);
+  static void init() {
+    window = new Window();
+    window.init(Configuration.builder()
+    .width(320)
+    .height(240)
+    .vsync(true)
+    .title("MeshTest")
+    .build(), null);
   }
 
     @Test 
   void initWindow() {
-      window.init();
       window.update();
       window.close();
   }
