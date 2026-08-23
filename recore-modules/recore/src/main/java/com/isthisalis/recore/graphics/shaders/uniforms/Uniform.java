@@ -1,6 +1,9 @@
-package com.isthisalis.recore.graphics.shaders;
+package com.isthisalis.recore.graphics.shaders.uniforms;
 
 /**
  * Uniform
  */
-public record Uniform(int location) {}
+public record Uniform(
+    int location,
+    String name
+    ) {}
