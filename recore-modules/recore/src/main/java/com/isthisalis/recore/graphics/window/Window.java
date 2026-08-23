@@ -1,31 +1,39 @@
 package com.isthisalis.recore.graphics.window;
 
-  // ReCore imports
+// ReCore imports
   // Core 
 import com.isthisalis.recore.core.ComponentLogic;
-import com.isthisalis.recore.core.GameLoop;
+import com.isthisalis.recore.core.Engine;
 
   // Util
 import com.isthisalis.recore.util.IO;
 import com.isthisalis.recore.util.OS;
+import com.isthisalis.recore.util.Time;
 
-  // GLFW imports
+// Lombok imports
+import lombok.Getter;
+import lombok.NonNull;
+
+// GLFW imports
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFW;
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWVidMode;
 
-  // OpenGL imports
+// OpenGL imports
 import org.lwjgl.opengl.GL;
-import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Window implements ComponentLogic {
   
-  // Gets parameters instance
-  Params params;
-  long remainTime;
-  long frameDelayTime;
+  private long remainTime;
+  private long frameDelayTime;
+
+  private @Getter long windowHandle;
+  private @Getter Configuration configuration;
+
+  private Time time;
 
      /**
      * Initializing GLFW, OpenGL, window 
@@ -35,14 +43,14 @@ public class Window implements ComponentLogic {
      * @param height Height of creating window
      * @param title Title of creating window 
      */
-  @Override
-    public void init() {
-    // Getting parameters instance
-      params = Params.getParams();
+    public void init(@NonNull Configuration configuration, Engine app) {
+      this.configuration = configuration;
+      if (app != null) time = app.getTime();
+      else time = new Time();
       
     // GLFW hint to use X11 on linux
       if(OS.isLinux()) {
-        glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
+        glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_WAYLAND);
       }
 
     // MacOS hints
@@ -66,14 +74,14 @@ public class Window implements ComponentLogic {
 
         
       // Creating window
-        params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
-      if(params.getWindow() == 0L) {
+      windowHandle = glfwCreateWindow(configuration.getWidth(), configuration.getHeight(), configuration.getTitle(), 0L, 0L);
+
+      if(windowHandle == 0L) {
         System.out.println("ReCore: Error in window creating process!");
-        params.setWindow(glfwCreateWindow(params.getWidth(), params.getHeight(), params.getTitle(), 0L, 0L));
       }
 
       // Making OpenGL context current   
-        glfwMakeContextCurrent(params.getWindow());
+        glfwMakeContextCurrent(windowHandle);
         GL.createCapabilities();
 
         glfwSwapInterval(0);
@@ -81,31 +89,26 @@ public class Window implements ComponentLogic {
         glDisable(GL_DEPTH_TEST);
 
       // Makes window visible
-        glfwShowWindow(params.getWindow());
+        glfwShowWindow(windowHandle);
 
-
-        if (params.getVsyncStatus()) {
-            long monitor = GLFW.glfwGetPrimaryMonitor();
-            GLFWVidMode vidmode = GLFW.glfwGetVideoMode(monitor);
-            params.setFrameRateLimit(vidmode.refreshRate());
-            frameDelayTime = 1_000_000_000L / params.getFrameRateLimit();
-        }
-
-        if (!params.getVsyncStatus()) {
-            frameDelayTime = 1_000_000_000L / params.getFrameRateLimit();
-        }
+        if (configuration.isVsync()) {
+            GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+            frameDelayTime = 1_000_000_000L / vidmode.refreshRate();
+        } else {
+            frameDelayTime = 1_000_000_000L / configuration.getFpsLimit();
+        }   
     }
 
 
       /**
        * Cleans data, use after window closing
        */
-  @Override
+    @Override
     public void cleanup() {
-      Callbacks.glfwFreeCallbacks(params.getWindow());
+      Callbacks.glfwFreeCallbacks(windowHandle);
 
       // Deleting window and GLFW
-      glfwDestroyWindow(params.getWindow());
+      glfwDestroyWindow(windowHandle);
       glfwTerminate();
         
         // Set GLFWErrorCallback null and checks
@@ -121,15 +124,15 @@ public class Window implements ComponentLogic {
        * Updates window data, call it from your update method
        * Operates with window through getter
        */ 
-  @Override
+    @Override
     public void update() {
-      remainTime = frameDelayTime - GameLoop.getGameLoop().endFrame();
+      remainTime = frameDelayTime - time.endFrame();
       if (remainTime > 0) {
             glfwWaitEventsTimeout(remainTime / 1_000_000_000.0);
         } else {
             glfwPollEvents();
         }
-      glfwSwapBuffers(params.getWindow());
+      glfwSwapBuffers(windowHandle);
     }
 
 
@@ -137,8 +140,8 @@ public class Window implements ComponentLogic {
        * Applies new window size
        * Use once to avoid bugs with window resizing
        */
-    public void resize() {
-      glViewport(0, 0, params.getWidth(), params.getHeight());
+    public void resize(int width, int height) {
+      glViewport(0, 0, width, height);
     }
 
 
@@ -147,7 +150,7 @@ public class Window implements ComponentLogic {
        * @return Should window close or not
        */
     public boolean isWindowShouldClose() {
-      if(!glfwWindowShouldClose(params.getWindow())) {
+      if(!glfwWindowShouldClose(windowHandle)) {
         return false;
       }
       return true;
@@ -161,7 +164,7 @@ public class Window implements ComponentLogic {
     public void setIcon(String path) {
       IO io = new IO();
       try {
-        io.loadIcon(params.getWindow(), path);
+        io.loadIcon(windowHandle, path);
       } catch(Exception e) {
         System.out.println("ReCore: FAIL - setIcon: "+e);
       }
@@ -172,7 +175,7 @@ public class Window implements ComponentLogic {
        * Sends signal to close window 
        */
     public void close() {
-      glfwSetWindowShouldClose(params.getWindow(), true);
+      glfwSetWindowShouldClose(windowHandle, true);
     }
 
     
@@ -188,13 +191,13 @@ public class Window implements ComponentLogic {
        * Operates with blending state, useful when need to render objects with empty pixels in texture
        * @param on Blend state 
        */
-    public void blend(boolean on) {
-      if(on) {
+    public void blend(boolean state) {
+      if(state) {
           glEnable(GL_BLEND);
           glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       }
 
-      if(!on){
+      if(!state){
           glDisable(GL_BLEND);
       }
   }
