@@ -17,7 +17,7 @@ public class WindowTest {
     .width(320)
     .height(240)
     .vsync(true)
-    .title("MeshTest")
+    .title("WindowTest")
     .build(), null);
   }
 

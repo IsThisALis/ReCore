@@ -5,6 +5,9 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
+import com.isthisalis.recore.core.util.buffers.ElementBufferObject;
+import com.isthisalis.recore.core.util.buffers.VertexArrayObject;
+import com.isthisalis.recore.core.util.buffers.VertexBufferObject;
 import com.isthisalis.recore.graphics.render.*;
 import com.isthisalis.recore.graphics.shaders.*;
 import com.isthisalis.recore.graphics.textures.Texture;

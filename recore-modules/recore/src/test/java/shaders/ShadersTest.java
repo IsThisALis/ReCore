@@ -22,7 +22,7 @@ public class ShadersTest {
     .width(320)
     .height(240)
     .vsync(true)
-    .title("MeshTest")
+    .title("ShadersTest")
     .build(), null);
     program = new ShaderProgram();
     shader = new Shader();

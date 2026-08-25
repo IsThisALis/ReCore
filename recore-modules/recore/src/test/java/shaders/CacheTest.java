@@ -23,10 +23,10 @@ public class CacheTest {
     .width(320)
     .height(240)
     .vsync(true)
-    .title("MeshTest")
+    .title("CacheTest")
     .build(), null);
     program = new ShaderProgram();
-    program.setCachePath("test/shadercache/program");
+    program.setName("sp1");
   }
 
     @RepeatedTest(5)
