@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 /**
  * Logging utility class.
  */
+@Deprecated
 public class Logging {
 
     private final Logger logger;
