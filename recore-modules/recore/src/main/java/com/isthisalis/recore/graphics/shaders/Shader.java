@@ -6,33 +6,31 @@ import static org.lwjgl.opengl.GL20.*;
 
   // Lombok import
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString(onlyExplicitlyIncluded = true)
 public class Shader {
 
       // Shader identifier
     private @Getter int id;
       // String representing shader type 
     private String shaderType;
+
+    @ToString.Include
+    private @Getter String code;
    
     public Shader() {}
    
-    public Shader(String code, String type) {
-      if (type.toLowerCase().contains("vertex")) {
-          id = glCreateShader(GL_VERTEX_SHADER);
-      }
-      if (type.toLowerCase().contains("fragment")) {
-          id = glCreateShader(GL_FRAGMENT_SHADER);
-      } else {
-            // Throwss exception when type invalid
-          throw new IllegalArgumentException("ReCore: Unknown shader type: "+type);
-        }
+    public Shader(String code, ShaderTypes type) {
+      this.code = code;
+      id = glCreateShader(type.getCode());
       glShaderSource(id, code);
       glCompileShader(id);
     }
 
 
       /**
-       * Custom. Uploads shader code to OpenGL
+       * Uploads shader code to OpenGL
        * @param source Shader code
        */
       @Deprecated

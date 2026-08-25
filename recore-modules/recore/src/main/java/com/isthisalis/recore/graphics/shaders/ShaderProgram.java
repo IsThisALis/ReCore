@@ -1,7 +1,10 @@
 package com.isthisalis.recore.graphics.shaders;
 
+import static org.lwjgl.opengl.GL11.GL_RENDERER;
 // OpenGL imports
 import static org.lwjgl.opengl.GL11.GL_TRUE;
+import static org.lwjgl.opengl.GL11.GL_VENDOR;
+import static org.lwjgl.opengl.GL11.glGetString;
 import static org.lwjgl.opengl.GL20.*;
 
 // Java imports
@@ -15,10 +18,14 @@ import lombok.Setter;
 
 public class ShaderProgram {
 
-      // Program identifier given by OpenGL
-    private @Getter int id;
+    /**
+     * Program identifier given by OpenGL
+     */
+    private final @Getter int id;
 
-      // Stores shader we are working with
+    /**
+     * Stores shader we are working with
+     */
     private Shader attachedShader;
 
     /**
@@ -27,9 +34,14 @@ public class ShaderProgram {
     private final ConcurrentHashMap<String, Shader> shaders = new ConcurrentHashMap<>();
     
     /**
+     * Shader program name. Used in caching system. Should be set before using caching
+     */
+    private @Getter @Setter String name;
+    
+    /**
     * Path to external shader program cache.
     */
-    private @Getter @Setter String cachePath;
+    private @Getter String cachePath;
 
     /**
      * Creates new OpenGL shader program
@@ -50,7 +62,7 @@ public class ShaderProgram {
     
 
     /**
-     * Links ShaderProgram and checks link status
+     * Links ShaderProgram and checks link status.
      */
     public void link() {
         glLinkProgram(id);
@@ -74,9 +86,10 @@ public class ShaderProgram {
       /**
        * Deletes shader program 
        */
-      @Deprecated 
-    public void deleteShaderProgram() {
-        glDeleteProgram(id);
+    public void delete() {
+      deleteShader();
+      shaders.clear();
+      glDeleteProgram(id);
     }
 
 
@@ -87,6 +100,7 @@ public class ShaderProgram {
         if (attachedShader != null) {
             glDeleteShader(attachedShader.getId());
         }
+        attachedShader = null;
     }
 
     
@@ -128,7 +142,15 @@ public class ShaderProgram {
         * False - not exists.
         * True - saved on path.
         */
-    public boolean hasCache() {
+    public boolean hasCache() { 
+      String[] strs = new String[3];
+        strs[0] = glGetString(GL_VENDOR);
+        strs[1] = glGetString(GL_RENDERER);
+        strs[2] = name;
+
+        cachePath = ".recore/cache/" + ShaderCache.hash(strs).substring(0, 16);
+      
+
       return Files.exists(NIO.makePath(cachePath));
     }
 
@@ -147,4 +169,4 @@ public class ShaderProgram {
     public void loadCache() {
       if (hasCache()) ShaderCache.loadCache(this);
     }
-}
+  }
