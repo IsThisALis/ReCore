@@ -49,12 +49,13 @@ public class NIO {
   }
 
 
-  public static String load(Path path) {
+  public static String loadString(Path path) {
     try {
-      return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+      if (Files.exists(path)) return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+      else return new String(NIO.class.getClassLoader().getResourceAsStream(path.toString()).readAllBytes(), StandardCharsets.UTF_8);
     } catch (IOException e) {
       log.error("in NIO while loading file ", e);
-      return null;
+      return new String();
     }
   }
 
