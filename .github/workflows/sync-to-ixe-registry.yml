@@ -1,0 +1,52 @@
+name: Sync to IXE Registry
+
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  sync:
+    if: contains(github.event.issue.labels.*.name, 'ixe')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout IXE Registry
+        uses: actions/checkout@v4
+        with:
+          repository: IsThisALis/IXE-Registry
+          token: ${{ secrets.IXE_REGISTRY_TOKEN }}
+          path: ixe-registry
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Generate IXE file
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PROJECT_NAME: ${{ github.event.repository.name }}
+        run: |
+          cd ixe-registry
+          python ../scripts/generate_ixe_from_issue.py
+      
+      - name: Update README
+        run: |
+          cd ixe-registry
+          python scripts/generate_readme.py
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.IXE_REGISTRY_TOKEN }}
+          path: ixe-registry
+          commit-message: "Add IXE from ${{ github.event.repository.name }}#${{ github.event.issue.number }}"
+          title: "Add IXE from ${{ github.event.repository.name }}#${{ github.event.issue.number }}"
+          body: "Automated IXE sync from ${{ github.event.repository.name }}"
+          branch: ixe-sync-${{ github.event.issue.number }}
+          base: main
