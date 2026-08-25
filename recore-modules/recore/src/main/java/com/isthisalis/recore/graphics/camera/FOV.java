@@ -1,5 +1,6 @@
 package com.isthisalis.recore.graphics.camera;
 
+import com.isthisalis.recore.graphics.render.Entity;
 import com.isthisalis.recore.graphics.render.Mesh;
 
 public class FOV {
@@ -14,14 +15,14 @@ public class FOV {
 
   private float halfX, halfY;
 
-  public boolean inFov(Mesh mesh, Camera camera) {
+  public boolean inFov(Entity entity, Camera camera) {
     w = camera.getFOV().x;
     h = camera.getFOV().y;
 
-    meshX = mesh.getPosition().x;
-    meshY = mesh.getPosition().y;
-    halfX = getHalfWidth(mesh) * mesh.getScale().x;
-    halfY = getHalfHeight(mesh) * mesh.getScale().y;
+    meshX = entity.getTransform().getPosition().x;
+    meshY = entity.getTransform().getPosition().y;
+    halfX = getHalfWidth(entity.getMesh()) * entity.getTransform().getScale().x;
+    halfY = getHalfHeight(entity.getMesh()) * entity.getTransform().getScale().y;
 
     camX = camera.getPosition().x;
     camY = camera.getPosition().y;
