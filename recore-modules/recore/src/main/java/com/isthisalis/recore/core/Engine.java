@@ -20,7 +20,7 @@ public abstract class Engine {
     while (!window.isWindowShouldClose()) {
       update();
     }
-    cleanup();
     assetManager.cleanup();
+    cleanup();
   }
 }
