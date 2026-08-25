@@ -1,5 +1,9 @@
 package com.isthisalis.recore.input;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum KeyboardKeys {
     SPACE(32), APOSTROPHE(39), COMMA(44), MINUS(45), PERIOD(46), SLASH(47),
     NUM_0(48), NUM_1(49), NUM_2(50), NUM_3(51), NUM_4(52), NUM_5(53), NUM_6(54), NUM_7(55), NUM_8(56), NUM_9(57),
@@ -18,13 +22,5 @@ public enum KeyboardKeys {
     LEFT_SHIFT(340), LEFT_CONTROL(341), LEFT_ALT(342), LEFT_SUPER(343),
     RIGHT_SHIFT(344), RIGHT_CONTROL(345), RIGHT_ALT(346), RIGHT_SUPER(347), MENU(348);
 
-    private final int code;
-
-    KeyboardKeys(int code) {
-        this.code = code;
-    }
-
-    public int getCode() {
-        return code;
-    }
+    private final @Getter int code;
 }
