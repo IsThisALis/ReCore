@@ -1,4 +1,4 @@
-package com.isthisalis.recore.graphics.render;
+package com.isthisalis.recore.core.util.buffers;
 
   // OpenGL imports
 import static org.lwjgl.opengl.GL30.*;

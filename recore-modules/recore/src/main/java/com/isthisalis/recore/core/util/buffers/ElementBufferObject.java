@@ -1,26 +1,26 @@
-package com.isthisalis.recore.graphics.render;
+package com.isthisalis.recore.core.util.buffers;
 
   // OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 
-public class VertexBufferObject {
-        // Buffer identifier
+public class ElementBufferObject {
+      // Buffer identifier
     private final int id;
     
 
     /**
      * Generates new buffer
      */
-    public VertexBufferObject() {
+    public ElementBufferObject() {
         id = glGenBuffers();
     }
-
     
+
     /**
      * Binds buffer
      */
     public void bind() {
-        glBindBuffer(GL_ARRAY_BUFFER, id);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
     }
 
 
@@ -28,26 +28,26 @@ public class VertexBufferObject {
      * Unbinds buffer
      */
     public void unbind() {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
-
     
+
     /**
      * Uploads object data to buffer
-     * @param vertices Mesh data to upload 
+     * @param indices Indices to load in buffer 
      */
-    public void uploadData(float[] vertices) {
-        glBufferData(GL_ARRAY_BUFFER, vertices, GL_DYNAMIC_DRAW);
+    public void uploadData(int[] indices) {
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_DYNAMIC_DRAW);
     }
-    
+
 
     /**
      * Deletes buffer
      */
     public void delete() {
-        glDeleteBuffers(id);
+      glDeleteBuffers(id);
     }
-    
+   
 
     /**
      * Returns buffer identifier
@@ -57,4 +57,3 @@ public class VertexBufferObject {
         return id;
     }
 }
-
