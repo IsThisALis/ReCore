@@ -4,21 +4,22 @@ import org.joml.Vector2f;
 
 import com.isthisalis.rephysics.math.VectorUtil;
 
-import com.isthisalis.recore.graphics.render.Mesh;
+import lombok.Getter;
+
+import com.isthisalis.recore.graphics.render.Transform;
 
 public class AABB {
 
      /**
      * Lower left vertex of bounding box.
      */
-    private Vector2f min;
+    private @Getter Vector2f min;
 
     /**
      * Top right vertex of bounding box.
      */
-    private Vector2f max;
+    private @Getter Vector2f max;
 
-    private AABB copyto;
     private static AABB aCopy = new AABB();
     private static AABB bCopy = new AABB();
 
@@ -87,24 +88,6 @@ public class AABB {
     }
 
     /**
-     * Getter for min variable for lower bound vertex.
-     *
-     * @return AABB min
-     */
-    public Vector2f getMin() {
-        return min;
-    }
-
-    /**
-     * Getter for max variable for upper bound vertex.
-     *
-     * @return AABB max
-     */
-    public Vector2f getMax() {
-        return max;
-    }
-
-    /**
      * Method to check if an AABB is valid.
      * Makes sure the bounding volume is not; a point, has order of vertex's backwards and valid values have been used for the bounds.
      *
@@ -152,12 +135,8 @@ public class AABB {
      *
      * @return New AABB that's the same as the current object.
      */
-    public AABB copy() {
-        if (copyto == null) {
-          copyto = new AABB();
-        }
-        copyto.set(this.min, this.max);
-        return copyto;
+    public void copy(AABB target) {
+        target.set(this.min, this.max);;
     }
 
     /**
@@ -167,9 +146,9 @@ public class AABB {
      * @param B Second body to evaluate.
      * @return Boolean value of whether the two bodies AABB's overlap in world space.
      */
-    public static boolean AABBOverLap(AABB A, AABB B, Mesh a, Mesh b) {
-        aCopy = A.copy();
-        bCopy = B.copy();
+    public static boolean AABBOverLap(AABB A, AABB B, Transform a, Transform b) {
+        A.copy(aCopy);
+        B.copy(bCopy);
 
         aCopy.addOffset(VectorUtil.to2f(a.getPosition()));
         bCopy.addOffset(VectorUtil.to2f(b.getPosition()));

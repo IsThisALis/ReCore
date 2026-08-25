@@ -4,19 +4,13 @@ import org.joml.Vector2f;
 
 import com.isthisalis.rephysics.collision.AABB;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Circle {
 
-  public float radius;
+  public @Getter @Setter float radius = 0f;
   private AABB aabb;
-
-
-  public void setRadius(float value) {
-    radius = value;
-  }
-
-  public void setRadius(int value) {
-    radius = value;
-  }
 
 
   public final AABB getAABB() {
