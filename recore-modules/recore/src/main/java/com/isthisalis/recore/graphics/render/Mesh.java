@@ -1,17 +1,17 @@
 package com.isthisalis.recore.graphics.render;
 
-    // Graphic imports
+import com.isthisalis.recore.core.util.buffers.ElementBufferObject;
+import com.isthisalis.recore.core.util.buffers.VertexArrayObject;
+import com.isthisalis.recore.core.util.buffers.VertexBufferObject;
+// Graphic imports
 import com.isthisalis.recore.graphics.shaders.ShaderProgram;
 import com.isthisalis.recore.util.Logging;
+
+import lombok.Getter;
 
 // OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
-
-    // JOML imports
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Matrix4f;
 
 public class Mesh {
 
@@ -23,25 +23,10 @@ public class Mesh {
   private VertexArrayObject VAO;
   private ElementBufferObject EBO;
 
-      // Instances for objects used in rendering
-  private ShaderProgram shaderProgram;
-  
-      // Int values
-  private int indicesNumber;
-  private int location;
-
       // Array values
-  private int[] indices;
-  private float[] vertices;
-  private float[] modelData;
+  private @Getter int[] indices;
+  private @Getter float[] vertices;
 
-      // Vector3f values
-  private Vector3f position = new Vector3f(0, 0, 0);
-  private Vector3f rotation = new Vector3f(0, 0, 0);
-  private Vector3f scale    = new Vector3f(1, 1, 1);
-
-      // Matrix4f values
-  private Matrix4f modelMatrix = new Matrix4f();
 
       /**
        * Advanced constructor for creating mesh
@@ -58,8 +43,6 @@ public class Mesh {
       VBO = vbo;
       VAO = vao;
       EBO = ebo;
-          // Attaches texture and ShaderProgram
-      this.shaderProgram = shaderProgram;
       log.info("New mesh initialized");
     } 
 
@@ -71,8 +54,6 @@ public class Mesh {
      * @param useTexture use texture or not, if true requires to load texture and use UV in vertices instead of rgb
      */
     public void init(float[] vertices, int[] indices, boolean useTexture) {
-          // Initializes number of indices
-      this.indicesNumber = indices.length;
       this.indices = indices;
       this.vertices = vertices;
 
@@ -109,9 +90,6 @@ public class Mesh {
       EBO.uploadData(indices);
           // Unbinds VAO (no use now)
       VAO.unbind();
-          // Need to use ShaderProgram when getting uniform location
-      shaderProgram.use();
-      location = glGetUniformLocation(shaderProgram.getId(), "uModelMatrix"); 
     }
 
 
@@ -123,7 +101,6 @@ public class Mesh {
     public void update(float[] vertices, int[] indices) {
       this.vertices = vertices;
       this.indices = indices;
-      this.indicesNumber = indices.length;
 
           // Binds VBO to update data
       VBO.bind();
@@ -148,140 +125,13 @@ public class Mesh {
       VAO.delete();
     }
 
-
-    /**
-     * Draws object with ShaderProgram and its texture if used
-     */
-    public void draw() {
+     
+    public void bind() {
           // Binds VAO
       VAO.bind();
-
-          // Building model matrix for camera
-      if (modelData == null) modelData = new float[16];
-      buildModelMatrix().get(modelData);
-          // Move model matrix to uniform
-      glUniformMatrix4fv(location, false, modelData);
-          // Draws object from triangles and indicesNumber (pointer)
-      glDrawElements(GL_TRIANGLES, indicesNumber, GL_UNSIGNED_INT, 0L); 
     }
 
-  public Matrix4f buildModelMatrix() {
-    /*return modelMatrix.identity()
-          .translate(position.x, position.y, 0)
-          .translate(scale.x * 0.5f, scale.y, 0)
-          .scale(scale);*/
-    return modelMatrix.identity().translate(this.position).rotateZ(this.rotation.z).scale(this.scale);
+    public void draw() {
+      glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0L); 
+    }
   }
-
-
-      /**
-       * Moves mesh to position 
-       *
-       * @param x New x position
-       * @param y New y position
-       * @param speed Speed to move object with 
-       * @param deltaTime Time between past and now frames 
-       */
-    public void move(float x, float y, float speed, float deltaTime) {
-      position.x += x*speed*deltaTime;
-      position.y += y*speed*deltaTime; 
-  }
-
-
-  //   <---   GETTERS --->
-
-
-  /**
-   * Getter for mesh position
-   * 
-   * @return Mesh position
-   */
-  public Vector3f getPosition() {
-    return position;
-  }
-
-
-  /**
-   * Getter for mesh scale 
-   * 
-   * @return Mesh scale
-   */
-  public Vector3f getScale() {
-    return scale;
-  }
-
-
-  /**
-   * Getter for vertices
-   *
-   * @return Mesh vertices
-   */
-  public float[] getVertices() {
-    return vertices;
-  }
-
-
-  /**
-   * Getter for mesh indices 
-   *
-   * @return Mesh indices 
-   */
-  public int[] getIndices() {
-    return indices;
-  }
-
-
-  //   <---  SETTERS   --->
-
-
-    /**
-     * Setter for object position in world
-     * 
-     * @param x X coordinate in world
-     * @param y Y coordinate in world
-     */
-  public void setPosition(float x, float y) {
-    position.x = x;
-    position.y = y;
-  }
-
-    /**
-     * Setter for object position in world.
-     *
-     * @param position New position.
-     */
-  public void setPosition(Vector2f position) {
-    this.position.x = position.x;
-    this.position.y = position.y;
-  }
-
-    /**
-     * Setter for object position in world.
-     *
-     * @param position New position.
-     */
-  public void setPosition(Vector3f position) {
-    this.position.x = position.x;
-    this.position.y = position.y;
-  }
-
-
-    /**
-     * Setter for object scale 
-     * @param x Scale value in x dimension
-     * @param y Scale value in y dimension 
-     */
-  public void setScale(float x, float y) {
-    scale.x = x;
-    scale.y = y;
-  }
-
-    /**
-     * Setter for object rotation
-     *
-     * @param value Rotation value
-     */
-  public void setRotation(float value) {
-    rotation.z = value;
-  }
-}
