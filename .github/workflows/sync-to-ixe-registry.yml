@@ -33,7 +33,7 @@ jobs:
           PROJECT_NAME: ${{ github.event.repository.name }}
         run: |
           cd ixe-registry
-          python ../scripts/generate_ixe_from_issue.py
+          python scripts/generate_ixe_from_issue.py
       
       - name: Update README
         run: |
