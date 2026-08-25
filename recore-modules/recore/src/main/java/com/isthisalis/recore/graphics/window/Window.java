@@ -25,10 +25,14 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.logging.Logger;
+
 public class Window implements ComponentLogic {
   
   private long remainTime;
   private long frameDelayTime;
+
+  private Logger logger = Logger.getLogger(Window.class.getName());
 
   private @Getter long windowHandle;
   private @Getter Configuration configuration;
@@ -47,11 +51,6 @@ public class Window implements ComponentLogic {
       this.configuration = configuration;
       if (app != null) time = app.getTime();
       else time = new Time();
-      
-    // GLFW hint to use X11 on linux
-      if(OS.isLinux()) {
-        glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_WAYLAND);
-      }
 
     // MacOS hints
       if(OS.isMac()) {
@@ -68,7 +67,6 @@ public class Window implements ComponentLogic {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        //glfwWindowHint(GLFW_DEPTH_BITS, 24);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
@@ -150,10 +148,7 @@ public class Window implements ComponentLogic {
        * @return Should window close or not
        */
     public boolean isWindowShouldClose() {
-      if(!glfwWindowShouldClose(windowHandle)) {
-        return false;
-      }
-      return true;
+      return glfwWindowShouldClose(windowHandle);
     }
 
 
@@ -185,20 +180,4 @@ public class Window implements ComponentLogic {
     public void cleanWindow() {
       glClear(GL_COLOR_BUFFER_BIT);
     }
-
-
-      /**
-       * Operates with blending state, useful when need to render objects with empty pixels in texture
-       * @param on Blend state 
-       */
-    public void blend(boolean state) {
-      if(state) {
-          glEnable(GL_BLEND);
-          glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      }
-
-      if(!state){
-          glDisable(GL_BLEND);
-      }
-  }
 }
