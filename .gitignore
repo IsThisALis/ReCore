@@ -118,4 +118,8 @@ test
 .settings
 .factorypath
 .dev
+
+### Recore dir ###
+.recore
+
 # End of https://www.toptal.com/developers/gitignore/api/git,visualstudiocode,java,maven,gradle,backup
