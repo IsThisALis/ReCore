@@ -1,0 +1,69 @@
+name: IXE Report
+description: Report a new vulnerability or issue
+title: "[IXE] "
+labels: ["ixe"]
+body:
+  - type: input
+    id: project
+    attributes:
+      label: Project
+      description: Which project is affected?
+      placeholder: ReCore, ChatAIssistant, JThorn
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity (ISS)
+      description: Impact Severity Score
+      options:
+        - S1 (Critical)
+        - S2 (Major)
+        - S3 (Minor)
+        - S4 (Cosmetic)
+    validations:
+      required: true
+  
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: Affected component tag
+      placeholder: "[IO], [MEM], [RND], [ARC], [SEC]"
+    validations:
+      required: true
+  
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is the problem?
+      placeholder: Describe the issue...
+    validations:
+      required: true
+  
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How to reproduce the issue?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+      render: shell
+  
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen?
+      placeholder: A clear description of what you expected...
+  
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Screenshots
+      description: Any relevant logs or screenshots?
+      render: shell
