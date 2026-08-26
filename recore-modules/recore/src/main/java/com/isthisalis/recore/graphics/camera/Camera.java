@@ -1,9 +1,5 @@
 package com.isthisalis.recore.graphics.camera;
 
-  // ReCore imports
-  // Shaders 
-import com.isthisalis.recore.graphics.shaders.ShaderProgram;
-
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -33,7 +29,6 @@ public class Camera {
   private float[] uniformData = new float[16];
 
     // Instances values
-  private ShaderProgram program;
   private final @Getter Configuration config;
 
     // Matrix4f values 
@@ -127,7 +122,7 @@ public class Camera {
      * Always call this method at the end of frame.
      */
   public void update() {
-    program.use();
+    config.getShaderProgram().use();
     VPMatrix = getVPMatrix();
     VPMatrix.get(uniformData);
     glUniformMatrix4fv(config.getUniform().location(), false, uniformData);
