@@ -42,7 +42,6 @@ public class Texture {
   public void bind() {
     glActiveTexture(GL_TEXTURE0 + textures);
     glBindTexture(GL_TEXTURE_2D, id);
-    textures++;
   }
 
 
@@ -70,6 +69,7 @@ public class Texture {
    */
   public void createTexture(ShaderProgram program, String uniformName) {
     id = glGenTextures();
+    textures++;
 
     bind();
           // Texture parameters
