@@ -6,12 +6,14 @@ import lombok.NonNull;
 
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 import java.nio.ByteBuffer;
 
+import static org.lwjgl.opengl.GL11.GL_TRUE;
+import static org.lwjgl.opengl.GL20.GL_LINK_STATUS;
+import static org.lwjgl.opengl.GL20.glGetProgramiv;
 import static org.lwjgl.opengl.GL41.*;
 
 import org.lwjgl.system.MemoryStack;
@@ -39,7 +41,7 @@ public class ShaderCache {
       data.put(bin.duplicate());
       data.flip();
       
-      NIO.write(Path.of(program.getCachePath() + ".bin"), data);
+      NIO.write(program.getCachePath() + ".bin", data.array());
       return true;
     } catch (Exception e) {
         System.out.println("ReCore: Error in writing shader cache " + e.getMessage());
@@ -49,10 +51,10 @@ public class ShaderCache {
 
 
   protected static boolean loadCache(ShaderProgram program) {
-    ByteBuffer data = NIO.loadByteBuffer(NIO.makePath(program.getCachePath() + ".bin"));
-    if (data == null || data.remaining() < 4 ) return false;
-
     try (MemoryStack stack = MemoryStack.stackPush()) {
+      ByteBuffer data = ByteBuffer.wrap(NIO.load(program.getCachePath() + ".bin"));
+      if (data == null || data.remaining() < 4 ) return false;
+
       int format = data.getInt();
       ByteBuffer bin = ByteBuffer.allocateDirect(data.remaining());
       bin.put(data);
