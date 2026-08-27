@@ -5,15 +5,14 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
-import com.isthisalis.recore.core.util.buffers.ElementBufferObject;
-import com.isthisalis.recore.core.util.buffers.VertexArrayObject;
-import com.isthisalis.recore.core.util.buffers.VertexBufferObject;
 import com.isthisalis.recore.graphics.render.*;
 import com.isthisalis.recore.graphics.shaders.*;
 import com.isthisalis.recore.graphics.textures.Texture;
 
 import com.isthisalis.recore.graphics.window.*;
 import com.isthisalis.recore.util.IO;
+
+import app.Application;
 
 public class MeshTest {
 
@@ -29,7 +28,7 @@ public class MeshTest {
     .height(240)
     .vsync(true)
     .title("MeshTest")
-    .build(), null);
+    .build(), new Application());
   }
 
     @BeforeEach
@@ -52,11 +51,7 @@ public class MeshTest {
 
         texture.createTexture(program, "ourTexture");
 
-        VertexArrayObject vao = new VertexArrayObject();
-        VertexBufferObject vbo = new VertexBufferObject();
-        ElementBufferObject ebo = new ElementBufferObject();
-
-        Mesh mesh = new Mesh(vao, vbo, ebo, program);
+        Mesh mesh = new Mesh();
 
         float[] vertices = {
           // x     y     z    u   v

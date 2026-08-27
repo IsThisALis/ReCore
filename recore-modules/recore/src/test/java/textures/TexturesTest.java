@@ -11,6 +11,8 @@ import com.isthisalis.recore.graphics.textures.Texture;
 import com.isthisalis.recore.graphics.window.*;
 import com.isthisalis.recore.util.IO;
 
+import app.Application;
+
 public class TexturesTest {
 
   static ShaderProgram program;
@@ -25,7 +27,7 @@ public class TexturesTest {
     .height(240)
     .vsync(true)
     .title("TexturesTest")
-    .build(), null);
+    .build(), new Application());
 
     program = new ShaderProgram();
   }

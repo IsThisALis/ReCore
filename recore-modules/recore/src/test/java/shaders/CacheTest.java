@@ -9,6 +9,8 @@ import com.isthisalis.recore.graphics.window.Configuration;
 import com.isthisalis.recore.graphics.window.Window;
 import com.isthisalis.recore.util.IO;
 
+import app.Application;
+
 /**
  * CacheTest
  */
@@ -24,7 +26,7 @@ public class CacheTest {
     .height(240)
     .vsync(true)
     .title("CacheTest")
-    .build(), null);
+    .build(), new Application());
     program = new ShaderProgram();
     program.setName("sp1");
   }

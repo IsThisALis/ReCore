@@ -3,6 +3,8 @@ package window;
 import com.isthisalis.recore.graphics.window.Configuration;
 import com.isthisalis.recore.graphics.window.Window;
 
+import app.Application;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +20,7 @@ public class WindowTest {
     .height(240)
     .vsync(true)
     .title("WindowTest")
-    .build(), null);
+    .build(), new Application());
   }
 
     @Test 

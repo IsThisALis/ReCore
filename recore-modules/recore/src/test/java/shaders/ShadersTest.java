@@ -10,6 +10,8 @@ import com.isthisalis.recore.graphics.window.Configuration;
 import com.isthisalis.recore.graphics.window.Window;
 import com.isthisalis.recore.util.IO;
 
+import app.Application;
+
 public class ShadersTest {
 
   static ShaderProgram program;
@@ -23,7 +25,7 @@ public class ShadersTest {
     .height(240)
     .vsync(true)
     .title("ShadersTest")
-    .build(), null);
+    .build(), new Application());
     program = new ShaderProgram();
     shader = new Shader();
   }
