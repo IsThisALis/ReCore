@@ -1,9 +1,9 @@
 package com.isthisalis.recore.core;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,52 +29,45 @@ public final class AssetManager {
     protected AssetManager() {}
     
     public Texture loadTexture(String path) {
-        Path file = Path.of(path);
-
-        ByteBuffer imageBuffer;
+      ByteBuffer imageBuffer;
       try (MemoryStack stack = MemoryStack.stackPush()) {
 
-        if (!path.endsWith("png")) throw new IOException(new Throwable("Not a valid image!"));
-
-          // Puts raw image data in ByteBuffer
-        imageBuffer = NIO.loadByteBuffer(file);
+        // Puts raw image data in ByteBuffer
+        byte[] data = NIO.load(path);
+        imageBuffer = ByteBuffer.allocateDirect(data.length);
+        imageBuffer.put(data);
         imageBuffer.position(0);
             
 
-          // Puts image data into IntBuffers
+        // Puts image data into IntBuffers
         IntBuffer w = stack.mallocInt(1);
         IntBuffer h = stack.mallocInt(1);
         IntBuffer comp = stack.mallocInt(1);
       
 
-          // Loads image with STB
+        // Loads image with STB
         STBImage.stbi_set_flip_vertically_on_load(true);
         ByteBuffer image = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
-
+        
+        // Throws exception if texture image not loaded
+        if (image == null) {
+          throw new RuntimeException("Error while loading texture: "+STBImage.nstbi_failure_reason());
+        }
       
           // Transfers texture parameters to int variables
         int height = h.get();
         int width = w.get();
+        
 
-
-          // Throws exception if texture image not loaded
-        if (image == null) {
-          throw new RuntimeException("Error while loading texture: "+STBImage.nstbi_failure_reason());
-        }
         Texture texture = new Texture(width, height, image);
         loadedTextures.add(texture);
         return texture;
-
-      } catch(IOException e) {
-          System.out.println("ReCore: Encountered IO exception while loading file " + "[ " + path + " ] " + "[ " + e + " ]");
-          return new Texture(0, 0, null);
-        }
+      }
     }
 
 
     public Shader loadShader(String path, ShaderTypes type) {
-      Path file = Path.of(path);
-      String code = NIO.loadString(file);
+      String code = new String(NIO.load(path), StandardCharsets.UTF_8);
 
       Shader shader = new Shader(code, type);
       loadedShaders.add(shader);
