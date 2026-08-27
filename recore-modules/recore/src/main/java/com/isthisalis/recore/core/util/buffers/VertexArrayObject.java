@@ -3,9 +3,11 @@ package com.isthisalis.recore.core.util.buffers;
   // OpenGL imports
 import static org.lwjgl.opengl.GL30.*;
 
+import lombok.Getter;
+
 public class VertexArrayObject {
         // Buffer identifier
-    private final int id;
+    private final @Getter int id;
     
 
     /**
@@ -38,13 +40,4 @@ public class VertexArrayObject {
     public void delete() {
         glDeleteVertexArrays(id);
     }
-    
-
-    /**
-     * Returns buffer identifier
-     * @return Buffer id  
-     */
-     public int getId() {
-        return id;
-    }   
 }
