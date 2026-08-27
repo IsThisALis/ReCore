@@ -89,6 +89,7 @@ buildNumber.properties
 
 ### Gradle ###
 .gradle
+bin
 **/build/
 !src/**/build/
 
@@ -114,7 +115,6 @@ gradle-app.setting
 
 ### Test & Dev ###
 
-test
 .settings
 .factorypath
 .dev
