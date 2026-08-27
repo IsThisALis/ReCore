@@ -3,9 +3,6 @@ package com.isthisalis.recore.graphics.render;
 import com.isthisalis.recore.core.util.buffers.ElementBufferObject;
 import com.isthisalis.recore.core.util.buffers.VertexArrayObject;
 import com.isthisalis.recore.core.util.buffers.VertexBufferObject;
-// Graphic imports
-import com.isthisalis.recore.graphics.shaders.ShaderProgram;
-import com.isthisalis.recore.util.Logging;
 
 import lombok.Getter;
 
@@ -13,15 +10,17 @@ import lombok.Getter;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
+import java.util.logging.Logger;
+
 public class Mesh {
 
       // Logger wrap 
-  private static Logging log = new Logging("ReCore");
+  private Logger log = Logger.getLogger(Mesh.class.getName());
 
       // Buffers for data
-  private VertexBufferObject VBO;
-  private VertexArrayObject VAO;
-  private ElementBufferObject EBO;
+  private @Getter VertexBufferObject VBO;
+  private @Getter VertexArrayObject VAO;
+  private @Getter ElementBufferObject EBO;
 
       // Array values
   private @Getter int[] indices;
@@ -36,13 +35,11 @@ public class Mesh {
        * @param ebo ElementBufferObject to attach 
        * @param shaderProgram ShaderProgram to attach 
        */
-    public Mesh(VertexArrayObject vao, VertexBufferObject vbo, ElementBufferObject ebo, ShaderProgram shaderProgram) {
-          // Sets Mesh logging to file 
-      log.logToFile();
+    public Mesh() {
           // Attaches buffers
-      VBO = vbo;
-      VAO = vao;
-      EBO = ebo;
+      VBO = new VertexBufferObject();
+      VAO = new VertexArrayObject();
+      EBO = new ElementBufferObject();
       log.info("New mesh initialized");
     } 
 
