@@ -1,6 +1,7 @@
 package com.isthisalis.recore.util;
 
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.stb.STBImage;
@@ -8,7 +9,6 @@ import org.lwjgl.system.MemoryStack;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.io.IOException;
@@ -18,73 +18,53 @@ import java.io.IOException;
  */
 public class NIO {
 
-  private static Logging log = new Logging(NIO.class.getName());
-
+  private static Logger logger = Logger.getLogger(NIO.class.getName());
 
   public static Path makePath(String path) {
     return Path.of(path);
   }
 
-
-   public static void write(Path path, String source) {
+  @Deprecated
+  public static void write(String path, String source) {
     try {
-      Files.writeString(path, source);
+      Path file = Path.of(path);
+      Files.writeString(file, source);
     } catch (IOException e) {
-      log.error("Error in NIO write ", e);
+      logger.warning("Error in NIO while writing: " + e);
     }
   }
 
 
-  public static void write(Path path, ByteBuffer bytes) {
+  public static void write(String path, byte[] bytes) {
     try {
-      if (path.getParent() != null) Files.createDirectories(path.getParent());
-
-      byte[] arr = new byte[bytes.remaining()];
-      bytes.duplicate().get(arr);
+      Path file = Path.of(path);
+      if (file.getParent() != null) Files.createDirectories(file.getParent());
       
-      Files.write(path, arr);
+      Files.write(file, bytes);
     } catch (IOException e) {
-      log.error("Error in NIO write ", e);
+      logger.warning("Error in NIO while writing: " + e);
     }
   }
 
 
-  public static String loadString(Path path) {
-    try {
-      if (Files.exists(path)) return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
-      else return new String(NIO.class.getClassLoader().getResourceAsStream(path.toString()).readAllBytes(), StandardCharsets.UTF_8);
-    } catch (IOException e) {
-      log.error("in NIO while loading file ", e);
-      return new String();
-    }
-  }
-
-
-  public static ByteBuffer loadByteBuffer(Path path) {
-     try {
-      byte[] bytes;
-      if (Files.exists(path)) bytes = Files.readAllBytes(path);
-      else bytes = NIO.class.getClassLoader().getResourceAsStream(path.toString()).readAllBytes();
-
-      ByteBuffer bytedata = ByteBuffer.allocateDirect(bytes.length);
-
-      bytedata.put(bytes);
-      bytedata.flip();
-
-      return bytedata;
-     } catch (IOException e) {
-        log.error("Error in loadByteBuffer(): ", e);
-        return ByteBuffer.allocate(1);
-     }
+  public static byte[] load(String path) {
+      Path file = Path.of(path);
+      try {
+        if (Files.exists(file)) return Files.readAllBytes(file);
+        else return NIO.class.getClassLoader().getResourceAsStream(path).readAllBytes();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
   }
 
 
   public static GLFWImage loadGlfwImage(String path) {
 
+    ByteBuffer bytes;
       MemoryStack stack = MemoryStack.stackPush();
 
       // Loads and pushes icon image data to buffer.
-      ByteBuffer bytes = loadByteBuffer(Path.of(path));
+        bytes = ByteBuffer.wrap(load(path));
       
       // Puts image data into IntBuffers
       IntBuffer w = stack.mallocInt(1);
