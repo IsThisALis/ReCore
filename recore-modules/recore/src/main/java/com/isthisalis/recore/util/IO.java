@@ -19,6 +19,10 @@ import org.lwjgl.stb.STBImage;
 import org.lwjgl.glfw.GLFWImage;
 import static org.lwjgl.glfw.GLFW.*;
 
+/**
+ * IO util class.
+ * @apiNote Will be deleted in 2.0.0
+ */
 @Deprecated
 public class IO {
 
@@ -102,47 +106,37 @@ public class IO {
   public void loadIcon(long window, String path) {
       ByteBuffer imageBuffer = null;
 
-      try (MemoryStack stack = MemoryStack.stackPush()) {
-
-
-        InputStream stream = IO.class.getClassLoader().getResourceAsStream(path);
-        if(stream == null) {
-          throw new IOException("ReCore: IO Error! Check file path please: "+path);
-        }
-
-
-          // Loads and pushes icon image data to buffer.
-        byte[] fileBytes = stream.readAllBytes();
-        imageBuffer = BufferUtils.createByteBuffer(fileBytes.length);
-        imageBuffer.put(fileBytes);
-        imageBuffer.position(0);
+      MemoryStack stack = MemoryStack.stackPush();
+      // Loads and pushes icon image data to buffer.
+      byte[] fileBytes = NIO.load(path);
+      imageBuffer = BufferUtils.createByteBuffer(fileBytes.length);
+      imageBuffer.put(fileBytes);
+      imageBuffer.position(0);
         
       
-          // Puts image data into IntBuffers
-        IntBuffer w = stack.mallocInt(1);
-        IntBuffer h = stack.mallocInt(1);
-        IntBuffer comp = stack.mallocInt(1);
+      // Puts image data into IntBuffers
+      IntBuffer w = stack.mallocInt(1);
+      IntBuffer h = stack.mallocInt(1);
+      IntBuffer comp = stack.mallocInt(1);
 
 
-        ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
+      ByteBuffer pixels = STBImage.stbi_load_from_memory(imageBuffer, w, h, comp, 4);
 
-        if (pixels == null) {
-          throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
-        }
+      if (pixels == null) {
+        throw new RuntimeException("Unable to load icon: " + STBImage.stbi_failure_reason());
+      }
 
-        GLFWImage.Buffer icons = GLFWImage.malloc(1);
-        GLFWImage icon = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
+      GLFWImage.Buffer icons = GLFWImage.malloc(1);
+      GLFWImage icon = GLFWImage.malloc().set(w.get(0), h.get(0), pixels);
 
-        icons.put(0, icon); 
-        glfwSetWindowIcon(window, icons);
-        icon.free();
+      icons.put(0, icon); 
+      glfwSetWindowIcon(window, icons);
+      icon.free();
 
-        STBImage.stbi_image_free(pixels);
-        icons.free();
+      STBImage.stbi_image_free(pixels);
+      icons.free();
 
-        } catch(IOException e) {
-          System.out.println("Encountered IO exception: "+e);
-        }
+      stack.close();
     }
 
 
