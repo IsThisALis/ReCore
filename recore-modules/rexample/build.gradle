@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+
+application {
+    mainClass.set('com.isthisalis.rexample.RExample')
+  }
+
+
+jar {
+    manifest.attributes('Main-Class': 'com.isthisalis.rexample.RExample')
+  }
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+dependencies {
+	compileOnly 'org.projectlombok:lombok:1.18.46'
+  	annotationProcessor 'org.projectlombok:lombok:1.18.46'
+	
+	implementation project(':recore')
+    implementation project(':rephysics')
+}
