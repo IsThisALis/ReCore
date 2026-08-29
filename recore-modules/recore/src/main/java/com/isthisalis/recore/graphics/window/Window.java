@@ -17,9 +17,7 @@ import lombok.NonNull;
 // GLFW imports
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFW;
 import static org.lwjgl.glfw.GLFW.*;
-import org.lwjgl.glfw.GLFWVidMode;
 
 // OpenGL imports
 import org.lwjgl.opengl.GL;
@@ -27,21 +25,34 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Window implements ComponentLogic {
   
-  private long remainTime;
-  private long frameDelayTime;
+  /**
+   * Memory optimisation - reusing variables instead of creating new ones.
+   */
+  private long remainTime, frameDelayTime;
 
+  /**
+   * GLFW window.
+   */
   private @Getter long windowHandle;
+
+  /**
+   * Window properties.
+   */
   private @Getter Configuration configuration;
 
+  /**
+   * Window time cycle.
+   */
   private Time time;
 
      /**
      * Initializing GLFW, OpenGL context, window.
      * @param configuration Window configuration @see {@link com.isthisalis.recore.graphics.window.Configuration}
-     * @param app 
+     * @param app Application to attach time cycle.
      */
     public void init(@NonNull Configuration configuration, Engine app) {
       this.configuration = configuration;
+
       if (app != null) time = app.getTime();
       else throw new IllegalStateException("ReCore: Can't attach window to null application");
 
@@ -80,7 +91,7 @@ public class Window implements ComponentLogic {
       glfwMakeContextCurrent(windowHandle);
       GL.createCapabilities();
 
-      glfwSwapInterval(0);
+      
       // Disabling depth 
       glDisable(GL_DEPTH_TEST);
 
@@ -88,21 +99,22 @@ public class Window implements ComponentLogic {
       glfwShowWindow(windowHandle);
 
       if (configuration.isVsync()) {
-        GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        /*GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
         frameDelayTime = 1_000_000_000L / vidmode.refreshRate();
         glfwSetWindowPos(windowHandle, 
           (vidmode.width() - configuration.getWidth()) / 2,
           (vidmode.height() - configuration.getHeight()) / 2
-        );
+        );*/
+        glfwSwapInterval(1);
       } else {
           frameDelayTime = 1_000_000_000L / configuration.getFpsLimit();
         }   
     }
 
 
-      /**
-       * Cleans data, use after window closing
-       */
+    /**
+     * Cleans data.
+     */
     @Override
     public void cleanup() {
       Callbacks.glfwFreeCallbacks(windowHandle);
@@ -119,44 +131,47 @@ public class Window implements ComponentLogic {
     }
 
 
-      /**
-       * Updates window.
-       * Automatically called in {@link com.isthisalis.recore.core.Engine#loop()}
-       */ 
+    /**
+     * Updates window.
+     * Automatically called in {@link com.isthisalis.recore.core.Engine#loop()}
+     */ 
     @Override
     public void update() {
-      remainTime = frameDelayTime - time.endFrame();
-      if (remainTime > 0) {
-            glfwWaitEventsTimeout(remainTime / 1_000_000_000.0);
-        } else {
+      if (frameDelayTime > 0) {
+        remainTime = frameDelayTime - time.endFrame();
+        if (remainTime > 0) {
+              glfwWaitEventsTimeout(remainTime / 1_000_000_000.0);
+          } else {
             glfwPollEvents();
+          }
+        } else {
+          glfwPollEvents();
         }
-      glfwSwapBuffers(windowHandle);
+      glfwSwapBuffers(windowHandle);  
     }
 
 
-      /**
-       * Applies new window size.
-       * Use once to avoid bugs with window resizing.
-       */
+    /**
+     * Applies new window size.
+     */
     public void resize(int width, int height) {
       glViewport(0, 0, width, height);
     }
 
 
-      /**
-       * Getter for window state 
-       * @return Should window close or not
-       */
+    /**
+     * Getter for window state 
+     * @return Should window close or not
+     */
     public boolean isWindowShouldClose() {
       return glfwWindowShouldClose(windowHandle);
     }
 
 
-      /**
-       * Loads and sets icon
-       * @param path Path to imaage file
-       */
+    /**
+     * Loads and sets icon
+     * @param path Path to imaage file
+     */
     public void setIcon(String path) {
       IO io = new IO();
       try {
@@ -167,17 +182,17 @@ public class Window implements ComponentLogic {
     }
 
 
-      /**
-       * Sends signal to close window 
-       */
+    /**
+     * Sends signal for GLFW to close window.
+     */
     public void close() {
       glfwSetWindowShouldClose(windowHandle, true);
     }
 
     
-      /**
-       * Clears window, used in render cycle
-       */
+    /**
+     * Clears window, used in render cycle.
+     */
     public void clean() {
       glClear(GL_COLOR_BUFFER_BIT);
     }
