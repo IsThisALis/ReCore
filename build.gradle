@@ -1,0 +1,15 @@
+task buildAllOs {
+    group = 'build'
+    description = 'Builds recore library for Windows, Linux, MacOS (x86_64)'
+}
+
+def osList = ['windows', 'linux', 'macos']
+osList.each { osName ->
+    tasks.register("buildRecore${osName.capitalize()}", Exec) {
+        group = 'build'
+        description = "Build recore for ${osName}"
+        commandLine './gradlew', ':recore:jar', "-Pos=${osName}", '--no-daemon'
+        workingDir project.projectDir
+    }
+    buildAllOs.dependsOn "buildRecore${osName.capitalize()}"
+}

@@ -1,10 +1,11 @@
 import org.gradle.internal.os.OperatingSystem
 
+
 plugins {
   id 'java-library'
-  //id 'application'
   id 'com.vanniktech.maven.publish' version '0.34.0'
 }
+
 
 apply plugin: 'signing'
 signing {
@@ -12,41 +13,95 @@ signing {
     sign publishing.publications
 }
 
+
 project.ext.lwjglVersion = "3.4.1"
 project.ext.jomlVersion = "1.10.9"
 
-switch (OperatingSystem.current()) {
-	case OperatingSystem.LINUX:
-		project.ext.lwjglNatives = "natives-linux"
-		def osArch = System.getProperty("os.arch")
-		if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
-			project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
-		} else if  (osArch.startsWith("ppc")) {
-			project.ext.lwjglNatives += "-ppc64le"
-		} else if  (osArch.startsWith("riscv")) {
-			project.ext.lwjglNatives += "-riscv64"
-		}
-		break
-	case OperatingSystem.MAC_OS:
-		project.ext.lwjglNatives = "natives-macos"
-		break
-	case OperatingSystem.WINDOWS:
-		project.ext.lwjglNatives = "natives-windows"
-		break
+
+def targetOs = project.hasProperty('os') ? project.os : null
+def lwjglNatives
+
+if (targetOs) {
+    switch (targetOs) {
+	    case 'linux':
+		    lwjglNatives = "natives-linux"
+
+		    if (project.hasProperty('arch')) {
+                def arch = project.arch
+
+            if (arch == 'arm64' || arch == 'aarch64') {
+                lwjglNatives += '-arm64'
+
+            } else if (arch == 'arm32') {
+                lwjglNatives += 'arm32'
+
+            } else if (arch == 'ppc64le') {
+                lwjglNatives += 'ppc64le'
+
+            } else if (arch == 'riscv64') {
+                lwjglNatives += 'riscv64'
+
+            }
+        }
+        break
+
+        case 'windows':
+            lwjglNatives = "natives-windows"
+            break
+
+        case 'macos':
+            lwjglNatives = "natives-macos"
+            break
+    }
+} else {
+    switch (OperatingSystem.current()) {
+        case OperatingSystem.LINUX:
+
+            lwjglNatives = "natives-linux"
+            def osArch = System.getProperty("os.arch")
+
+            if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+                lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+
+            } else if (osArch.startsWith("ppc")) {
+                lwjglNatives += "-ppc64le"
+
+            } else if (osArch.startsWith("riscv")) {
+                lwjglNatives += "-riscv64"
+            }
+            break
+
+        case OperatingSystem.MAC_OS:
+            lwjglNatives = "natives-macos"
+            break
+
+        case OperatingSystem.WINDOWS:
+            lwjglNatives = "natives-windows"
+            break
+    }
 }
 
 
+project.ext.lwjglNatives = lwjglNatives
+
 group = 'io.github.isthisalis'
-version = '1.6.0'
+version = '1.0.0'
+
 
 repositories {
     mavenCentral()
 }
 
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+jar {
+    archiveBaseName.set('recore')
+    archiveClassifier.set(lwjglNatives)
 }
 
 mavenPublishing {
@@ -79,6 +134,7 @@ mavenPublishing {
     }
 }
 
+
 publishing {
     repositories {
         maven {
@@ -91,6 +147,7 @@ publishing {
         }
     }
 }
+
 
 dependencies {
 	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
