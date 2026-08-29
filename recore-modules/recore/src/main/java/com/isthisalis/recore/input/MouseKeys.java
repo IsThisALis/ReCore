@@ -1,5 +1,12 @@
 package com.isthisalis.recore.input;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * GLFW mouse buttons keys storage.
+ */
+@RequiredArgsConstructor
 public enum MouseKeys {
     MOUSE_1(0),
     MOUSE_2(1),
@@ -10,13 +17,8 @@ public enum MouseKeys {
     MOUSE_7(6),
     MOUSE_8(7);
 
-    private final int code;
-
-    MouseKeys(int code) {
-        this.code = code;
-    }
-
-    public int getCode() {
-        return code;
-    }
+    /**
+     * GLFW mouse button key.
+     */
+    private final @Getter int code;
 }
