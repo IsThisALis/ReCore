@@ -2,7 +2,6 @@ package com.isthisalis.recore.graphics.window;
 
 // ReCore imports
   // Core 
-import com.isthisalis.recore.core.ComponentLogic;
 import com.isthisalis.recore.core.Engine;
 
   // Util
