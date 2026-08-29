@@ -9,7 +9,22 @@ application {
   }
 
 
+def targetOs = project.hasProperty('os') ? project.os : null
+
+if (!targetOs) {
+    def osName = System.getProperty('os.name').toLowerCase()
+
+    if (osName.contains('win')) targetOs = 'windows'
+    else if (osName.contains('mac')) targetOs = 'macos'
+    else if (osName.contains('linux')) targetOs = 'linux'
+    else throw new GradleException("Unknown OS")
+}
+
+
 jar {
+    archiveBaseName.set('rexample')
+    archiveClassifier.set(targetOs)
+    
     manifest.attributes('Main-Class': 'com.isthisalis.rexample.RExample')
   }
 
