@@ -5,12 +5,16 @@ import java.lang.management.ManagementFactory;
 import org.lwjgl.Version;
 
 /**
- * Class logging system properties like  OS, GPU.
+ * Class logging system properties like  OS, GPU. Needed for debug.
  */
 public class SystemReport {
     
     private static final long MB = 1024L * 1024L;
 
+    /**
+     * Forms report containing system info.
+     * @return Ready-to-log report about system.
+     */
     public static String collect() {
         Runtime rnt = Runtime.getRuntime();
 
@@ -77,6 +81,11 @@ public class SystemReport {
         return sb.toString();
     }
 
+    /**
+     * Exists to reduce boiler-plate code in collect().
+     * @param key System property key.
+     * @return System property value.
+     */
     private static String prop(String key) {
         return System.getProperty(key, "unknown");
     }
