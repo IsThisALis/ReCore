@@ -3,7 +3,7 @@ package com.isthisalis.recore.core;
 /**
  * Defines core logic for components.
  * 
- * @deprecated Scheduled for removal in 1.1.0. No longer maintained.
+ * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
  */
 @Deprecated(since = "1.0.0", forRemoval = true)
 public interface ComponentLogic {
@@ -11,7 +11,7 @@ public interface ComponentLogic {
 	/**
      * Cleans up resources.
      * 
-     * @deprecated Scheduled for removal in 1.1.0.
+     * @deprecated Scheduled for removal in 2.0.0.
      */
     @Deprecated(since = "1.0.0", forRemoval = true)
 	void cleanup();
@@ -19,7 +19,7 @@ public interface ComponentLogic {
 	/**
      * Updates the component state.
      * 
-     * @deprecated Scheduled for removal in 1.1.0.
+     * @deprecated Scheduled for removal in 2.0.0.
      */
 	@Deprecated(since = "1.0.0", forRemoval = true)
 	void update();
