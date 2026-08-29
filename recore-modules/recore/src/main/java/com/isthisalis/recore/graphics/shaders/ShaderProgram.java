@@ -10,8 +10,7 @@ import static org.lwjgl.opengl.GL20.*;
 // Java imports
 import java.util.concurrent.ConcurrentHashMap;
 import java.nio.file.Files;
-
-import com.isthisalis.recore.util.NIO;
+import java.nio.file.Path;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -151,7 +150,7 @@ public class ShaderProgram {
         cachePath = ".recore/cache/" + ShaderCache.hash(strs).substring(0, 16);
       
 
-      return Files.exists(NIO.makePath(cachePath));
+      return Files.exists(Path.of(cachePath));
     }
 
 
