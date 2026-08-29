@@ -3,6 +3,7 @@ package com.isthisalis.rexample;
 import com.isthisalis.recore.core.Engine;
 import com.isthisalis.recore.graphics.window.Configuration;
 import com.isthisalis.recore.graphics.window.Window;
+import com.isthisalis.recore.graphics.window.WindowMode;
 
 /**
  * Application class. Engine implementation.
@@ -16,8 +17,7 @@ public class Application extends Engine {
     public void init() {
         Window window = new Window();
         Configuration config = Configuration.builder()
-            .width(1920)
-            .height(1080)
+            .windowMode(WindowMode.FULLSCREEN)
             .title("RExample")
             .vsync(true)
             .build();
@@ -31,11 +31,13 @@ public class Application extends Engine {
      * Calls all updates. Used in {@link com.isthisalis.recore.core.Engine#loop()}.
      */
     public void update() {
-        getWindow().update();
+        // Some update logic
     }
     
     /**
      * Cleans all app-specified data. Always called in the end of {@link com.isthisalis.recore.core.Engine#loop()}.
      */
-    public void cleanup() {}
+    public void cleanup() {
+        // Some cleanup logic
+    }
 }
