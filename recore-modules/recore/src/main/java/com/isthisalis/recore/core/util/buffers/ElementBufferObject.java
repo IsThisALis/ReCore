@@ -3,26 +3,15 @@ package com.isthisalis.recore.core.util.buffers;
   // OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 
-import lombok.Getter;
 
-public class ElementBufferObject {
-      // Buffer identifier
-    private final @Getter int id;
-    
-
-    /**
-     * Generates new buffer
-     */
-    public ElementBufferObject() {
-        id = glGenBuffers();
-    }
+public class ElementBufferObject extends Buffer {
     
 
     /**
      * Binds buffer
      */
     public void bind() {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getId());
     }
 
 
@@ -40,13 +29,5 @@ public class ElementBufferObject {
      */
     public void uploadData(int[] indices) {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_DYNAMIC_DRAW);
-    }
-
-
-    /**
-     * Deletes buffer
-     */
-    public void delete() {
-      glDeleteBuffers(id);
     }
 }
