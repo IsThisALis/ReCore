@@ -1,13 +1,16 @@
 package com.isthisalis.recore.core.util.buffers;
 
-  // OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 
+/**
+ * OpenGL vertex buffer object. Implements Buffer.
+ * @see {@link com.isthisalis.recore.core.util.buffers.Buffer}
+ */
 public class VertexBufferObject extends Buffer {
 
     
     /**
-     * Binds buffer
+     * Binds buffer, preparing to work.
      */
     public void bind() {
         glBindBuffer(GL_ARRAY_BUFFER, getId());
@@ -15,7 +18,7 @@ public class VertexBufferObject extends Buffer {
 
 
     /**
-     * Unbinds buffer
+     * Unbinds buffer.
      */
     public void unbind() {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -23,8 +26,8 @@ public class VertexBufferObject extends Buffer {
 
     
     /**
-     * Uploads object data to buffer
-     * @param vertices Mesh data to upload 
+     * Uploads data to buffer.
+     * @param vertices Vertices to load in buffer. 
      */
     public void uploadData(float[] vertices) {
         glBufferData(GL_ARRAY_BUFFER, vertices, GL_DYNAMIC_DRAW);
@@ -32,7 +35,7 @@ public class VertexBufferObject extends Buffer {
     
 
     /**
-     * Deletes buffer
+     * Deletes buffer.
      */
     public void delete() {
         glDeleteBuffers(getId());

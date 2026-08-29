@@ -1,17 +1,22 @@
 package com.isthisalis.recore.core.util.buffers;
 
-  // OpenGL imports
 import static org.lwjgl.opengl.GL30.*;
 
 import lombok.Getter;
 
+/**
+ * OpenGl vertex array object. 
+ */
 public class VertexArrayObject {
-        // Buffer identifier
+
+    /**
+     * OpenGL array ID.
+     */
     private final @Getter int id;
     
 
     /**
-     * Generates new buffer
+     * Generates new array.
      */
     public VertexArrayObject() {
         id = glGenVertexArrays();
@@ -19,7 +24,7 @@ public class VertexArrayObject {
     
 
     /**
-     * Binds buffer
+     * Binds array, preparing to work.
      */
     public void bind() {
         glBindVertexArray(id);
@@ -27,7 +32,7 @@ public class VertexArrayObject {
     
 
     /**
-     * Unbinds buffer
+     * Unbinds array.
      */
     public void unbind() {
         glBindVertexArray(0);
@@ -35,7 +40,7 @@ public class VertexArrayObject {
     
 
     /**
-     * Deletes buffer
+     * Deletes array.
      */
     public void delete() {
         glDeleteVertexArrays(id);

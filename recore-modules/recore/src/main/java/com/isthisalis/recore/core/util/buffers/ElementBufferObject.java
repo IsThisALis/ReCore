@@ -1,14 +1,15 @@
 package com.isthisalis.recore.core.util.buffers;
 
-  // OpenGL imports
 import static org.lwjgl.opengl.GL15.*;
 
-
+/**
+ * OpenGL element buffer object. Implements Buffer.
+ * @see {@link com.isthisalis.recore.core.util.buffers.Buffer}
+ */
 public class ElementBufferObject extends Buffer {
     
-
     /**
-     * Binds buffer
+     * Binds buffer, preparing to work.
      */
     public void bind() {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getId());
@@ -16,7 +17,7 @@ public class ElementBufferObject extends Buffer {
 
 
     /**
-     * Unbinds buffer
+     * Unbinds buffer.
      */
     public void unbind() {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -24,8 +25,8 @@ public class ElementBufferObject extends Buffer {
     
 
     /**
-     * Uploads object data to buffer
-     * @param indices Indices to load in buffer 
+     * Uploads data to buffer.
+     * @param indices Indices to load in buffer.
      */
     public void uploadData(int[] indices) {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_DYNAMIC_DRAW);
