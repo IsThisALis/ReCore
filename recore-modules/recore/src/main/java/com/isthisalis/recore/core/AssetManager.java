@@ -19,15 +19,40 @@ import com.isthisalis.recore.util.NIO;
 import lombok.Getter;
 
 /**
- * AssetManager. WiP.
+ * AssetManager class. Loads assets like textures, shaders, shader programs.
  */
 public final class AssetManager {
+  
+    /**
+     * List storing all loaded textures through AssetManager instance.
+     * @see {@link com.isthisalis.recore.graphics.textures.Texture}
+     */
     private @Getter List<Texture> loadedTextures = new ArrayList<>();
+
+    /**
+     * List storing all loaded shaders through AssetManager instance.
+     * @see {@link com.isthisalis.recore.graphics.shaders.Shader}
+     */
     private @Getter List<Shader> loadedShaders = new ArrayList<>();
+
+    /**
+     * List storing all loaded shader programs through AssetManager instance.
+     * @see {@link com.isthisalis.recore.graphics.shaders.ShaderProgram}
+     */
     private @Getter List<ShaderProgram> loadedShaderPrograms = new ArrayList<>();
 
+    /**
+     * Protected constructor to avoid creating AssetManager instanses.
+     */
     protected AssetManager() {}
-    
+
+
+    /**
+     * Loads texture from storage (Jar / external file system).
+     * @param path Path to image file. 
+     * @return loaded Texture.
+     * @see {@link com.isthisalis.recore.graphics.textures.Texture}
+     */
     public Texture loadTexture(String path) {
       ByteBuffer imageBuffer;
       try (MemoryStack stack = MemoryStack.stackPush()) {
@@ -66,6 +91,13 @@ public final class AssetManager {
     }
 
 
+    /**
+     * Loads shader from file with code.
+     * @param path Path to shader code file.
+     * @param type Shader type
+     * @return Loaded shader.
+     * @see {@link com.isthisalis.recore.graphics.shaders.ShaderTypes}.
+     */
     public Shader loadShader(String path, ShaderTypes type) {
       String code = new String(NIO.load(path), StandardCharsets.UTF_8);
 
