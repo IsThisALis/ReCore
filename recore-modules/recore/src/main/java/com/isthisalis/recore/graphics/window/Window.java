@@ -16,14 +16,17 @@ import lombok.NonNull;
 
 // GLFW imports
 import org.lwjgl.glfw.Callbacks;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 // OpenGL imports
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.*;
 
-public class Window implements ComponentLogic {
+public class Window {
   
   /**
    * Memory optimisation - reusing variables instead of creating new ones.
@@ -76,12 +79,23 @@ public class Window implements ComponentLogic {
 
         
       // Creating window
-      windowHandle = glfwCreateWindow(configuration.getWidth(),
+      if (configuration.getWindowMode().equals(WindowMode.FULLSCREEN)) {
+        GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        windowHandle = glfwCreateWindow(
+        vidmode.width(),
+        vidmode.height(),
+        configuration.getTitle(),
+        0L, 
+        0L
+
+      ); } else {
+      windowHandle = glfwCreateWindow(
+        configuration.getWidth(),
         configuration.getHeight(),
         configuration.getTitle(),
         0L, 
         0L
-      );
+      ); }
 
       if(windowHandle == 0L) {
         throw new IllegalStateException("ReCore: GLFW unable to create window for some reason");
@@ -99,12 +113,6 @@ public class Window implements ComponentLogic {
       glfwShowWindow(windowHandle);
 
       if (configuration.isVsync()) {
-        /*GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
-        frameDelayTime = 1_000_000_000L / vidmode.refreshRate();
-        glfwSetWindowPos(windowHandle, 
-          (vidmode.width() - configuration.getWidth()) / 2,
-          (vidmode.height() - configuration.getHeight()) / 2
-        );*/
         glfwSwapInterval(1);
       } else {
           frameDelayTime = 1_000_000_000L / configuration.getFpsLimit();
@@ -115,7 +123,6 @@ public class Window implements ComponentLogic {
     /**
      * Cleans data.
      */
-    @Override
     public void cleanup() {
       Callbacks.glfwFreeCallbacks(windowHandle);
 
@@ -134,8 +141,7 @@ public class Window implements ComponentLogic {
     /**
      * Updates window.
      * Automatically called in {@link com.isthisalis.recore.core.Engine#loop()}
-     */ 
-    @Override
+     */
     public void update() {
       if (frameDelayTime > 0) {
         remainTime = frameDelayTime - time.endFrame();

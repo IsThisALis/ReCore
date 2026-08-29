@@ -31,4 +31,9 @@ public class Configuration {
      * FPS limit.
      */
     @Default int fpsLimit = 30;
+
+    /**
+     * Window mode - fullscreen or windowed.
+     */
+    @Default WindowMode windowMode = WindowMode.FULLSCREEN;
 }
