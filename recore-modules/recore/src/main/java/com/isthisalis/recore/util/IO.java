@@ -20,10 +20,12 @@ import org.lwjgl.glfw.GLFWImage;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * IO util class.
- * @apiNote Will be deleted in 2.0.0
+ * IO woker util class.
+ * @deprecated Scheduled for removal in 1.1.0. No longer maintaned.
+ * @apiNote It is higly recommended to use NIO instead of IO.
+ * @apiNote This uses only InputStream through classloader -> only files from resources can be loaded.
  */
-@Deprecated
+@Deprecated(since = "1.0.0", forRemoval = true)
 public class IO {
 
 
@@ -103,6 +105,11 @@ public class IO {
   
 
   @Deprecated
+  /**
+   * Loads icon for window.
+   * @param window Window to attach icon.
+   * @param path Path to icon image.
+   */
   public void loadIcon(long window, String path) {
       ByteBuffer imageBuffer = null;
 

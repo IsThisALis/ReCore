@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Setter;
 
-@Data
-@AllArgsConstructor
 /**
  * Simple data class to store 2 position values.
 */
+@Data
+@AllArgsConstructor
 public class Vec2f {
     
     /**
