@@ -48,9 +48,9 @@ public abstract class Engine {
    */
   public void loop() {
     while (!window.isWindowShouldClose()) {
+      window.clean();
       time.startFrame();
       update();
-      window.clean();
       window.update();
     }
     
