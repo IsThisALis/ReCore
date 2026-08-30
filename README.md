@@ -2,9 +2,6 @@
 
 A lightweight Java game engine built on LWJGL 3
 
-![Java](https://img.shields.io/badge/java-21-orange)
-![License](https://img.shields.io/badge/license-MIT-green)
-
 ---
 
 ## Features
