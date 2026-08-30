@@ -87,6 +87,10 @@ public class ShaderProgram {
        */
     public void delete() {
       deleteShader();
+      for (Shader shader : shaders.values()) {
+        shader.delete();
+      }
+
       shaders.clear();
       glDeleteProgram(id);
     }
