@@ -13,6 +13,9 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.Builder.Default;
 
+/**
+ * Object world position data.
+ */
 @Builder
 public class Transform {
     
@@ -26,13 +29,14 @@ public class Transform {
     private @Default Matrix4f modelMatrix = new Matrix4f();
 
 
+
     public Matrix4f buildModelMatrix() {
         return modelMatrix.identity()
           .translate(position.x, position.y, 0)
           .translate(scale.x * 0.5f, scale.y, 0)
           .scale(scale);
     //return modelMatrix.identity().translate(this.position).rotateZ(this.rotation.z).scale(this.scale);
-  }
+    }
 
 
     /**
@@ -48,6 +52,9 @@ public class Transform {
       position.y += y*speed*deltaTime; 
   }
 
+  /**
+   * Prepares to use.
+   */
   public void bind() {
     buildModelMatrix().get(modelData);
     glUniformMatrix4fv(uniform.location(), false, modelData);

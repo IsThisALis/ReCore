@@ -10,12 +10,10 @@ import lombok.Getter;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import java.util.logging.Logger;
-
+/**
+ * Geometry object.
+ */
 public class Mesh {
-
-      // Logger wrap 
-  private Logger log = Logger.getLogger(Mesh.class.getName());
 
       // Buffers for data
   private @Getter VertexBufferObject VBO;
@@ -40,7 +38,6 @@ public class Mesh {
       VBO = new VertexBufferObject();
       VAO = new VertexArrayObject();
       EBO = new ElementBufferObject();
-      log.info("New mesh initialized");
     } 
 
 
@@ -122,12 +119,16 @@ public class Mesh {
       VAO.delete();
     }
 
-     
+    /**
+     * Binds VAO, preparing mesh to use.
+     */
     public void bind() {
-          // Binds VAO
       VAO.bind();
     }
 
+    /**
+     * Sends draw call to OpenGL.
+     */
     public void draw() {
       glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0L); 
     }

@@ -12,7 +12,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Scene
+ * Scene WiP pre-built.
  */
 @RequiredArgsConstructor
 public class Scene {
