@@ -7,6 +7,7 @@ public class RExample {
 
     /**
      * creates and starts application.
+     * @param args JVM args.
      */
     public static void main(String[] args) {
         Application app = new Application();
