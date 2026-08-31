@@ -15,6 +15,9 @@ import java.nio.file.Path;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * OpenGL shader program wrap.
+ */
 public class ShaderProgram {
 
     /**
@@ -23,17 +26,17 @@ public class ShaderProgram {
     private final @Getter int id;
 
     /**
-     * Stores shader we are working with
+     * Stores shader we are currently working with.
      */
     private Shader attachedShader;
 
     /**
-     * Storing shaders.
+     * Shaders storage.
      */
     private final ConcurrentHashMap<String, Shader> shaders = new ConcurrentHashMap<>();
     
     /**
-     * Shader program name. Used in caching system. Should be set before using caching
+     * Shader program name. Used in caching system. Should be set before using caching.
      */
     private @Getter @Setter String name;
     
@@ -43,17 +46,17 @@ public class ShaderProgram {
     private @Getter String cachePath;
 
     /**
-     * Creates new OpenGL shader program
+     * Creates new OpenGL shader program.
      */
     public ShaderProgram() {
         id = glCreateProgram();
     }
 
     
-      /**
-       * Attaches shader to the program and context (attachedShader)
-       * @param shader Shader to be attached
-       */
+    /**
+     * Attaches shader to the program and context (attachedShader)
+     * @param shader Shader to be attached
+     */
     public void attachShader(Shader shader) {
         glAttachShader(id, shader.getId());
         attachedShader = shader;
@@ -75,16 +78,16 @@ public class ShaderProgram {
 
 
     /**
-     * Call OpenGL to use shader program 
+     * Prepares shader program to use.
      */
     public void use() {
         glUseProgram(id);
     }
 
     
-      /**
-       * Deletes shader program 
-       */
+    /**
+      * Deletes shader program.
+      */
     public void delete() {
       deleteShader();
       for (Shader shader : shaders.values()) {
@@ -96,9 +99,9 @@ public class ShaderProgram {
     }
 
 
-      /**
-       * Deletes attached shader
-       */
+    /**
+     * Deletes attached shader.
+     */
     public void deleteShader() {
         if (attachedShader != null) {
             glDeleteShader(attachedShader.getId());
@@ -107,10 +110,10 @@ public class ShaderProgram {
     }
 
     
-      /**
-       * Checks program link status
-       * @return Link status 
-       */
+    /**
+     * Checks program link status
+     * @return Link status 
+     */
     public boolean checkStatus() {
         int status = glGetProgrami(id, GL_LINK_STATUS);
         if (status != GL_TRUE) {
@@ -120,11 +123,11 @@ public class ShaderProgram {
     }
 
 
-      /**
-       * Puts shader in storage
-       * @param key keyword to store shader under
-       * @param shader shader to store
-       */
+    /**
+     * Puts shader in storage
+     * @param key keyword to store shader under
+     * @param shader shader to store
+     */
     public void putShader(String key, Shader shader) {
       shaders.put(key, shader);
     }
@@ -140,11 +143,11 @@ public class ShaderProgram {
     }
 
 
-       /**
-        * Getter for cachefile status.
-        * False - not exists.
-        * True - saved on path.
-        */
+    /**
+     * Getter for cachefile status.
+     * False - not exists.
+     * True - saved on path.
+     */
     public boolean hasCache() { 
       String[] strs = new String[3];
         strs[0] = glGetString(GL_VENDOR);
@@ -158,18 +161,21 @@ public class ShaderProgram {
     }
 
 
-      /**
-       * Caches shader program in cachefile with path.
-       */
-    public void cache() {
-      ShaderCache.writeShaderCache(this); 
+    /**
+     * Caches shader program in cachefile with path.
+     * @return {@link ShaderCache#writeShaderCache(ShaderProgram)}
+     */
+    public boolean cache() {
+      return ShaderCache.writeShaderCache(this); 
     }
 
 
-      /**
-       * Loads cache from cachefile.
-       */
-    public void loadCache() {
-      if (hasCache()) ShaderCache.loadCache(this);
+    /**
+     * Loads cache from cachefile.
+     * @return {@link ShaderCache#writeShaderCache(ShaderProgram)}
+     */
+    public boolean loadCache() {
+      if (hasCache()) return ShaderCache.loadCache(this);
+      return false;
     }
   }

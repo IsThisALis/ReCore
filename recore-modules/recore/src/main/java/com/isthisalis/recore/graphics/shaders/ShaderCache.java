@@ -19,11 +19,16 @@ import static org.lwjgl.opengl.GL41.*;
 import org.lwjgl.system.MemoryStack;
 
 /**
- * ShaderCache
+ * Shader program caching mechanism.
+ * @apiNote Cache dont cleans automaticaully.
  */
 public class ShaderCache {
 
-
+  /**
+   * Writes linked shader program on disk.
+   * @param program ShaderProgram to write cache for.
+   * @return Cache save status.
+   */
   protected static boolean writeShaderCache(ShaderProgram program) {
     try (MemoryStack stack = MemoryStack.stackPush()) {
       IntBuffer len = stack.mallocInt(1);
@@ -49,7 +54,11 @@ public class ShaderCache {
     }
   }
 
-
+  /**
+   * Loads linked shader program from cache.
+   * @param program Program to laad cache for.
+   * @return Cache loading status.
+   */
   protected static boolean loadCache(ShaderProgram program) {
     try (MemoryStack stack = MemoryStack.stackPush()) {
       ByteBuffer data = ByteBuffer.wrap(NIO.load(program.getCachePath() + ".bin"));
@@ -72,7 +81,11 @@ public class ShaderCache {
     }
   }
 
-
+  /**
+   * Makes SHA-256 hashcode from String array.
+   * @param strings Source to make hash.
+   * @return SHA-256 hashcode.
+   */
   public static String hash(@NonNull String... strings) {
     try {
       MessageDigest dgst = MessageDigest.getInstance("SHA-256");

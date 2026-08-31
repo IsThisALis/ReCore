@@ -8,19 +8,46 @@ import static org.lwjgl.opengl.GL20.*;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * OpenGL shader OOP wrap.
+ */
 @ToString(onlyExplicitlyIncluded = true)
 public class Shader {
 
-      // Shader identifier
+    /**
+     * OpenGL shader ID.
+     */
     private @Getter int id;
-      // String representing shader type 
+
+    /**
+     * String representing shader type.
+     * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
+     */
+    @Deprecated(since = "1.0.0", forRemoval = true)
     private String shaderType;
 
     @ToString.Include
     private @Getter String code;
+
+    /**
+     * OpenGL shader type.
+     */
+    private @Getter ShaderTypes type;
    
+    /**
+     * Empty shader constructor.
+     * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
+     */
+    @Deprecated(since = "1.0.0", forRemoval = true)
     public Shader() {}
    
+
+    /**
+     * Creates new shader from source code and {@link #ShaderTypes} type
+     * @param code Shader source code.
+     * @param type Shader type.
+     * @see {@link com.isthisalis.recore.graphics.shaders.ShaderTypes}
+     */
     public Shader(String code, ShaderTypes type) {
       this.code = code;
       id = glCreateShader(type.getCode());
@@ -29,21 +56,23 @@ public class Shader {
     }
 
 
-      /**
-       * Uploads shader code to OpenGL
-       * @param source Shader code
-       */
-      @Deprecated
+    /**
+     * Uploads shader code to OpenGL.
+     * @param source Shader code.
+     * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
+     */
+    @Deprecated(since = "1.0.0", forRemoval = true)
     public void uploadSource(CharSequence source) {
         glShaderSource(id, source);
     }
 
 
-      /**
-       * Custom. Use only if you made custom method to create shader 
-       * @param id Shader to compile 
-       */
-      @Deprecated
+     /**
+     * Custom. Use only if you made custom method to create shader 
+     * @param id Shader to compile.
+     * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
+     */
+    @Deprecated(since = "1.0.0", forRemoval = true)
     public void compile(int id) {
         glCompileShader(id);
         if(!checkStatus()) {
@@ -53,10 +82,10 @@ public class Shader {
     }
 
     
-      /**
-       * Checks shader compile status 
-       * @return Shader compile state 
-       */
+    /**
+     * Checks shader compile status.
+     * @return Shader compile state.
+     */
     public boolean checkStatus() {
       if (glGetShaderi(id, GL_COMPILE_STATUS) != GL_TRUE && id == 0) {
         return false;
@@ -65,12 +94,13 @@ public class Shader {
     }
 
 
-      /**
-       * Transforms string to OpenGL shader type 
-       * @param type Text shader type (vertex/fragment)
-       * @return OpenGL shader type (Int)
-       */
-      @Deprecated
+    /**
+     * Transforms string to OpenGL shader type.
+     * @param type Text shader type (vertex/fragment).
+     * @return OpenGL shader type (Int).
+     * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
+     */
+    @Deprecated(since = "1.0.0", forRemoval = true)
     public int getShaderType(String type) {
       shaderType = type;
         // Checks shader type
@@ -86,19 +116,20 @@ public class Shader {
     }
 
 
-      /**
-       * Deletes this shader 
-       */
+    /**
+     * Deletes this shader 
+     */
     public void delete() {
         glDeleteShader(id);
     }
 
 
-      /**
-      * Creates shader from source and type 
-      * @param source code of your shader
-      */
-      @Deprecated
+    /**
+     * Creates shader from source code and type.
+     * @param source Shader code.
+     * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
+     */
+    @Deprecated(since = "1.0.0", forRemoval = true)
     public void createShader(String source) {
         id = glCreateShader(getShaderType(shaderType));
             // Check to be sure shader created
