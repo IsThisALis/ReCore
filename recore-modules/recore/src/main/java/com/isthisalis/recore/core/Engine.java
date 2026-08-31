@@ -1,6 +1,7 @@
 package com.isthisalis.recore.core;
 
 import com.isthisalis.recore.graphics.window.Window;
+import com.isthisalis.recore.input.Input;
 import com.isthisalis.recore.util.Time;
 
 import lombok.Getter;
@@ -29,17 +30,23 @@ public abstract class Engine {
   private final @Getter Time time = new Time();
 
   /**
+   * Engine input manager. Should be initialized at {@link #init()}.
+   * @see {@link com.isthisalis.recore.input.Input#init(Window)}.
+   */
+  private final @Getter Input input = new Input();
+
+  /**
    * Initializes engine, should be called first.
    */
   public abstract void init();
 
   /**
-   * Polls all updates, no need to call this manually.
+   * Polls all updates.
    */
   public abstract void update();
 
   /**
-   * Cleans all resources, no need to call this manually.
+   * Cleans all data after work.
    */
   public abstract void cleanup();
   
