@@ -20,24 +20,40 @@ import java.nio.ByteBuffer;
   // STB imports.
 import org.lwjgl.stb.STBImage;
 
+/**
+ * OpenGL texture wrap.
+ */
 @RequiredArgsConstructor
 public class Texture {
 
-    /**
-     * Number storing textures number.
-     */
-  private @Getter static int textures = 0;
-      // Used to set uniform
+  /**
+   * Number storing textures number.
+   */
+  private static @Getter int textures = 0;
+  
+  /**
+   * OpenGL texture ID.
+   */
   private @Getter int id;
-    
-  private final @Getter int width;
-  private final @Getter int height;
+  
+  /**
+   * Texture size parameters.
+   */
+  private final @Getter int width, height;
+
+  /**
+   * Raw texture image data.
+   */
   private final ByteBuffer image;
+
+  /**
+   * Texture uniform. Used in shaders.
+   */
   private @Getter TextureUniform uniform;
  
 
   /** 
-   * Prepares texture to use and binds
+   * Prepares texture to use.
    */
   public void bind() {
     glActiveTexture(GL_TEXTURE0 + textures);
@@ -54,8 +70,10 @@ public class Texture {
 
 
   /**
-   * Uploads setted and loaded data into texture
+   * Uploads setted and loaded data into texture.
+   * @deprecated Scheduled for removal in 2.0.0.
    */
+  @Deprecated(since = "1.0.0", forRemoval = true)
   public void uploadData() {
      image.position(0);
      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
@@ -97,9 +115,9 @@ public class Texture {
   }
 
 
-    /**
-     * Updates texture uniform.
-     */
+  /**
+   * Updates texture uniform.
+   */
   public void update() {
     glUniform1i(uniform.location(), 0);
   }

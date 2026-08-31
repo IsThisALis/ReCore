@@ -3,7 +3,11 @@ package com.isthisalis.recore.graphics.textures;
   // Java imports
 import java.nio.ByteBuffer;
 
-  @Deprecated
+/**
+ * Texture parameters class. 
+ * @deprecated Scheduled for removal in 2.0.0. No longer maintained.
+ */
+@Deprecated(since = "1.0.0", forRemoval = true)
 public class Params {
 
   private String path;
