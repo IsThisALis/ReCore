@@ -27,6 +27,7 @@ public class Material {
 
   public void bind() {
     program.use();
+    texture.update();
     texture.bind();
   }
 }
