@@ -1,7 +1,7 @@
 package com.isthisalis.recore.graphics.shaders.uniforms;
 
 /**
- * TextureUniform
+ * Texture uniform, storing name, texture unit and uniform location given by OpenGL.
  */
 public record TextureUniform(
     int location, 
