@@ -6,21 +6,25 @@ import lombok.Builder.Default;
 
 /**
  * Window configuration data-class.
- * @see {@link com.isthisalis.recore.graphics.window.Window}
  */
 @Value
 @Builder
 public class Configuration {
 
     /**
-     * Window size.
+     * Window width in pixels.
      */
-    int width, height;
+    @Default int width = 360;
+
+    /**
+     * Window height in pixels. 
+     */
+    @Default int height = 240;
 
     /**
      * Window title.
      */
-    String title;
+    @Default String title = "ReCore";
 
     /**
      * VSync on/off value.
@@ -33,7 +37,7 @@ public class Configuration {
     @Default int fpsLimit = 30;
 
     /**
-     * Window mode - fullscreen or windowed.
+     * Window appearance.
      */
     @Default WindowMode windowMode = WindowMode.FULLSCREEN;
 }
