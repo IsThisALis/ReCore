@@ -34,15 +34,15 @@ See `rexample` module for usage.
 A: Use built-in methods as a foundation, extend with your own logic.
 
 **Q: Can i get help with modifications (forked and modificated versions)?**    
-A: Author is not liable for conflicts and cannot help you anymore, [see](https://github.com/IsThisALis/ReCore/issues/9).
+A: Author is not liable for conflicts, but still can try help you with these.
 
 **Q: Where do I report bugs or get help?**  
 A: Create a ticket in [Issues](https://github.com/IsThisALis/ReCore/issues).
 
 **Q: Can I contribute?**  
-A: No. This is a archived project, contributions are useless.
+A: Yes, of course! 
 
 **Q: Is there a roadmap?**  
-A: No fixed roadmap. Development currently stopped, [see](https://github.com/IsThisALis/ReCore/issues/9).
+A: No fixed roadmap. Roadmap will be soon. 
 
 ---
