@@ -78,16 +78,20 @@ public class Window {
 
         
       // Creating window
-      if (configuration.getWindowMode().equals(WindowMode.FULLSCREEN)) {
+      if (WindowMode.FULLSCREEN == configuration.getWindowMode()) {
         GLFWVidMode vidmode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        if (vidmode == null) {
+           throw new IllegalStateException("ReCore: Failed to get video mode for primary monitor.");
+        }
+        
         windowHandle = glfwCreateWindow(
         vidmode.width(),
         vidmode.height(),
         configuration.getTitle(),
         0L, 
         0L
-
-      ); } else {
+        );
+      } else {
       windowHandle = glfwCreateWindow(
         configuration.getWidth(),
         configuration.getHeight(),
@@ -124,16 +128,13 @@ public class Window {
      */
     public void cleanup() {
       Callbacks.glfwFreeCallbacks(windowHandle);
-
-      // Deleting window and GLFW
-      glfwDestroyWindow(windowHandle);
-      glfwTerminate();
-        
-        // Set GLFWErrorCallback null and checks
-        GLFWErrorCallback callback = glfwSetErrorCallback(null);
+      GLFWErrorCallback callback = glfwSetErrorCallback(null);
         if (callback != null) {
             callback.free();
         }
+      
+      glfwDestroyWindow(windowHandle);
+      glfwTerminate();
     }
 
 
