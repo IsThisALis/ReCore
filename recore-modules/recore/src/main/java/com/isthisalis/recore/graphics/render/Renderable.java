@@ -1,6 +1,4 @@
-package com.isthisalis.recore.core;
-
-import com.isthisalis.recore.graphics.render.Entity;
+package com.isthisalis.recore.graphics.render;
 
 import lombok.Getter;
 
